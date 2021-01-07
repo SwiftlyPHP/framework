@@ -3,6 +3,7 @@ FROM php:7.1.11-fpm-alpine3.4
 # Install required libraries
 RUN apk add --update --no-cache --virtual .ext-deps \
     mysql-client \
+    postgresql-dev \
     zip \
     libpng-dev \
     imagemagick-dev \
