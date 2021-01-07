@@ -15,9 +15,10 @@ RUN apk add --no-cache \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && docker-php-ext-enable mailparse \
+    && docker-php-ext-install mbstring \
     && docker-php-ext-install gd \
-    && docker-php-ext-install mysql \
-    && docker-php-ext-install mbstring
+    && docker-php-ext-install mysqli \
+    && docker-php-ext-install pgsql
 
 # Move project files into container
 COPY . /var/www/html/

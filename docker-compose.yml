@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: logsmith/php
+    image: swiftly/php
     volumes:
      - .:/var/www/html
     networks:
