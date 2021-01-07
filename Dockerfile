@@ -1,4 +1,4 @@
-FROM php:7.1.11-fpm-alpine3.4
+FROM php:7.1.33-fpm-alpine3.10
 
 # Install required libraries
 RUN apk add --update --no-cache --virtual .ext-deps \
