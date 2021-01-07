@@ -1,6 +1,6 @@
 <?php
 
-namespace Swiftly\Dependency\Loaders;
+namespace Swiftly\Dependency\Loader;
 
 use Swiftly\Dependency\{
     Container,
