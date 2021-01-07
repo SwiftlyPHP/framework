@@ -1,8 +1,11 @@
 <?php
 
-namespace Swiftly\Dependencies\Loaders;
+namespace Swiftly\Dependency\Loaders;
 
-use \Swiftly\Dependencies\{ Container, LoaderInterface };
+use Swiftly\Dependency\{
+    Container,
+    LoaderInterface
+};
 
 /**
  * Class used to load dependencies from a PHP file
@@ -32,8 +35,8 @@ Class PhpLoader Implements LoaderInterface
     /**
      * Attempts to load the dependencies from PHP file
      *
-     * @param \Swiftly\Dependencies\Container $container  Dependency container
-     * @return void                                       N/a
+     * @param Container $container Dependency container
+     * @return void                N/a
      */
     public function load( Container $container ) : void
     {

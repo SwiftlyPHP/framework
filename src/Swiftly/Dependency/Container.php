@@ -1,8 +1,11 @@
 <?php
 
-namespace Swiftly\Dependencies;
+namespace Swiftly\Dependency;
 
-use Swiftly\Dependencies\LoaderInterface;
+use Swiftly\Dependency\{
+    LoaderInterface,
+    Dependency
+};
 
 /**
  * Dependency management
@@ -22,9 +25,9 @@ Class Container
     /**
      * Binds a new service by name
      *
-     * @param string $name                      Service name
-     * @param callable|object                   Service implementation
-     * @return \Swiftly\Dependencies\Dependency  Dependency wrapper
+     * @param string $name    Service name
+     * @param callable|object Service implementation
+     * @return Dependency     Dependency wrapper
      */
     public function bind( string $name, $implementation ) : Dependency
     {
@@ -38,9 +41,9 @@ Class Container
      *
      * @internal
      *
-     * @param string $name                                  Service name
-     * @param \Swiftly\Dependencies\Dependency $dependency  Dependency wrapper
-     * @return \Swiftly\Dependencies\Dependency             Dependency wrapper
+     * @param string $name           Service name
+     * @param Dependency $dependency Dependency wrapper
+     * @return Dependency            Dependency wrapper
      */
     public function alias( string $name, Dependency $dependency ) : Dependency
     {
@@ -52,8 +55,8 @@ Class Container
     /**
      * Load services from the given dependency loader
      *
-     * @param \Swiftly\Dependencies\LoaderInterface $loader Dependency loader
-     * @return void                                         N/a
+     * @param LoaderInterface $loader Dependency loader
+     * @return void                   N/a
      */
     public function load( LoaderInterface $loader ) : void
     {

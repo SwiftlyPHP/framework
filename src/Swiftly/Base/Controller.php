@@ -4,7 +4,7 @@ namespace Swiftly\Base;
 
 use \Swiftly\{
     Template\TemplateInterface,
-    Dependencies\Container,
+    Dependency\Container,
     Base\Model
 };
 use \Swiftly\Http\Server\{
@@ -38,7 +38,7 @@ Abstract Class Controller
     /**
      * Load the services into the base controller
      *
-     * @param \Swiftly\Dependencies\Container $container  Dependency manager
+     * @param Container $container Dependency manager
      */
     public function __construct( Container $container )
     {
@@ -70,8 +70,8 @@ Abstract Class Controller
     /**
      * Attempts to get a DB model
      *
-     * @param string $name  Model name
-     * @return Model|null   DB model (Or null)
+     * @param string $name Model name
+     * @return Model|null  DB model (Or null)
      */
     public function getModel( string $name ) : ?Model
     {
@@ -86,8 +86,8 @@ Abstract Class Controller
     /**
      * Tries to create a model of the given type
      *
-     * @param string $name  Model name
-     * @return Model|null   Db model (Or null)
+     * @param string $name Model name
+     * @return Model|null  Db model (Or null)
      */
     private function createModel( string $name ) : ?Model
     {

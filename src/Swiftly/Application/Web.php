@@ -2,18 +2,18 @@
 
 namespace Swiftly\Application;
 
-use \Swiftly\Config\Config;
-use \Swiftly\Template\TemplateInterface;
-use \Swiftly\Routing\Dispatcher;
-use \Swiftly\Dependencies\{
+use Swiftly\Config\Config;
+use Swiftly\Template\TemplateInterface;
+use Swiftly\Routing\Dispatcher;
+use Swiftly\Dependency\{
     Container,
-    Loaders\PhpLoader
+    Loader\PhpLoader
 };
-use \Swiftly\Http\Server\{
+use Swiftly\Http\Server\{
     Request,
     Response
 };
-use \Swiftly\Database\{
+use Swiftly\Database\{
     Database,
     AdapterInterface,
     Adapters\Mysql,
@@ -111,9 +111,9 @@ Class Web
     /**
      * Binds the database adapter
      *
-     * @param \Swiftly\Dependencies\Container $services Dependency manager
-     * @param array $config                             Database config
-     * @return void                                     N/a
+     * @param Container $services Dependency manager
+     * @param array $config       Database config
+     * @return void               N/a
      */
     private function bindDatabase( Container $services, array $config ) : void
     {

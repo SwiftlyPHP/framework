@@ -2,9 +2,11 @@
 
 namespace Swiftly\Routing;
 
-use \Swiftly\Base\Controller;
-use \Swiftly\Dependencies\Container;
-use \Swiftly\Http\Server\Response;
+use Swiftly\{
+    Base\Controller,
+    Dependency\Container
+};
+use Swiftly\Http\Server\Response;
 
 /**
  * Represents an action that can be called
@@ -19,28 +21,28 @@ Class Action
      *
      * @var string $class Class name
      */
-    private $class = '';
+    private $class;
 
     /**
      * The controller method to call
      *
      * @var string $method Method name
      */
-    private $method = '';
+    private $method;
+
+    /**
+    * Scoped context variables
+    *
+    * @var array $context The context
+    */
+    private $context;
 
     /**
      * The controller used to handle the request
      *
-     * @var \Swiftly\Base\Controller $controller Controller class
+     * @var Controller $controller Controller class
      */
     private $controller = null;
-
-    /**
-     * Scoped context variables
-     *
-     * @var array $context The context
-     */
-    private $context = [];
 
     /**
      * Create a new action using the controller and method provided
@@ -59,7 +61,7 @@ Class Action
     /**
      * Get the controller for this action
      *
-     * @return \Swiftly\Base\Controller|null Controller
+     * @return Controller|null Controller
      */
     public function getController() : ?Controller
     {
@@ -105,9 +107,9 @@ Class Action
      *
      * Calling code should have already called the {@see Action::prepare} method
      *
-     * @param \Swiftly\Dependencies\Container $services Dependency manager
-     * @param array $params                             Parameters
-     * @return \Swiftly\Http\Server\Response|null       Controller response
+     * @param Container $services Dependency manager
+     * @param array $params       Parameters
+     * @return Response|null      Controller response
      */
     public function execute( Container $services, array $params = [] ) : ?Response
     {
@@ -170,9 +172,9 @@ Class Action
     /**
      * Checks to see if a variable is of the given type
      *
-     * @param  \ReflectionType $type  Variable type
-     * @param  mixed $variable        The variable
-     * @return bool                   Is of type
+     * @param \ReflectionType $type Variable type
+     * @param mixed $variable       The variable
+     * @return bool                 Is of type
      */
     private function isType( \ReflectionType $type, $variable ) : bool
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Swiftly\Dependencies;
+namespace Swiftly\Dependency;
 
-use Swiftly\Dependencies\Container;
+use Swiftly\Dependency\Container;
 
 /**
  * Wraps a dependency in the dependency container
@@ -15,29 +15,29 @@ Class Dependency
     /**
      * The parent container for this dependency
      *
-     * @var \Swiftly\Dependencies\Container $container Dependency container
+     * @var Container $container Dependency container
      */
-    private $container = null;
-
-    /**
-     * Is this dependency a singleton?
-     *
-     * @var bool $singleton Is singleton?
-     */
-    private $singleton = false;
+    private $container;
 
     /**
      * Actual implementation of this dependency
      *
      * @var callable|object $implementation Dependency implementation
      */
-    private $implementation = null;
+    private $implementation;
+
+    /**
+    * Is this dependency a singleton?
+    *
+    * @var bool $singleton Is singleton?
+    */
+    private $singleton = false;
 
     /**
      * Creates a new dependency
      *
-     * @param callable|object $implementation           Implementation
-     * @param \Swiftly\Dependencies\Container $container Dependency container
+     * @param callable|object $implementation Implementation
+     * @param Container $container            Dependency container
      */
     public function __construct( $implementation, Container $container )
     {
