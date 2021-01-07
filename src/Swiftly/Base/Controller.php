@@ -2,9 +2,11 @@
 
 namespace Swiftly\Base;
 
-use \Swiftly\Template\TemplateInterface;
-use \Swiftly\Dependencies\Container;
-use \Swiftly\Base\Model;
+use \Swiftly\{
+    Template\TemplateInterface,
+    Dependencies\Container,
+    Base\Model
+};
 use \Swiftly\Http\Server\{
     Response,
     RedirectResponse
@@ -19,12 +21,12 @@ Abstract Class Controller
 {
 
     /**
-     * @var \Swiftly\Dependencies\Container $dependencies Dependency manager
+     * @var Container $dependencies Dependency manager
      */
-    private $dependencies = null;
+    private $dependencies;
 
     /**
-     * @var \Swiftly\Template\TemplateInterface $renderer Internal renderer
+     * @var TemplateInterface $renderer Internal renderer
      */
     private $renderer = null;
 
@@ -120,9 +122,9 @@ Abstract Class Controller
     /**
      * Renders a template and wraps it in a Response object
      *
-     * @param  string $template              Template
-     * @param  array  $data                  Template data
-     * @return \Swiftly\Http\Server\Response Response object
+     * @param string $template Template
+     * @param array  $data     Template data
+     * @return Response        Response object
      */
     public function output( string $template, array $data = [] ) : Response
     {

@@ -15,7 +15,7 @@ Abstract Class Model
     /**
      * @var Database $database DB wrapper
      */
-    protected $database = null;
+    protected $database;
 
     /**
      * Pass the db object into the model
