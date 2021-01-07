@@ -38,18 +38,20 @@ $autoloader->addPrefix( 'Swiftly', APP_SWIFTLY );
 
 
 // Load the config
-$config = Swiftly\Config\Config::fromJson( APP_CONFIG . 'app.json' );
+$config = ( new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . 'app.json' ) )->load(
+    new Swiftly\Config\Config
+);
 
 
 // Set the encoding
-if ( $config->has( 'encoding' ) ) {
-    mb_internal_encoding( $config->get( 'encoding' ) );
-    mb_http_output( $config->get( 'encoding' ) );
+if ( $config->has( 'core.encoding' ) ) {
+    mb_internal_encoding( $config->get( 'core.encoding' ) );
+    mb_http_output( $config->get( 'core.encoding' ) );
 }
 
 
 // Are we in development mode?
-switch ( (string)$config->get( 'environment' ) )
+switch ( (string)$config->get( 'core.environment' ) )
 {
     case 'development':
     case 'dev':
@@ -63,13 +65,13 @@ switch ( (string)$config->get( 'environment' ) )
 
 
 // Does the developer want to see E_STRICT errors?
-if ( (bool)$config->get( 'strict', false ) ) {
+if ( (bool)$config->get( 'core.strict', false ) ) {
     $error_level = $error_level | E_STRICT;
 }
 
 
 // Display developer defined errors & warnings?
-if ( (bool)$config->get( 'warnings', false ) ) {
+if ( (bool)$config->get( 'core.warnings', false ) ) {
     $error_level = $error_level | E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE | E_USER_DEPRECATED;
 }
 

@@ -1,12 +1,14 @@
 {
-    "encoding": "UTF-8",
-    "environment": "dev",
-    "strict" : true,
-    "warnings": true,
+    "core": {
+        "encoding": "UTF-8",
+        "environment": "dev",
+        "strict" : true,
+        "warnings": true
+    },
     "database": {
         "adapter": "mysql",
-        "host":     "mysql",
-        "name":     "database",
+        "host": "mysql",
+        "name": "database",
         "username": "username",
         "password": "secret"
     }
