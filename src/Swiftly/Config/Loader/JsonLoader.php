@@ -68,13 +68,13 @@ Class JsonLoader Implements LoaderInterface
         foreach ( $data as $index => $value ) {
             $index = \is_string( $index ) ? $index : '';
 
+            if ( !empty( $name ) ) {
+              $index = "$name.$index";
+            }
+
             // Recurse if array
             if ( \is_array( $value ) ) {
                 $this->parse( $index, $value, $config );
-            }
-
-            if ( !empty( $name ) ) {
-                $index = "$name.$index";
             }
 
             $config->set( $index, $value );
