@@ -7,7 +7,7 @@ use Swiftly\Config\Config;
 /**
  * Interface for classes that can load config values.
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Interface LoaderInterface
 {

@@ -5,7 +5,7 @@ namespace Swiftly\Console;
 /**
  * Provides utility methods for dealing with console input
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Input
 {

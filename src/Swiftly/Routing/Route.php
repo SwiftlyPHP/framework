@@ -5,7 +5,7 @@ namespace Swiftly\Routing;
 /**
  * P.O.D used to represent a single route
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Route
 {

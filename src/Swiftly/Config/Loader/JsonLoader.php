@@ -10,7 +10,7 @@ use Swiftly\Config\{
 /**
  * Loads config values from JSON files
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class JsonLoader Implements LoaderInterface
 {
@@ -36,7 +36,7 @@ Class JsonLoader Implements LoaderInterface
      * Loads the JSON into the config object
      *
      * @param Config $config Config object
-     * @return void          N/a
+     * @return Config        Updated config
      */
     public function load( Config $config ) : Config
     {

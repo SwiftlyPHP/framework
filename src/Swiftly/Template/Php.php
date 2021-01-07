@@ -5,7 +5,7 @@ namespace Swiftly\Template;
 /**
  * Renders a template using PHP
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Php Implements TemplateInterface
 {

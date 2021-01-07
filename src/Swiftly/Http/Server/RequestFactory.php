@@ -11,7 +11,7 @@ use \Swiftly\Http\{
 /**
  * Factory used to create Request objects
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class RequestFactory
 {

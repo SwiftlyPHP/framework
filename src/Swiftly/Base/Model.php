@@ -7,7 +7,7 @@ use Swiftly\Database\Database;
 /**
  * The abstract class all models should inherit
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Abstract Class Model
 {

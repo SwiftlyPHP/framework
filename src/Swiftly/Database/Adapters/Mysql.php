@@ -7,7 +7,7 @@ use \Swiftly\Database\AdapterInterface;
 /**
  * Driver for MySQL databases
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Mysql Implements AdapterInterface
 {

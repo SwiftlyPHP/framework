@@ -7,7 +7,7 @@ use Swiftly\Dependency\Container;
 /**
  * Interface for classes that can load dependencies from a file
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Interface LoaderInterface
 {

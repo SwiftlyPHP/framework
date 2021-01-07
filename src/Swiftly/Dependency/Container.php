@@ -10,7 +10,7 @@ use Swiftly\Dependency\{
 /**
  * Dependency management
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Container
 {

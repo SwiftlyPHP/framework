@@ -2,7 +2,7 @@
 /**
  * Utility functions
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 
 

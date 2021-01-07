@@ -5,7 +5,7 @@ namespace Swiftly\Console;
 /**
  * Provides utility methods for dealing with console output
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Output
 {

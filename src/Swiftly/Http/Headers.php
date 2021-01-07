@@ -5,7 +5,7 @@ namespace Swiftly\Http;
 /**
  * Utility container for managing HTTP headers
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Headers
 {

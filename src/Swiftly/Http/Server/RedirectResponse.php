@@ -7,7 +7,7 @@ use \Swiftly\Http\Headers;
 /**
  * Class used to redirect the client to a new resource
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class RedirectResponse Extends Response
 {

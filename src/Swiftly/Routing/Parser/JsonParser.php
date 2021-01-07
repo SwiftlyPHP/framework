@@ -7,7 +7,7 @@ use Swiftly\Routing\{ Route, ParserInterface };
 /**
  * Class responsible for loading routes from .json files
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class JsonParser Implements ParserInterface
 {

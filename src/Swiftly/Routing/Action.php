@@ -11,7 +11,7 @@ use Swiftly\Http\Server\Response;
 /**
  * Represents an action that can be called
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Action
 {

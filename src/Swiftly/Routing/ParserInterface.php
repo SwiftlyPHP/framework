@@ -5,7 +5,7 @@ namespace Swiftly\Routing;
 /**
  * Interface for classes that can parse the Swiftly route format
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Interface ParserInterface
 {

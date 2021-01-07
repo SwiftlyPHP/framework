@@ -7,7 +7,7 @@ use \Swiftly\Database\AdapterInterface;
 /**
  * Driver for PostgreSQL databases
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Postgres Implements AdapterInterface
 {

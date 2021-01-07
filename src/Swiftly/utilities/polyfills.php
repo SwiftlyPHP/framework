@@ -2,7 +2,7 @@
 /**
  * Provides polyfilled functions and interfaces
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 
 

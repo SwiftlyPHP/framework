@@ -11,7 +11,7 @@ use \Swiftly\Http\{
 /**
  * Class used to represent HTTP requests coming into the server
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Request
 {

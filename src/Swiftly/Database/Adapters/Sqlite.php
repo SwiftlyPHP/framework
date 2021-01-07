@@ -7,7 +7,7 @@ use \Swiftly\Database\AdapterInterface;
 /**
  * Driver for SQLite databases
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Sqlite Implements AdapterInterface
 {

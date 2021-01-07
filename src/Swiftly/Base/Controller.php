@@ -15,7 +15,7 @@ use \Swiftly\Http\Server\{
 /**
  * The abstract class all controllers should inherit
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Abstract Class Controller
 {

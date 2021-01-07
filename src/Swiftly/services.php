@@ -3,7 +3,7 @@
 /**
  * Provides some of the default services used by most web apps
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 
 return [

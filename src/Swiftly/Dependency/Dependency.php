@@ -7,7 +7,7 @@ use Swiftly\Dependency\Container;
 /**
  * Wraps a dependency in the dependency container
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Dependency
 {

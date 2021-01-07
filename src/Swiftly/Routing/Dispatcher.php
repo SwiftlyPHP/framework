@@ -8,7 +8,7 @@ use \Swiftly\Routing\{ Route, ParserInterface };
 /**
  * Handles dispatching of HTTP requests
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Dispatcher
 {

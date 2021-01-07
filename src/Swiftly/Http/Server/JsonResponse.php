@@ -7,7 +7,7 @@ use \Swiftly\Http\Headers;
 /**
  * Class used to send JSON responses to the client
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class JsonResponse Extends Response
 {

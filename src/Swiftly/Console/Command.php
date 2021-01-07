@@ -5,7 +5,7 @@ namespace Swiftly\Console;
 /**
  * Provides utility methods for dealing with console arguments
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Command
 {

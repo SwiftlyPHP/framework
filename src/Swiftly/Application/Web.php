@@ -24,7 +24,7 @@ use Swiftly\Database\{
 /**
  * The front controller for our web app
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Web
 {

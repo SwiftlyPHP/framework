@@ -10,7 +10,7 @@ use Swiftly\Dependency\{
 /**
  * Class used to load dependencies from a PHP file
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class PhpLoader Implements LoaderInterface
 {

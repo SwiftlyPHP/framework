@@ -5,7 +5,7 @@ namespace Swiftly\Template;
 /**
  * A null template
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Null Implements TemplateInterface
 {

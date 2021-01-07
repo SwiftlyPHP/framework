@@ -5,7 +5,7 @@ namespace Swiftly\Http;
 /**
  * Utility container for managing HTTP parameters
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Parameters
 {
