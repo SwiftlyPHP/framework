@@ -74,27 +74,4 @@ Class Config
 
         return \array_key_exists( $name, $this->settings );
     }
-
-    /**
-     * Create a config object from a JSON file
-     *
-     * @static
-     * @param string $filepath  Path to JSON file
-     * @return Config           Config object
-     */
-    public static function fromJson( string $filepath ) : Config
-    {
-        $values = [];
-
-        if ( \is_file( $filepath ) && ( $values = \file_get_contents( $filepath ) ) !== false ) {
-
-            $values = \json_decode( $values, true );
-
-            if ( \json_last_error() !== JSON_ERROR_NONE ) {
-                $values = [];
-            }
-        }
-
-        return ( new Config( $values ) );
-    }
 }
