@@ -15,4 +15,4 @@ RewriteBase /
 # If the user hasn't requested an existing file, send request to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !\.(css|js|png|jpe?g|gif|ttf|woff2)
-RewriteRule (.*) index.php?_route_=$1 [L,QSA]
+RewriteRule (.*) index.php [L,QSA]
