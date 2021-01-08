@@ -2,11 +2,17 @@
 
 namespace Swiftly\Dependency;
 
-use Swiftly\Dependency\{
-    Callback,
-    Container
-};
+use Swiftly\Dependency\Callback;
+use Swiftly\Dependency\Container;
+use ReflectionFunction;
+use ReflectionMethod;
+use ReflectionClass;
+use ReflectionFunctionAbstract;
 
+use function is_object;
+use function is_string;
+use function class_exists;
+use function call_user_func_array;
 
 /**
  * Wraps a dependency in the dependency container
@@ -90,12 +96,12 @@ Class Dependency
     public function resolve() // : ?object
     {
         // Already instantiated?
-        if ( \is_object( $this->resolved ) && $this->singleton ) {
+        if ( is_object( $this->resolved ) && $this->singleton ) {
             return $this->resolved;
         }
 
         // Might just be a class name?
-        if ( \is_string( $this->handler ) && \class_exists( $this->handler ) ) {
+        if ( is_string( $this->handler ) && class_exists( $this->handler ) ) {
             $this->resolved = $this->constructClass( $this->handler );
             return $this->resolved;
         }
@@ -133,11 +139,11 @@ Class Dependency
      */
     public function callFunction( callable $function ) // : mixed
     {
-        $reflected = new \ReflectionFunction( $function );
+        $reflected = new ReflectionFunction( $function );
 
         $arguments = $this->reflect( $reflected );
 
-        return \call_user_func_array( $function, $arguments );
+        return call_user_func_array( $function, $arguments );
     }
 
     /**
@@ -149,15 +155,15 @@ Class Dependency
      */
     public function callMethod( /* object */ $class, string $method ) // : mixed
     {
-        if ( !\is_object( $class ) ) {
+        if ( !is_object( $class ) ) {
             $class = $this->constructClass( $class );
         }
 
-        $function = new \ReflectionMethod( $class, $method );
+        $function = new ReflectionMethod( $class, $method );
 
         $arguments = $this->reflect( $function );
 
-        return \call_user_func_array([ $class, $method ], $arguments );
+        return call_user_func_array([ $class, $method ], $arguments );
     }
 
     /**
@@ -169,11 +175,11 @@ Class Dependency
      */
     public function callStatic( string $class, string $method ) // : mixed
     {
-        $function = new \ReflectionMethod( $class, $method );
+        $function = new ReflectionMethod( $class, $method );
 
         $arguments = $this->reflect( $function );
 
-        return \call_user_func_array([ $class, $method ], $arguments );
+        return call_user_func_array([ $class, $method ], $arguments );
     }
 
     /**
@@ -184,7 +190,7 @@ Class Dependency
     */
     public function constructClass( string $class ) // : ?object
     {
-        $class = new \ReflectionClass( $classname );
+        $class = new ReflectionClass( $classname );
         $constructor = $class->getConstructor();
 
         if ( $constructor !== null ) {
@@ -202,7 +208,7 @@ Class Dependency
      * @param ReflectionFunctionAbstract $reflection Reflected function
      * @return array                                 Function arguments
      */
-    private function reflect( \ReflectionFunctionAbstract $reflection ) : array
+    private function reflect( ReflectionFunctionAbstract $reflection ) : array
     {
         $arguments = [];
 
