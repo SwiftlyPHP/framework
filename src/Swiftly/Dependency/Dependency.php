@@ -123,7 +123,6 @@ Class Dependency
     {
         $result = null;
 
-        $type =
         if ( \is_callable( $this->implementation ) ) {
             $callback = $this->implementation;
             $result = $callback( $this->container );
@@ -181,7 +180,7 @@ Class Dependency
 
         // Static method or just uninitialised object?
         try {
-            $reflected = new \ReflectionMethod( $class, $name );
+            $reflected = new \ReflectionMethod( $class, $method );
         } catch ( \ReflectionException $e ) {
             return self::TYPE_INVALID;
         }
