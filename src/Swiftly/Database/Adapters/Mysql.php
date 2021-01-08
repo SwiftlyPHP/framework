@@ -21,14 +21,14 @@ Class Mysql Implements AdapterInterface
     /**
      * Handle to the MySQL DB
      *
-     * @var mysqli $handle DB handle
+     * @var mysqli|null $handle DB handle
      */
     private $handle = null;
 
     /**
      * Results of last query
      *
-     * @var mysqli_result $results Query results
+     * @var mysqli_result|null $results Query results
      */
     private $results = null;
 

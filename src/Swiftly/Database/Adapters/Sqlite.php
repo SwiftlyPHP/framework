@@ -2,7 +2,13 @@
 
 namespace Swiftly\Database\Adapters;
 
-use \Swiftly\Database\AdapterInterface;
+use Swiftly\Database\AdapterInterface;
+use SQLite3;
+use SQLite3Result;
+
+use const SQLITE3_OPEN_READWRITE;
+use const SQLITE3_OPEN_CREATE;
+use const SQLITE3_ASSOC;
 
 /**
  * Driver for SQLite databases
@@ -15,14 +21,14 @@ Class Sqlite Implements AdapterInterface
     /**
      * Handle to the Sqlite DB
      *
-     * @var \SQLite3 $handle Sqlite handle
+     * @var SQLite3|null $handle Sqlite handle
      */
-    private $handle;
+    private $handle = null;
 
     /**
      * Result of last query
      *
-     * @var \SQLite3Result $result Sqlite result
+     * @var SQLite3Result|null $result Sqlite result
      */
     private $result = null;
 
@@ -46,13 +52,13 @@ Class Sqlite Implements AdapterInterface
     /**
      * Opens the SQLite file
      *
-     * @return bool Opened successfully
+     * @return bool Opened successfully?
      */
     public function open() : bool
     {
-        $this->handle = new \SQLite3(
+        $this->handle = new SQLite3(
             $this->file,
-            \SQLITE3_OPEN_READWRITE | \SQLITE3_OPEN_CREATE
+            SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE
         );
 
         // Naive check to see if successfull
@@ -74,7 +80,7 @@ Class Sqlite Implements AdapterInterface
         }
 
         // Free memory
-        if ( !\is_null( $this->result ) ) {
+        if ( $this->result !== null ) {
             $this->result->finalize();
         }
 
@@ -91,7 +97,10 @@ Class Sqlite Implements AdapterInterface
      */
     public function getResult() : array
     {
-        return ( \is_null( $this->result ) ? [] : $this->result->fetchArray( \SQLITE3_ASSOC ) );
+        return ( $this->result !== null
+            ? $this->result->fetchArray( SQLITE3_ASSOC )
+            : []
+        );
     }
 
     /**
@@ -103,11 +112,11 @@ Class Sqlite Implements AdapterInterface
         $return = [];
 
         // Are there results to read?
-        if ( \is_null( $this->result ) || $this->result->numColumns() === 0 ) {
+        if ( $this->result === null || $this->result->numColumns() === 0 ) {
             return $return;
         }
 
-        while (( $result = $this->result->fetchArray( \SQLITE3_ASSOC ) )) {
+        while (( $result = $this->result->fetchArray( SQLITE3_ASSOC ) )) {
             $return[] = $result;
         }
 
@@ -130,7 +139,7 @@ Class Sqlite Implements AdapterInterface
     public function close() : void
     {
         // Free any stray result objects
-        if ( !\is_null( $this->result ) ) {
+        if ( $this->result !== null ) {
             $this->result->finalize();
         }
 
