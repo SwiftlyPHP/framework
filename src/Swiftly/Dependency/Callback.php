@@ -58,7 +58,7 @@ Class Callback
      * @param mixed $callable Callable variable
      * @return int            TYPE_* constant
      */
-    public static function inferType( $callback ) : int
+    public static function inferType( $callable ) : int
     {
         // Nice and easy!
         if ( $callable instanceof Closure ) {

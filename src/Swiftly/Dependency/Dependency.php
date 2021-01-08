@@ -111,15 +111,15 @@ Class Dependency
             case Callback::TYPE_CLOSURE:
             case Callback::TYPE_FUNCTION:
             case Callback::TYPE_INVOKABLE:
-                $this->resolved = $this->resolveFunction( $this->handler );
+                $this->resolved = $this->callFunction( $this->handler );
                 break;
 
             case Callback::TYPE_STATIC:
-                $this->resolved = $this->resolveStatic( ...$this->handler );
+                $this->resolved = $this->callStatic( ...$this->handler );
                 break;
 
             case Callback::TYPE_METHOD:
-                $this->resolved = $this->resolveMethod( ...$this->handler );
+                $this->resolved = $this->callMethod( ...$this->handler );
                 break;
 
             case Callback::TYPE_INVALID:
@@ -190,8 +190,8 @@ Class Dependency
     */
     public function constructClass( string $class ) // : ?object
     {
-        $class = new ReflectionClass( $classname );
-        $constructor = $class->getConstructor();
+        $reflected = new ReflectionClass( $class );
+        $constructor = $reflected->getConstructor();
 
         if ( $constructor !== null ) {
             $arguments = $this->reflect( $constructor );
@@ -199,7 +199,7 @@ Class Dependency
             $arguments = [];
         }
 
-        return $class->newInstanceArgs( $arguments );
+        return $reflected->newInstanceArgs( $arguments );
     }
 
     /**
@@ -221,6 +221,11 @@ Class Dependency
                 continue;
             } else {
                 $value = $this->container->resolve( $name );
+            }
+
+            // Backwards compat for older versions!
+            if ( $name === 'app' ) {
+                $value = $this->container;
             }
 
             $arguments[$parameter->getPosition()] = $value;
