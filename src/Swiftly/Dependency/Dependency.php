@@ -220,7 +220,7 @@ Class Dependency
             if ( $type === null || $type->isBuiltin() ) {
                 continue;
             } else {
-                $value = $this->container->resolve( $name );
+                $value = $this->container->resolve( $type->getName() );
             }
 
             // Backwards compat for older versions!
