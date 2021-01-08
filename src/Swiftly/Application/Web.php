@@ -2,7 +2,7 @@
 
 namespace Swiftly\Application;
 
-use Swiftly\Config\Config;
+use Swiftly\Config\Store;
 use Swiftly\Template\TemplateInterface;
 use Swiftly\Routing\Dispatcher;
 use Swiftly\Dependency\{
@@ -30,7 +30,7 @@ Class Web
 {
 
     /**
-     * @var Config $config Configuration values
+     * @var Store $config Configuration values
      */
     private $config;
 
@@ -42,9 +42,9 @@ Class Web
     /**
      * Create our application
      *
-     * @param Config $config Configuration values
+     * @param Store $config Configuration values
      */
-    public function __construct( Config $config )
+    public function __construct( Store $config )
     {
         $this->config = $config;
 
@@ -55,8 +55,8 @@ Class Web
         $this->dependencies->load( $services );
 
         // Bind this config
-        $this->dependencies->bind( Config::class, $config )->singleton( true );
-
+        $this->dependencies->bind( Store::class, $config )->singleton( true );
+        $this->dependencies->bind( Container::class, $this->dependencies )->singleton( true );
 
         // Register the appropriate database adapter
         if ( $config->has( 'database' ) ) {
