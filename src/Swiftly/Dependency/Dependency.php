@@ -44,11 +44,18 @@ Class Dependency
     private $resolved = null;
 
     /**
-    * Is this dependency a singleton?
-    *
-    * @var bool $singleton Is singleton?
-    */
-    private $singleton = false;
+     * Is this dependency a singleton?
+     *
+     * @var bool $singleton Is singleton?
+     */
+    private $singleton = true;
+
+    /**
+     * Post resolution callbacks
+     *
+     * @var callable[] $callbacks Callbacks
+     */
+    private $callbacks = [];
 
     /**
      * Creates a new dependency
@@ -84,6 +91,19 @@ Class Dependency
     public function alias( string $name ) : self
     {
         $this->container->alias( $name, $this );
+
+        return $this;
+    }
+
+    /**
+     * Register callback to be run after service resolution
+     *
+     * @param callable $callback Callback
+     * @return self              Allow chaining
+     */
+    public function then( callable $callback ) : self
+    {
+        $this->callbacks[] = $callback;
 
         return $this;
     }
@@ -126,6 +146,11 @@ Class Dependency
             default:
                 // Throw maybe?
                 break;
+        }
+
+        // TODO: Make the callback resolvable too!
+        foreach ( $this->callbacks as $callback ) {
+            $callback( $this->resolved );
         }
 
         return $this->resolved;

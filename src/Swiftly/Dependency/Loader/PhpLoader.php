@@ -69,9 +69,12 @@ Class PhpLoader Implements LoaderInterface
                 $implementation = $name;
             }
 
+            // Singleton by default!
+            $singleton = !( isset( $options['singleton'] ) && empty( $options['singleton'] ) );
+
             // Add them to the container
             $dependency = $container->bind( $name, $implementation );
-            $dependency->singleton( !empty( $options['singleton'] ) );
+            $dependency->singleton( $singleton );
         }
 
         return;

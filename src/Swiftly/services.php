@@ -9,25 +9,17 @@
 return [
 
     // HTTP services
-    Swiftly\Http\Server\RequestFactory::class => [
-        'singleton' => true
-    ],
+    Swiftly\Http\Server\RequestFactory::class => Swiftly\Http\Server\RequestFactory::class,
     Swiftly\Http\Server\Request::class => [
-        'singleton' => true,
         'handler'   => [ Swiftly\Http\Server\RequestFactory::class, "fromGlobals" ]
     ],
-    Swiftly\Http\Server\Response::class => [
-        'singleton' => true
-    ],
+    Swiftly\Http\Server\Response::class => Swiftly\Http\Server\Response::class,
 
     // Database
-    // TODO: Bind correct adapter
     Swiftly\Database\Database::class => [
-        'singleton' => true,
         'handler'   => function ( Swiftly\Dependency\AdapterInterface $db ) {
             $database = new Swiftly\Database\Database( $db );
             $database->open();
-
             return $database;
         }
     ],
@@ -37,7 +29,5 @@ return [
 
     // Route parser
     Swiftly\Routing\ParserInterface::class => Swiftly\Routing\Parser\JsonParser::class,
-    Swiftly\Routing\Dispatcher::class => [
-        'singleton' => true
-    ]
+    Swiftly\Routing\Dispatcher::class => Swiftly\Routing\Dispatcher::class
 ];
