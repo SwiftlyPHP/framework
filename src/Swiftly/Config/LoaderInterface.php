@@ -2,10 +2,10 @@
 
 namespace Swiftly\Config;
 
-use Swiftly\Config\Config;
+use Swiftly\Config\Store;
 
 /**
- * Interface for classes that can load config values.
+ * Interface for classes that can parse config files
  *
  * @author clvarley
  */
@@ -15,9 +15,11 @@ Interface LoaderInterface
     /**
      * Load values into the given config
      *
-     * @param Config $config Config object
-     * @return void          Config object
+     * Expected to return the same store object to allow method chaining.
+     *
+     * @param Store $config Config store
+     * @return Store        Updated store
      */
-    public function load( Config $config ) : Config;
+    public function load( Store $config ) : Store;
 
 }

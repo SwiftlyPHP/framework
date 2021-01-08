@@ -3,12 +3,21 @@
 namespace Swiftly\Config\Loader;
 
 use Swiftly\Config\{
-    Config,
-    LoaderInterface
+    LoaderInterface,
+    Store
 };
 
+use function is_string;
+use function is_array;
+use function is_readable;
+use function file_get_contents;
+use function json_decode;
+use function json_last_error;
+
+use const JSON_ERROR_NONE;
+
 /**
- * Loads config values from JSON files
+ * Class for loading and parsing json config files
  *
  * @author clvarley
  */
@@ -16,92 +25,105 @@ Class JsonLoader Implements LoaderInterface
 {
 
     /**
-     * Path to the JSON config file
+     * Path to the config JSON file
      *
-     * @var string $filepath File path
+     * @var string $filename File path
      */
-    private $filepath;
+    protected $filename;
 
     /**
-     * Prepares the given file for loading
+     * Name of the current group being parsed
      *
-     * @param string $filepath File path
+     * Used to track the group name during recursive calls to the
+     * {@see JsonLoader::parse} method.
+     *
+     * @internal
+     * @var string $groupname Group name
      */
-    public function __construct( string $filepath )
+    private $groupname = '';
+
+    /**
+     * Creates a loader for the given config file
+     *
+     * @param string $filename File path
+     */
+    public function __construct( string $filename )
     {
-        $this->filepath = $filepath;
+        $this->filename = $filename;
     }
 
     /**
-     * Loads the JSON into the config object
+     * Loads values from the JSON file into the given store
      *
-     * @param Config $config Config object
-     * @return Config        Updated config
+     * @param Store $config Config store
+     * @return Store        Updated store
      */
-    public function load( Config $config ) : Config
+    public function load( Store $config ) : Store
     {
-        $json = $this->getJson();
+        $json = $this->json();
 
+        // Nothing to do!
         if ( empty( $json ) ) {
             return $config;
         }
 
-        $this->parse( '', $json, $config );
+        $this->parse( $json, $config );
 
         return $config;
     }
 
     /**
-     * Parse our custom config structure and strip out values
+     * Recursively parse the values into the store
      *
-     * @param string $name   Setting name
-     * @param mixed $data    Setting value
-     * @param Config $config Config object
-     * @return void          N/a
+     * @param array $values Config values
+     * @param Store $config Config store
+     * @return void         N/a
      */
-    public function parse( string $name, /* mixed */ $data, Config $config ) : void
+    private function parse( array $values, Store $config ) : void
     {
-        if ( !\is_array( $data ) ) {
-            $data = [ $data ];
-        }
+        $previous = $this->groupname;
 
-        foreach ( $data as $index => $value ) {
-            $index = \is_string( $index ) ? $index : '';
-
-            if ( !empty( $name ) ) {
-              $index = "$name.$index";
+        foreach ( $values as $name => $value ) {
+            // Already inside a group?
+            if ( !empty( $previous ) ) {
+                $name = "$previous.$name";
             }
 
-            // Recurse if array
-            if ( \is_array( $value ) ) {
-                $this->parse( $index, $value, $config );
+            $this->groupname = $name;
+
+            // Recurse if required
+            if ( is_array( $value ) ) {
+                $this->parse( $value, $config );
             }
 
-            $config->set( $index, $value );
+            $config->set( $this->groupname, $value );
         }
+
+        // Reset
+        $this->groupname = $previous;
 
         return;
     }
 
     /**
-     * Attempts to load the JSON file
+     * Attempt to load the JSON file
      *
      * @return array JSON data
      */
-    private function getJson() : array
+    private function json() : array
     {
-        if ( !\is_readable( $this->filepath ) ) {
+        if ( !is_readable( $this->filename ) ) {
             return [];
         }
 
+        $content = (string)file_get_contents( $this->filename );
+        $content = json_decode( $content, true );
 
-        $contents = (string)\file_get_contents( $this->filepath );
-        $contents = \json_decode( $contents, true );
-
-        if ( empty( $contents ) || \json_last_error() !== \JSON_ERROR_NONE ) {
+        // Parse error?
+        if ( !is_array( $content ) || json_last_error() !== JSON_ERROR_NONE ) {
             return [];
         }
 
-        return $contents;
+        return $content;
     }
 }

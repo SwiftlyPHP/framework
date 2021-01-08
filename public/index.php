@@ -38,8 +38,8 @@ $autoloader->addPrefix( 'Swiftly', APP_SWIFTLY );
 
 
 // Load the config
-$config = ( new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . 'app.json' ) )->load(
-    new Swiftly\Config\Config
+$config = ( new Swiftly\Config\Store )->load(
+    new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . 'app.json' )
 );
 
 
