@@ -9,6 +9,7 @@ use ReflectionMethod;
 use ReflectionClass;
 use ReflectionFunctionAbstract;
 
+use function array_merge;
 use function is_object;
 use function is_string;
 use function class_exists;
@@ -35,6 +36,13 @@ Class Dependency
      * @var callable|string $handler Dependency handler
      */
     private $handler;
+
+    /**
+     * Function arguments to be used during dependency resolution
+     *
+     * @var mixed[] $arguments Resolution arguments
+     */
+    private $arguments = [];
 
     /**
      * Cached resolved dependency
@@ -91,6 +99,22 @@ Class Dependency
     public function alias( string $name ) : self
     {
         $this->container->alias( $name, $this );
+
+        return $this;
+    }
+
+    /**
+     * Sets named arguments to be used during resolution
+     *
+     * @param array $arguments Constructor arguments
+     * @return self            Allow chaining
+     */
+    public function arguments( array $arguments ) : self
+    {
+        $this->arguments = array_merge(
+            $this->arguments,
+            $arguments
+        );
 
         return $this;
     }
@@ -241,9 +265,8 @@ Class Dependency
             $type = $parameter->getType();
             $name = $parameter->getName();
 
-            // TODO: Allow arbitrary param types
             if ( $type === null || $type->isBuiltin() ) {
-                continue;
+                $value = $this->arguments[$name] ?? null;
             } else {
                 $value = $this->container->resolve( $type->getName() );
             }
@@ -251,6 +274,11 @@ Class Dependency
             // Backwards compat for older versions!
             if ( $name === 'app' ) {
                 $value = $this->container;
+            }
+
+            // One last try for a value
+            if ( $value === null && $parameter->isDefaultValueAvailable() ) {
+                $value = $parameter->getDefaultValue();
             }
 
             $arguments[$parameter->getPosition()] = $value;

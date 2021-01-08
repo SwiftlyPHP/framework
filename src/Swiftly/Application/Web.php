@@ -55,8 +55,8 @@ Class Web
         $this->dependencies->load( $services );
 
         // Bind this config
-        $this->dependencies->bind( Store::class, $config )->singleton( true );
-        $this->dependencies->bind( Container::class, $this->dependencies )->singleton( true );
+        $this->dependencies->bind( Store::class, $config );
+        $this->dependencies->bind( Container::class, $this->dependencies );
 
         // Register the appropriate database adapter
         if ( $config->has( 'database' ) ) {
@@ -122,6 +122,7 @@ Class Web
             case 'sqlite':
                 $adapter = Sqlite::class;
                 break;
+                
             case 'postgres':
             case 'postgresql':
                 $adapter = Postgres::class;
