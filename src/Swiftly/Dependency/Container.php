@@ -74,7 +74,7 @@ Class Container
         $result = null;
 
         if ( isset( $this->services[$name] ) ) {
-            $result = $this->services[$name]->resolve( $this );
+            $result = $this->services[$name]->resolve();
         }
 
         return $result;

@@ -2,8 +2,11 @@
 
 namespace Swiftly\Dependency;
 
-use Swiftly\Dependency\Container;
-use Closure;
+use Swiftly\Dependency\{
+    Callback,
+    Container
+};
+
 
 /**
  * Wraps a dependency in the dependency container
@@ -21,11 +24,18 @@ Class Dependency
     private $container;
 
     /**
-     * Actual implementation of this dependency
+     * Handler used to construct this dependency
      *
-     * @var callable|object $implementation Dependency implementation
+     * @var callable|string $handler Dependency handler
      */
-    private $implementation;
+    private $handler;
+
+    /**
+     * Cached resolved dependency
+     *
+     * @var object|null $resolved Resolved dependency
+     */
+    private $resolved = null;
 
     /**
     * Is this dependency a singleton?
@@ -37,12 +47,12 @@ Class Dependency
     /**
      * Creates a new dependency
      *
-     * @param callable|object $implementation Implementation
-     * @param Container $container            Dependency container
+     * @param callable|object $handler Dependency handler
+     * @param Container $container     Dependency container
      */
-    public function __construct( $implementation, Container $container )
+    public function __construct( $handler, Container $container )
     {
-        $this->implementation = $implementation;
+        $this->handler = $handler;
         $this->container = $container;
     }
 
@@ -73,66 +83,143 @@ Class Dependency
     }
 
     /**
-     * Resolve this dependency
+     * Attempt to resolve this dependency
      *
-     * @return object Resolved dependency
+     * @return object|null Resolved dependency
      */
-    public function resolve() /* : object */
+    public function resolve() // : ?object
     {
-        $result = null;
-
-        if ( \is_callable( $this->implementation ) ) {
-            $callback = $this->implementation;
-            $result = $callback( $this->container );
-        } elseif ( \is_object( $this->implementation ) ) {
-            $result = $this->implementation;
-        } elseif ( \is_string( $this->implementation ) && \class_exists( $this->implementation ) ) {
-            $result = $this->initialize( $this->implementation );
+        // Already instantiated?
+        if ( \is_object( $this->resolved ) && $this->singleton ) {
+            return $this->resolved;
         }
 
-        if ( $this->singleton ) {
-            $this->implementation = $result;
-            $this->singleton = false;
+        // Might just be a class name?
+        if ( \is_string( $this->handler ) && \class_exists( $this->handler ) ) {
+            $this->resolved = $this->constructClass( $this->handler );
+            return $this->resolved;
         }
 
-        return $result;
+        // Try to figure it out!
+        switch ( Callback::inferType( $this->handler ) ) {
+            case Callback::TYPE_CLOSURE:
+            case Callback::TYPE_FUNCTION:
+            case Callback::TYPE_INVOKABLE:
+                $this->resolved = $this->resolveFunction( $this->handler );
+                break;
+
+            case Callback::TYPE_STATIC:
+                $this->resolved = $this->resolveStatic( ...$this->handler );
+                break;
+
+            case Callback::TYPE_METHOD:
+                $this->resolved = $this->resolveMethod( ...$this->handler );
+                break;
+
+            case Callback::TYPE_INVALID:
+            default:
+                // Throw maybe?
+                break;
+        }
+
+        return $this->resolved;
     }
 
     /**
-     * Resolves arameters of an object constructor and creates an object
+     * Attempts to resolve and call a standard function
      *
-     * @param string $class Class name
-     * @return object       Initialized object
+     * @param callable $function Function
+     * @return void              Function return value
      */
-    private function initialize( string $class ) /* :object */
+    public function callFunction( callable $function ) // : mixed
     {
-        $constructor = ( new \ReflectionClass( $class ) )->getConstructor();
+        $reflected = new \ReflectionFunction( $function );
 
-        // No constructor
-        if ( empty( $constructor ) ) {
-            return ( new $class );
+        $arguments = $this->reflect( $reflected );
+
+        return \call_user_func_array( $function, $arguments );
+    }
+
+    /**
+     * Attempts to resolve and call a class method
+     *
+     * @param object $class  Class object
+     * @param string $method Method name
+     * @return mixed         Method return value
+     */
+    public function callMethod( /* object */ $class, string $method ) // : mixed
+    {
+        if ( !\is_object( $class ) ) {
+            $class = $this->constructClass( $class );
         }
 
-        // TODO: Needs a tidy
+        $function = new \ReflectionMethod( $class, $method );
 
+        $arguments = $this->reflect( $function );
+
+        return \call_user_func_array([ $class, $method ], $arguments );
+    }
+
+    /**
+     * Attempts to resolve and call a static method
+     *
+     * @param string $class  Class name
+     * @param string $method Method name
+     * @return mixed         Static return value
+     */
+    public function callStatic( string $class, string $method ) // : mixed
+    {
+        $function = new \ReflectionMethod( $class, $method );
+
+        $arguments = $this->reflect( $function );
+
+        return \call_user_func_array([ $class, $method ], $arguments );
+    }
+
+    /**
+    * Attempts to construct the given class
+    *
+    * @param string $class Class name
+    * @return object|null  Instantiated object
+    */
+    public function constructClass( string $class ) // : ?object
+    {
+        $class = new \ReflectionClass( $classname );
+        $constructor = $class->getConstructor();
+
+        if ( $constructor !== null ) {
+            $arguments = $this->reflect( $constructor );
+        } else {
+            $arguments = [];
+        }
+
+        return $class->newInstanceArgs( $arguments );
+    }
+
+    /**
+     * Returns the arguments for this function/method
+     *
+     * @param ReflectionFunctionAbstract $reflection Reflected function
+     * @return array                                 Function arguments
+     */
+    private function reflect( \ReflectionFunctionAbstract $reflection ) : array
+    {
         $arguments = [];
 
-        foreach ( $constructor->getParameters() as $param ) {
-            $value = null;
+        foreach ( $reflection->getParameters() as $parameter ) {
+            $type = $parameter->getType();
+            $name = $parameter->getName();
 
-            $type = $param->getType();
-
-            if ( !$type->isBuiltin() ) {
-                $value = $this->container->resolve( $type->getName() );
+            // TODO: Allow arbitrary param types
+            if ( $type === null || $type->isBuiltin() ) {
+                continue;
+            } else {
+                $value = $this->container->resolve( $name );
             }
 
-            if ( $value === null && $param->isOptional() ) {
-                $value = $param->getDefaultValue();
-            }
-
-            $arguments[$param->getPosition()] = $value;
+            $arguments[$parameter->getPosition()] = $value;
         }
 
-        return ( new $class( ...$arguments ) );
+        return $arguments;
     }
 }
