@@ -40,11 +40,11 @@ Abstract Class Controller
      *
      * @param Container $container Dependency manager
      */
-    public function __construct( Container $container )
+    public function __construct( Container $container, TemplateInterface $renderer )
     {
         $this->dependencies = $container;
+        $this->renderer = $renderer;
     }
-
 
     /**
      * Provide access to services
@@ -55,16 +55,6 @@ Abstract Class Controller
     public function getService( string $name )
     {
         return $this->dependencies->resolve( $name );
-    }
-
-    /**
-     * Sets the object that will be used for rendering
-     *
-     * @param TemplateInterface $renderer Template renderer
-     */
-    public function setRenderer( TemplateInterface $renderer ) : void
-    {
-        $this->renderer = $renderer;
     }
 
     /**
@@ -99,7 +89,7 @@ Abstract Class Controller
             include $file;
 
             if ( \class_exists( $name ) ) {
-                $this->dependencies->bind( $name, $name )->singleton( true );
+                $this->dependencies->bind( $name, $name );
                 $result = $this->dependencies->resolve( $name );
             }
         }

@@ -7,6 +7,7 @@ use Swiftly\Template\TemplateInterface;
 use Swiftly\Routing\Dispatcher;
 use Swiftly\Dependency\{
     Container,
+    Dependency,
     Loader\PhpLoader
 };
 use Swiftly\Http\Server\{
@@ -83,23 +84,23 @@ Class Web
             $router->load( APP_CONFIG . 'routes.json' );
         }
 
-        $action = $router->dispatch( $request );
+        // Match URL to defined route
+        $route = $router->dispatch(
+            $request->getMethod(),
+            $request->getPath()
+        );
 
-        // Did we return a callable route?
-        if ( \is_null( $action ) || !$action->prepare( $this->dependencies ) ) {
+        if ( $route !== null ) {
+            $controller = new Dependency( $route->callable, $this->dependencies );
+            $controller->arguments( $route->args );
 
+            // Get the Response object
+            $response = $controller->resolve();
+        }
+
+        // No choice but to 404
+        if ( empty( $response ) || !$response instanceof Response ) {
             $response = new Response( '', 404 );
-
-        } else {
-
-            $action->getController()->setRenderer( $this->dependencies->resolve( TemplateInterface::class ) );
-
-            // Execute the request
-            $response = $action->execute( $this->dependencies );
-
-            if ( $response === null ) {
-                $response = new Response( '', 404 );
-            }
         }
 
         // Send the response and end!
@@ -122,7 +123,7 @@ Class Web
             case 'sqlite':
                 $adapter = Sqlite::class;
                 break;
-                
+
             case 'postgres':
             case 'postgresql':
                 $adapter = Postgres::class;
@@ -136,9 +137,9 @@ Class Web
         }
 
         // Bind the adapter
-        $services->bind( AdapterInterface::class, function () use (&$config, $adapter) {
-            return new $adapter( $config );
-        });
+        $services->bind( AdapterInterface::class, $adapter )->arguments([
+            'options' => $config
+        ]);
 
         return;
     }

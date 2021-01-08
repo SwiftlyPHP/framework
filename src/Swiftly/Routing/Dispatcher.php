@@ -2,11 +2,20 @@
 
 namespace Swiftly\Routing;
 
-use \Swiftly\Http\Server\Request;
-use \Swiftly\Routing\{ Route, ParserInterface };
+use Swiftly\Routing\{
+    Route,
+    ParserInterface,
+    CollectionInterface
+};
+
+use function rtrim;
+use function in_array;
+use function preg_match_all;
+
+use const PREG_SET_ORDER;
 
 /**
- * Handles dispatching of HTTP requests
+ * Simple regex dispatcher
  *
  * @author clvarley
  */
@@ -16,41 +25,36 @@ Class Dispatcher
     /**
      * The route file parser to use
      *
-     * @var \Swiftly\Routing\ParserInterface $parser Route parser
+     * @var ParserInterface $parser Route parser
      */
-    private $parser = null;
+    private $parser;
 
     /**
-     * The compiled regex for each method
+     * Collection of routes
      *
-     * @var array $compiled Regular expressions
+     * @var CollectionInterface|null $routes Route collection
      */
-    private $compiled = [];
-
-    /**
-     * The routes for this router
-     *
-     * @var \Swiftly\Routing\Route[] $routes Route definitions
-     */
-    private $routes = [];
+    private $routes = null;
 
     /**
      * HTTP methods supported by this router
      *
-     * @var array ALLOWED_METHODS HTTP methods
+     * @var string[] ALLOWED_METHODS HTTP methods
      */
     private const ALLOWED_METHODS = [
+        'OPTIONS',
+        'HEAD',
         'GET',
         'POST',
         'PUT',
-        'UPDATE',
+        'PATCH',
         'DELETE'
     ];
 
     /**
      * Create a new router specifying the parser to use
      *
-     * @param \Swiftly\Routing\ParserInterface $parser Route parser
+     * @param ParserInterface $parser Route parser
      */
     public function __construct( ParserInterface $parser )
     {
@@ -58,24 +62,11 @@ Class Dispatcher
     }
 
     /**
-     * Gets a route definition by name
-     *
-     * Returns null if the given route does not exist
-     *
-     * @param  string $name Route name
-     * @return Route|null   Route definition
-     */
-    public function getRoute( string $name ) : ?Route
-    {
-        return $this->routes[ $name ] ?? null;
-    }
-
-    /**
      * Gets all the registered routes
      *
-     * @return Route[] Route definitions
+     * @return CollectionInterface|null Route definitions
      */
-    public function getRoutes() : array
+    public function getRoutes() : ?CollectionInterface
     {
         return $this->routes;
     }
@@ -83,79 +74,51 @@ Class Dispatcher
     /**
      * Loads the given routes file
      *
-     * @var string $filename  File path
+     * @var string $filename File path
      */
     public function load( string $filename ) : void
     {
-        $this->routes = $this->parser->parseFile( $filename );
+        $this->routes = $this->parser->parse( $filename );
     }
 
     /**
      * Returns all the routes that match the path
      *
-     * @param \Swiftly\Http\Server\Request $request HTTP request
-     * @return \Swiftly\Routing\Action|null         Action
+     * @param string $method HTTP method
+     * @param string $path   URL path
+     * @return Route|null    Route definition
      */
-    public function dispatch( Request $request ) : ?Action
+    public function dispatch( string $method, string $path ) : ?Route
     {
-        $method = $request->getMethod();
-
-        if ( !\in_array( $method, self::ALLOWED_METHODS ) ) {
-            $method = 'GET';
-        }
-
-        $path = \rtrim( $request->query->asString( '_route_' ), " \n\r\t\0\x0B\\/" );
+        $path = rtrim( $path, " \n\r\t\0\x0B\\/" );
 
         if ( empty( $path ) ) {
             $path = '/';
         }
 
-        // Compile the regex
-        if ( !isset( $this->compiled[$method] ) ) {
-            $this->compile( $method );
+        if ( !in_array( $method, self::ALLOWED_METHODS ) ) {
+            $method = 'GET';
         }
 
-        if ( !\preg_match_all( $this->compiled[$method], $path, $matches, \PREG_SET_ORDER ) ) {
+        // Compile the regex
+        $regex = $this->routes->compile( $method );
+
+        if ( !preg_match_all( $regex, $path, $matches, PREG_SET_ORDER ) ) {
             return null;
         }
 
-        $route = $this->routes[$matches[0]['MARK']];
-
-        $args = [];
+        // Get the named route
+        $route = $this->routes->get( $matches[0]['MARK'] );
 
         // Handle params (if any)
-        foreach ( $route->arguments as $index => $param ) {
-            $args[$param['name']] = $matches[0][$index + 1] ?? null;
+        $args = [];
+
+        foreach ( $route->args as $index => $param ) {
+            $args[$param] = $matches[0][$index + 1] ?? null;
         }
 
-        return new Action(
-            $route->class,
-            $route->method,
-            $args
-        );
-    }
+        $route->args = $args;
 
-    /**
-     * Compiles the regex for this method
-     *
-     * @param string $method  HTTP method
-     * @return void           N/a
-     */
-    private function compile( string $method ) : void
-    {
-        $regexes = [];
-
-        // Only routes that support the method
-        foreach ( $this->routes as $name => $route ) {
-            if ( !\in_array( $method, $route->http_methods ) ) {
-                continue;
-            }
-
-            $regexes[] = '(?>' . $route->regex . '(*:' . $name . '))';
-        }
-
-        $this->compiled[$method] = '~^(?|' . \implode( '|', $regexes ) . ')$~ixX';
-
-        return;
+        return $route;
     }
 }

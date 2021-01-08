@@ -3,7 +3,7 @@
 namespace Swiftly\Routing;
 
 /**
- * P.O.D used to represent a single route
+ * Simple class used to represent a single route
  *
  * @author clvarley
  */
@@ -11,7 +11,14 @@ Class Route
 {
 
     /**
-     * Regex used to match against this route
+     * The name of this route
+     *
+     * @var string $name Route name
+     */
+    public $name = '';
+
+    /**
+     * The regex used to match this route
      *
      * @var string $regex Route regex
      */
@@ -20,29 +27,22 @@ Class Route
     /**
      * Allowed HTTP methods for this route
      *
-     * @var array $http_methods Allowed methods
+     * @var string[] $methods HTTP methods
      */
-    public $http_methods = [];
+    public $methods = [];
 
     /**
-     * Class for this route
+     * Arguments to be passed to the controller
      *
-     * @var string $class Class name
+     * @var array $args Route arguments
      */
-    public $class = '';
+    public $args = [];
 
     /**
-     * Class method to be called
+     * The controller used to handle this route
      *
-     * @var string $method Method name
+     * @var callable|null $callable Route controller
      */
-    public $method = '';
-
-    /**
-     * Optional route arguments
-     *
-     * @var array $arguments Route args
-     */
-    public $arguments = [];
+    public $callable = null;
 
 }

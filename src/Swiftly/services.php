@@ -11,7 +11,7 @@ return [
     // HTTP services
     Swiftly\Http\Server\RequestFactory::class => Swiftly\Http\Server\RequestFactory::class,
     Swiftly\Http\Server\Request::class => [
-        'handler'   => [ Swiftly\Http\Server\RequestFactory::class, "fromGlobals" ]
+        'handler' => [ Swiftly\Http\Server\RequestFactory::class, "fromGlobals" ]
     ],
     Swiftly\Http\Server\Response::class => Swiftly\Http\Server\Response::class,
 

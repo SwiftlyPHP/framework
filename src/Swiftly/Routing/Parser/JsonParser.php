@@ -2,7 +2,26 @@
 
 namespace Swiftly\Routing\Parser;
 
-use Swiftly\Routing\{ Route, ParserInterface };
+use Swiftly\Routing\{
+    Collection\RouteCollection,
+    CollectionInterface,
+    ParserInterface,
+    Route
+};
+
+use function file_exists;
+use function file_get_contents;
+use function json_decode;
+use function json_last_error;
+use function is_array;
+use function array_intersect;
+use function rtrim;
+use function preg_match_all;
+use function preg_quote;
+
+use const JSON_ERROR_NONE;
+use const PREG_SET_ORDER;
+use const PREG_OFFSET_CAPTURE;
 
 /**
  * Class responsible for loading routes from .json files
@@ -15,9 +34,9 @@ Class JsonParser Implements ParserInterface
     /**
      * Allowed HTTP methods
      *
-     * @var array HTTP_METHODS HTTP verbs
+     * @var string[] HTTP_METHODS HTTP verbs
      */
-    private const HTTP_METHODS = [
+    const HTTP_METHODS = [
         'GET',
         'POST',
         'PUT',
@@ -35,124 +54,107 @@ Class JsonParser Implements ParserInterface
     /**
      * Parse the given json routes file
      *
-     * @param  string $filename Routes file
-     * @return array            Parsed routes
+     * @param string $filename Path to file
+     * @return RouteCollection Route collection
      */
-    public function parseFile( string $filename ) : array
+    public function parse( string $filename ) : CollectionInterface
     {
-        $content = \file_get_contents( $filename ) ?: '';
+        $routes = new RouteCollection();
 
-        // No content, bail early
-        if ( empty( $content ) ) {
-            return [];
+        $json = $this->loadJson( $filename );
+
+        // Nothing to do
+        if ( empty( $json ) ) {
+            return $routes;
         }
 
-        $content = \json_decode( $content, true, 4 );
-
-        if ( $content === null || \json_last_error() !== \JSON_ERROR_NONE ) {
-            return [];
-        }
-
-        $parsed_routes = [];
-
-        // Build the routes
-        foreach ( $content as $name => $route ) {
-
-            // If the name is already in use
-            if ( empty( $name ) || isset( $parsed_routes[$name] ) ) {
-                $name = \uniqid( $name ?: '_' );
-            }
-
-            // Invalid, skip this one!
-            if ( !\is_array( $route ) || empty( $route ) ) {
+        foreach ( $json as $name => $contents ) {
+            if ( empty( $contents['path'] ) || empty( $contents['handler'] ) ) {
                 continue;
             }
 
-            $parsed_routes[$name] = $this->convert( $route );
+            // Create route definition struct
+            $route = $this->convert( $contents );
+            $route->name = $name;
+
+            $routes->add( $name, $route );
         }
 
-        return $parsed_routes;
+        return $routes;
     }
 
     /**
-     * Converts the file route definition into a standardised format
+     * Attempts to load the given JSON file
      *
-     * @param  array $route Route file definition
-     * @return Route        Standardised definition
+     * @param string $filename JSON file
+     * @return array           JSON data
      */
-    private function convert( array $route ) : Route
+    private function loadJson( string $filename ) : array
     {
-        $standard = new Route;
-
-        // Get the method
-        if ( !empty( $route['methods'] ) ) {
-
-            if ( \is_array( $route['methods'] ) ) {
-                $methods = $route['methods'];
-            } else {
-                $methods = [ $route['methods'] ];
-            }
-
-            $methods = \array_map( '\strtoupper', $methods );
-
-            // Strip out invalid methods
-            $methods = \array_intersect( self::HTTP_METHODS, $methods );
-
-            $standard->http_methods = ( $methods ?: [ 'GET' ] );
-        } else {
-            $standard->http_methods = [ 'GET' ];
+        if ( !file_exists( $filename ) ) {
+            return [];
         }
 
-        // Get the path
-        if ( empty( $route['path'] ) || !\is_string( $route['path'] ) ) {
-            // TODO: Logic to handle this
-        } else {
-            $standard->regex = $this->parseRoute( $route['path'], $standard->arguments );
+        $raw = file_get_contents( $filename );
+
+        // Nothing here, exit out
+        if ( empty( $raw ) ) {
+            return [];
         }
 
-        // Get the controller
-        if ( empty( $route['handler'] ) || !\is_string( $route['handler'] ) ) {
-            // TODO: Logic to handle this
-        }
+        $json = json_decode( $raw, true, 4 );
 
-        $handler = \explode( '::', $route['handler'] );
-
-        // If no method, default to `index()`
-        if ( empty( $handler[1] ) ) {
-            $handler[1] = 'index';
-        }
-
-        $standard->class = $handler[0];
-        $standard->method = $handler[1];
-
-        return $standard;
+        return json_last_error() === \JSON_ERROR_NONE ? $json : [];
     }
 
     /**
-     * Parse the given route and build the neccessary regex
+     * Converts the JSON array into a Route object
      *
-     * The args parameter will be filled with the details of any arguments
-     * this route takes
-     *
-     * @param  string $route  Route path
-     * @param  array  $args   Route arguments
-     * @return string         Regular expression
+     * @param array $route Route JSON
+     * @return Route       Route definition
      */
-    private function parseRoute( string $route, &$args = [] ) : string
+    private function convert( array $json ) : Route
     {
-        $route = \rtrim( $route, " \n\r\t\0\x0B\\/" );
+        $route = new Route;
+
+        // Parse regex
+        $route->regex = $this->compileRegex( $json['path'], $route );
+
+        // Allowed HTTP verbs only
+        if ( !empty( $json['methods'] ) && is_array( $json['methods'] ) ) {
+            $route->methods = array_intersect( $json['methods'], self::HTTP_METHODS );
+        } else {
+            $route->methods = [ 'GET' ];
+        }
+
+        // Controller/handler function
+        $route->callable = explode( '::', $json['handler'] );
+
+        return $route;
+    }
+
+    /**
+     * Parse route and build the neccessary regex
+     *
+     * @param string $path Route path
+     * @param Route $route Current route
+     * @return string      Compiled regex
+     */
+    private function compileRegex( string $path, Route $route ) : string
+    {
+        $path = rtrim( $path, " \n\r\t\0\x0B\\/" );
 
         // No route, assume root
-        if ( empty( $route ) ) {
+        if ( empty( $path ) ) {
             return '/';
         }
 
-        // Route placeholders?
-        if ( !\preg_match_all( self::ROUTE_REGEX, $route, $matches, \PREG_SET_ORDER | \PREG_OFFSET_CAPTURE ) ) {
-            return $route;
+        // Gather any route placeholders?
+        if ( !preg_match_all( self::ROUTE_REGEX, $path, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE ) ) {
+            $path;
         }
 
-        $route = '';
+        $regex = '';
 
         /**
          * Reference:
@@ -162,40 +164,31 @@ Class JsonParser Implements ParserInterface
          * $match['type'] - The type of the placeholder
          */
         foreach ( $matches as $match ) {
-
             if ( empty( $match['name'] ) ) {
-                $route .= \preg_quote( $match[0][0] );
+                $regex .= preg_quote( $match[0][0] );
                 continue;
             }
 
             // Atomic groups were messing with names :(
-            $regex = '(';
+            $regex .= '(';
 
             // Use appropriate regex
             switch ( $match['type'][0] ) {
                 case 'i':
                     $regex .= '\d+';
-                break;
+                    break;
 
                 case 's':
                 default:
                     $regex .= '[a-zA-Z0-9-_]+';
-                break;
+                    break;
             }
 
             $regex .= ')';
 
-            // Register the param
-            $args[] = [
-                'name'    => $match['name'][0],
-                'offset'  => \strlen( $route ),
-                'length'  => \strlen( $regex ),
-                'type'    => $match['type'][0] ?: 's'
-            ];
-
-            $route .= $regex;
+            $route->args[] = $match['name'][0];
         }
 
-        return $route;
+        return $regex;
     }
 }

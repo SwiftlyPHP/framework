@@ -169,6 +169,9 @@ Class Dependency
             case Callback::TYPE_INVALID:
             default:
                 // Throw maybe?
+                if ( is_object( $this->handler ) ) {
+                    $this->resolved = $this->handler;
+                }
                 break;
         }
 
