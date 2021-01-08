@@ -88,6 +88,8 @@ Class Store
      */
     public function has( string $key ) : bool
     {
+        $key = strtolower( $key );
+
         return array_key_exists( $key, $this->values );
     }
 }
