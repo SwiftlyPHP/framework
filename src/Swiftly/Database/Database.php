@@ -2,7 +2,7 @@
 
 namespace Swiftly\Database;
 
-use \Swiftly\Database\AdapterInterface;
+use Swiftly\Database\AdapterInterface;
 
 /**
  * A wrapper around the underlying database implementations
@@ -95,13 +95,11 @@ Class Database
      */
     public function queryResult( string $query ) : array
     {
-        $result = [];
-
-        if ( $this->connected && $this->adapter->query( $query ) ) {
-            $result = $this->adapter->getResult();
+        if ( !$this->connected || !$this->adapter->query( $query ) ) {
+            return [];
         }
 
-        return $result;
+        return $this->adapter->getResult();
     }
 
     /**
@@ -112,13 +110,11 @@ Class Database
      */
     public function queryResults( string $query ) : array
     {
-        $results = [];
-
-        if ( $this->connected && $this->adapter->query( $query ) ) {
-            $results = $this->adapter->getResults();
+        if ( !$this->connected || !$this->adapter->query( $query ) ) {
+            return [];
         }
 
-        return $results;
+        return $this->adapter->getResults();
     }
 
     /**
@@ -128,7 +124,10 @@ Class Database
      */
     public function getLastId() : int
     {
-        return ( $this->connected ? $this->adapter->getLastId() : 0 );
+        return ( $this->connected
+            ? $this->adapter->getLastId()
+            : 0
+        );
     }
 
     /**
