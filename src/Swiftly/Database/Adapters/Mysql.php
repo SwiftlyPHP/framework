@@ -2,7 +2,13 @@
 
 namespace Swiftly\Database\Adapters;
 
-use \Swiftly\Database\AdapterInterface;
+use Swiftly\Database\AdapterInterface;
+use mysqli;
+use mysqli_result;
+
+use function is_object;
+
+use const MYSQLI_ASSOC;
 
 /**
  * Driver for MySQL databases
@@ -15,14 +21,14 @@ Class Mysql Implements AdapterInterface
     /**
      * Handle to the MySQL DB
      *
-     * @var \mysqli $handle DB handle
+     * @var mysqli $handle DB handle
      */
     private $handle = null;
 
     /**
      * Results of last query
      *
-     * @var \mysqli_result $results Query results
+     * @var mysqli_result $results Query results
      */
     private $results = null;
 
@@ -82,15 +88,13 @@ Class Mysql Implements AdapterInterface
      */
     public function open() : bool
     {
-        $this->handle = new \mysqli(
+        $this->handle = new mysqli(
             $this->host,
             $this->username,
             $this->password,
             $this->name,
             $this->port
         );
-
-        $status = true;
 
         // Check for connection error
         return ( $this->handle->connect_errno === 0 );
@@ -111,12 +115,12 @@ Class Mysql Implements AdapterInterface
         }
 
         // Free memory
-        if ( !\is_null( $this->results ) ) {
+        if ( $this->results !== null ) {
             $this->results->free();
         }
 
         // Store results object
-        if ( \is_object( $result ) ) {
+        if ( is_object( $result ) ) {
             $this->results = $result;
         } else {
             $this->results = null;
@@ -132,9 +136,9 @@ Class Mysql Implements AdapterInterface
      */
     public function getResult() : array
     {
-        return ( \is_null( $this->results )
-            ? []
-            : $this->results->fetch_array( \MYSQLI_ASSOC )
+        return ( $this->results !== null
+            ? $this->results->fetch_array( MYSQLI_ASSOC )
+            : []
         );
     }
 
@@ -145,9 +149,9 @@ Class Mysql Implements AdapterInterface
      */
     public function getResults() : array
     {
-        return ( \is_null( $this->results )
-            ? []
-            : $this->results->fetch_all( \MYSQLI_ASSOC )
+        return ( $this->results !== null
+            ? $this->results->fetch_all( MYSQLI_ASSOC )
+            : []
         );
     }
 
@@ -167,7 +171,7 @@ Class Mysql Implements AdapterInterface
     public function close() : void
     {
         // Free any stray result object
-        if ( !\is_null( $this->results ) ) {
+        if ( $this->results !== null ) {
             $this->results->free();
         }
 
