@@ -65,7 +65,6 @@ Abstract Class Controller
      */
     public function getModel( string $name ) : ?Model
     {
-
         if ( !isset( $this->models[$name] ) ) {
             $this->models[$name] = $this->createModel( $name );
         }

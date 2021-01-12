@@ -49,5 +49,4 @@ Abstract Class Model
     {
         return $this->database;
     }
-
 }
