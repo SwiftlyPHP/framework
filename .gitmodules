@@ -1,0 +1,6 @@
+[submodule "src/Swiftly/Dependency"]
+	path = src/Swiftly/Dependency
+	url = git@github.com:SwiftlyPHP/dependency.git
+[submodule "src/Swiftly/Http"]
+	path = src/Swiftly/Http
+	url = git@github.com:SwiftlyPHP/http.git
