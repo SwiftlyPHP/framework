@@ -7,3 +7,6 @@
 [submodule "src/Swiftly/Routing"]
 	path = src/Swiftly/Routing
 	url = git@github.com:SwiftlyPHP/routing.git
+[submodule "src/Swiftly/Config"]
+	path = src/Swiftly/Config
+	url = git@github.com:SwiftlyPHP/config.git
