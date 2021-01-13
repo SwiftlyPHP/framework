@@ -137,7 +137,7 @@ Class Web
         }
 
         // Bind the adapter
-        $services->bind( AdapterInterface::class, $adapter )->arguments([
+        $services->bind( AdapterInterface::class, $adapter )->parameters([
             'options' => $config
         ]);
 
