@@ -7,7 +7,7 @@ use Swiftly\Template\TemplateInterface;
 use Swiftly\Routing\Dispatcher;
 use Swiftly\Dependency\{
     Container,
-    Dependency,
+    Service,
     Loader\PhpLoader
 };
 use Swiftly\Http\Server\{
@@ -91,8 +91,8 @@ Class Web
         );
 
         if ( $route !== null ) {
-            $controller = new Dependency( $route->callable, $this->dependencies );
-            $controller->arguments( $route->args );
+            $controller = new Service( $route->callable, $this->dependencies );
+            $controller->parameters( $route->args );
 
             // Get the Response object
             $response = $controller->resolve();
