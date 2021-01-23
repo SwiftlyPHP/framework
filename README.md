@@ -46,10 +46,10 @@ All Views live in the *App/View* directory.
 
 ## Routing
 
-Lets say I want to define a `/hello` route. The first thing you'd need to do is
-edit the `routes.json` file. This file can be found in the `config/` directory
-and will contain a list containing all the possible routes in your application,
-along with the controllers they map to and the HTTP methods they support.
+Lets say I want to define a `/hello` route. The first thing I need to do is edit
+the `routes.json` file. This file can be found in the `config/` directory and
+contains a list containing all the possible routes in your application, along
+with the controllers they map to and the HTTP methods they support.
 
 If you open the example `config/routes.json` file, you should see something
 similar to the following:
