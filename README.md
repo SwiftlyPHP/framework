@@ -44,9 +44,83 @@ TODO:
 
 All Views live in the *App/View* directory.
 
-## Usage
+## Routing
 
-// TODO: How do you use it
+Lets say I want to define a `/hello` route. The first thing you'd need to do is
+edit the `routes.json` file. This file can be found in the `config/` directory
+and will contain a list containing all the possible routes in your application,
+along with the controllers they map to and the HTTP methods they support.
+
+If you open the example `config/routes.json` file, you should see something
+similar to the following:
+
+```json
+{
+    "home": {
+        "path":     "/",
+        "methods":  ["GET"],
+        "handler":  "Home::index"
+    }
+}
+```
+
+This block defines a route called "home", that will match on GET requests to the
+root `/` URL and is handled by the `index` method of the `Home` controller. Each
+route definition can have the following values:
+
+### Path
+
+**Required**
+
+The URL path to match against.
+
+```json
+"path": "/hello/world"
+```
+
+Takes a valid string.
+
+**Note:**
+For the time being, all URLS must start with a forward slash `/`.
+
+### Handler
+
+**Required**
+
+The controller used to handle this route.
+
+```json
+"handler": "Controller::method"
+```
+
+Accepts either a string in the format `"Controller::index"` or a 2 element array
+in the format `[ "Controller", "method"]`.
+
+### Methods
+
+_\*Optional\*_
+
+The HTTP method allowed by this route.
+
+```json
+"methods": ["GET", "POST"]
+```
+
+An array of HTTP verbs.
+
+At the moment, Swiftly only supports the following methods:
+
+* GET
+* POST
+* PUT
+* DELETE
+* UPDATE
+
+### Tags
+
+_\*Optional\*_
+
+
 
 ## Reference
 
