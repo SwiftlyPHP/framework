@@ -1,7 +1,6 @@
 <?php
 
 use Swiftly\Base\Controller;
-use Swiftly\Database\Database;
 
 /**
  * The default controller that handles the homepage
@@ -32,7 +31,7 @@ Class Home Extends Controller
     {
         // Pass the named paramater in
         return $this->output( 'home', [
-            'title'   => \mb_ucfirst( $name ),
+            'title'   => ucfirst( $name ),
             'message' => 'Welcome to Swiftly!'
         ]);
     }

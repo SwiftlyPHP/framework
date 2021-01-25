@@ -10,7 +10,7 @@
  * readme file.
  *
  * @license MIT License
- * @author C Varley <clvarley>
+ * @author clvarley
  * @version 1.0.0 2019-08-11
  */
 
