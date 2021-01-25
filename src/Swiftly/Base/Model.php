@@ -26,27 +26,4 @@ Abstract Class Model
     {
         $this->database = $database;
     }
-
-    /**
-     * Get the database object
-     *
-     * @return Database DB wrapper
-     */
-    protected function getDatabase() : Database
-    {
-        return $this->database;
-    }
-
-    /**
-     * Get the database object
-     *
-     * Alias for `getDatabase()`
-     *
-     * @see Model::getDatabase
-     * @return Database [description]
-     */
-    protected function getDb() : Database
-    {
-        return $this->database;
-    }
 }
