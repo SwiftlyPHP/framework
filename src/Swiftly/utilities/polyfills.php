@@ -27,20 +27,16 @@ if ( !function_exists( 'apache_request_headers' ) ) {
      */
     function apache_request_headers() : array
     {
-        if ( empty( $_SERVER ) ) {
-            return [];
-        }
-
         $headers = [];
 
         foreach ( $_SERVER as $name => $value ) {
-            if ( \substr( $name, 0, 5 ) !== 'HTTP_' ) {
+            if ( substr( $name, 0, 5 ) !== 'HTTP_' ) {
                 continue;
             }
 
-            $name = \substr( $name, 5 );
-            $name = \strtr( $name, '_', '-' );
-            $name = \ucwords( $name, ' -' );
+            $name = substr( $name, 5 );
+            $name = strtr( $name, '_', '-' );
+            $name = ucwords( $name, ' -' );
 
             $headers[$name] = $value;
         }
