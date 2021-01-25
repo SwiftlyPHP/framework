@@ -2,6 +2,10 @@
 
 namespace Swiftly\Template;
 
+use function is_readable;
+use function ob_start;
+use function ob_get_clean;
+
 /**
  * Renders a template using PHP
  *
@@ -20,15 +24,17 @@ Class Php Implements TemplateInterface
      */
     public function render( string $template, array $data = [] ) : string
     {
-        $result = '';
+        $template = "$template.html.php";
+
+        if ( !is_readable( $template ) ) {
+            return '';
+        }
 
         $this->data = $data;
 
-        if ( \is_file( $template . '.html.php' ) && \is_readable( $template . '.html.php' ) ) {
-            \ob_start();
+        ob_start();
             include $template . '.html.php';
-            $result = \ob_get_clean() ?: '';
-        }
+        $result = ob_get_clean() ?: '';
 
         return $result;
     }
@@ -41,13 +47,15 @@ Class Php Implements TemplateInterface
      */
     public function renderPartial( string $template ) : string
     {
-        $result = '';
+        $template = "$template.html.php";
 
-        if ( \is_file( $template . '.html.php' ) && \is_readable( $template . '.html.php' ) ) {
-            \ob_start();
-            include $template . '.html.php';
-            $result = \ob_get_clean();
+        if ( is_readable( $template ) ) {
+            return '';
         }
+
+        ob_start();
+            include $template . '.html.php';
+        $result = ob_get_clean();
 
         return $result;
     }
