@@ -12,6 +12,12 @@ use \Swiftly\Http\Server\{
     RedirectResponse
 };
 
+use function is_file;
+use function class_exists;
+
+use const APP_MODEL;
+use const APP_VIEW;
+
 /**
  * The abstract class all controllers should inherit
  *
@@ -80,20 +86,23 @@ Abstract Class Controller
      */
     private function createModel( string $name ) : ?Model
     {
-        $result = null;
+        $file = APP_MODEL . "$name.php";
 
-        // TODO: This needs a lot of work!
-        if ( \is_file( $file = \APP_MODEL . $name . '.php' ) ) {
-
-            include $file;
-
-            if ( \class_exists( $name ) ) {
-                $this->dependencies->bind( $name, $name );
-                $result = $this->dependencies->resolve( $name );
-            }
+        if ( !is_file( $ile ) ) {
+            return null;
         }
 
-        return $result;
+        // TODO: This needs a lot of work!
+        include $file;
+
+        if ( !class_exists( $name ) ) {
+            return null;
+        }
+
+        // Allows model to have dependency injection
+        $this->dependencies->bind( $name, $name );
+
+        return $this->dependencies->resolve( $name );
     }
 
     /**
@@ -105,7 +114,7 @@ Abstract Class Controller
      */
     public function render( string $template, array $data = [] ) : string
     {
-        return $this->renderer->render( \APP_VIEW . $template, $data );
+        return $this->renderer->render( APP_VIEW . $template, $data );
     }
 
     /**
@@ -118,7 +127,7 @@ Abstract Class Controller
     public function output( string $template, array $data = [] ) : Response
     {
         return new Response(
-            $this->renderer->render( \APP_VIEW . $template, $data ),
+            $this->renderer->render( APP_VIEW . $template, $data ),
             200,
             []
         );
