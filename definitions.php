@@ -3,7 +3,7 @@
 /**
  * App wide definitions
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 
 // Swiftly version

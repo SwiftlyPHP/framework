@@ -5,7 +5,7 @@ use Swiftly\Base\Controller;
 /**
  * The default controller that handles the homepage
  *
- * @author C Varley <clvarley>
+ * @author clvarley
  */
 Class Home Extends Controller
 {
