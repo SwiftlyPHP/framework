@@ -33,7 +33,7 @@ Class Php Implements TemplateInterface
         $this->data = $data;
 
         ob_start();
-            include $template . '.html.php';
+            include $template;
         $result = ob_get_clean() ?: '';
 
         return $result;
@@ -54,7 +54,7 @@ Class Php Implements TemplateInterface
         }
 
         ob_start();
-            include $template . '.html.php';
+            include $template;
         $result = ob_get_clean();
 
         return $result;
