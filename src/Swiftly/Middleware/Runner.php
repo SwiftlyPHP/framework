@@ -28,7 +28,7 @@ Class Runner
      *
      * @var int $index Current middleware
      */
-    protected $index = 0;
+    protected $index = -1;
 
     /**
      * Create a new runner for the given middlewares
@@ -64,13 +64,7 @@ Class Runner
             return $response;
         }
 
-        $this->index = 0;
-
-        return $this->middleware[0]->run(
-            $request,
-            $response,
-            [ $this, 'next' ]
-        );
+        return $this->next( $request, $response );
     }
 
     /**
@@ -84,7 +78,7 @@ Class Runner
     {
         // Reached the end, reset!
         if ( !isset( $this->middleware[++$this->index] ) ) {
-            $this->index = 0;
+            $this->index = -1;
             return $response;
         }
 
