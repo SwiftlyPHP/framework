@@ -26,6 +26,7 @@ use Swiftly\Database\{
 };
 use Swiftly\Middleware\{
     ControllerMiddleware,
+    RoutingMiddleware,
     Runner
 };
 
@@ -175,7 +176,9 @@ Class Web
     {
         // TODO:
 
-        return new Runner();
+        return new Runner([
+            
+        ]);
     }
 
     /**
