@@ -3,7 +3,6 @@
 namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
-use Swiftly\Template\TemplateInterface;
 use Swiftly\Routing\{
     Dispatcher,
     Route
@@ -71,8 +70,6 @@ Class Web
         if ( $config->has( 'database' ) ) {
             $this->bindDatabase( $this->dependencies, $config->get( 'database' ) );
         }
-
-        // TODO:
     }
 
     /**
@@ -95,7 +92,7 @@ Class Web
         // Run startup middleware
         $startup = $this->getStartup();
         $response = $startup->run( $request, $response );
-        
+
         // Run shutdown middleware
         $shutdown = $this->getShutdown();
         $response = $shutdown->run( $request, $response );
@@ -166,8 +163,8 @@ Class Web
      */
     private function getShutdown() : Runner
     {
-        // TODO:
-
-        return new Runner();
+        return new Runner([
+            // TODO:
+        ]);
     }
 }
