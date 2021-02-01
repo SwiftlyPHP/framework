@@ -4,7 +4,10 @@ namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
 use Swiftly\Template\TemplateInterface;
-use Swiftly\Routing\Dispatcher;
+use Swiftly\Routing\{
+    Dispatcher,
+    Route
+};
 use Swiftly\Dependency\{
     Container,
     Service,
@@ -20,6 +23,10 @@ use Swiftly\Database\{
     Adapters\Mysql,
     Adapters\Postgres,
     Adapters\Sqlite
+};
+use Swiftly\Middleware\{
+    ControllerMiddleware,
+    Runner
 };
 
 /**
@@ -72,12 +79,12 @@ Class Web
      */
     public function start() : void
     {
-
         // Create a new router
         $router = $this->dependencies->resolve( Dispatcher::class );
 
         // Get the global request object
         $request = $this->dependencies->resolve( Request::class );
+        $response = new Response;
 
         // Load route.json and dispatch
         if ( \is_file( APP_CONFIG . 'routes.json' ) ) {
@@ -90,13 +97,28 @@ Class Web
             $request->getPath()
         );
 
+
         if ( $route !== null ) {
+            $this->dependencies->bind( Route::class, $route );
+
             $controller = new Service( $route->callable, $this->dependencies );
             $controller->parameters( $route->args );
 
+            // Run startup middleware
+            $startup = $this->getStartup();
+            $startup->addMiddleware(
+                new ControllerMiddleware( $controller )
+            );
+
             // Get the Response object
-            $response = $controller->resolve();
+            $response = $startup->run( $request, $response );
+        } else {
+            $response->setStatus( 404 );
         }
+
+        // Run shutdown middleware
+        $shutdown = $this->getShutdown();
+        $response = $shutdown->run( $request, $response );
 
         // No choice but to 404
         if ( empty( $response ) || !$response instanceof Response ) {
@@ -142,5 +164,29 @@ Class Web
         ]);
 
         return;
+    }
+
+    /**
+     * Gets the middleware to be run at startup
+     *
+     * @return Runner Startup middleware runner
+     */
+    private function getStartup() : Runner
+    {
+        // TODO:
+
+        return new Runner();
+    }
+
+    /**
+     * Gets the middleware to be run at shutdown
+     *
+     * @return Runner Shutdown middleware runner
+     */
+    private function getShutdown() : Runner
+    {
+        // TODO:
+
+        return new Runner();
     }
 }
