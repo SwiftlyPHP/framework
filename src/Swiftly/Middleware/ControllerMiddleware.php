@@ -3,10 +3,13 @@
 namespace Swiftly\Middleware;
 
 use Swiftly\Http\Server\{
-  Request,
-  Response
+    Request,
+    Response
 };
-use Swiftly\Dependency\Service;
+use Swiftly\Dependency\{
+    Container,
+    Service
+};
 use Swiftly\Middleware\MiddlewareInterface;
 
 /**
@@ -18,20 +21,20 @@ Class ControllerMiddleware Implements MiddlewareInterface
 {
 
     /**
-     * The controller for this route
+     * Reference to the main dependency container
      *
-     * @var Service $controller Route controller
+     * @var Container $container Dependency container
      */
-    private $controller;
+    private $container;
 
     /**
-     * Create a middleware for the route controller
+     * Create a middleware for executing the controller
      *
-     * @param Service $controller Route controller
+     * @param Container $container Dependency container
      */
-    public function __construct( Service $controller )
+    public function __construct( Container $container )
     {
-        $this->controller = $controller;
+        $this->container = $container;
     }
 
     /**
@@ -39,7 +42,7 @@ Class ControllerMiddleware Implements MiddlewareInterface
      */
     public function run( Request $request, Response $response, callable $next ) : Response
     {
-        $result = $this->controller->resolve();
+        $result = $this->container->resolve( Service::class );
 
         // Route matched but no response?
         if ( empty( $result ) || !$result instanceof Response ) {

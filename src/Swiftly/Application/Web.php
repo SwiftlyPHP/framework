@@ -92,31 +92,10 @@ Class Web
             $router->load( APP_CONFIG . 'routes.json' );
         }
 
-        // Match URL to defined route
-        $route = $router->dispatch(
-            $request->getMethod(),
-            $request->getPath()
-        );
-
-
-        if ( $route !== null ) {
-            $this->dependencies->bind( Route::class, $route );
-
-            $controller = new Service( $route->callable, $this->dependencies );
-            $controller->parameters( $route->args );
-
-            // Run startup middleware
-            $startup = $this->getStartup();
-            $startup->addMiddleware(
-                new ControllerMiddleware( $controller )
-            );
-
-            // Get the Response object
-            $response = $startup->run( $request, $response );
-        } else {
-            $response->setStatus( 404 );
-        }
-
+        // Run startup middleware
+        $startup = $this->getStartup();
+        $response = $startup->run( $request, $response );
+        
         // Run shutdown middleware
         $shutdown = $this->getShutdown();
         $response = $shutdown->run( $request, $response );
@@ -174,10 +153,9 @@ Class Web
      */
     private function getStartup() : Runner
     {
-        // TODO:
-
         return new Runner([
-            
+            $this->dependencies->resolve( RoutingMiddleware::class ),
+            $this->dependencies->resolve( ControllerMiddleware::class )
         ]);
     }
 

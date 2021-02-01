@@ -7,6 +7,10 @@
  */
 
 return [
+  
+    // Startup middleware
+    Swiftly\Middleware\ControllerMiddleware::class => Swiftly\Middleware\ControllerMiddleware::class,
+    Swiftly\Middleware\RoutingMiddleware::class => Swiftly\Middleware\RoutingMiddleware::class,
 
     // HTTP services
     Swiftly\Http\Server\RequestFactory::class => Swiftly\Http\Server\RequestFactory::class,

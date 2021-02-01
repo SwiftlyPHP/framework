@@ -56,7 +56,7 @@ Class RoutingMiddleware
         $path = $request->getPath();
 
         // Get the route
-        $route = $this->router->dispatch( $method, $url );
+        $route = $this->router->dispatch( $method, $path );
 
         // No matches, 404 and exit early!
         if ( empty( $route ) ) {
