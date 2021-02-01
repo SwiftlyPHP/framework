@@ -21,7 +21,7 @@ Interface MiddlewareInterface
      * @param Request $request   HTTP request
      * @param Response $response HTTP response
      * @param callable $next     Next middleware
-     * @return Response          HTTP response
+     * @return Response          Filtered HTTP response
      */
     public function run( Request $request, Response $response, callable $next ) : Response;
 
