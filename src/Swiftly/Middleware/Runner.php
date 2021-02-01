@@ -21,14 +21,14 @@ Class Runner
      *
      * @var MiddlewareInterface[] $middleware Middleware components
      */
-    protected $middleware;
+    private $middleware;
 
     /**
      * Currently running middleware
      *
      * @var int $index Current middleware
      */
-    protected $index = -1;
+    private $index = -1;
 
     /**
      * Create a new runner for the given middlewares
