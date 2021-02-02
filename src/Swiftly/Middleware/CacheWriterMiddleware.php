@@ -8,6 +8,16 @@ use Swiftly\Http\Server\{
 };
 use Swiftly\Middleware\MiddlewareInterface;
 
+use function strtolower;
+use function strpos;
+use function sha1;
+use function is_file;
+use function is_dir;
+use function mkdir;
+use function file_put_contents;
+
+use const APP_DATA;
+
 /**
  * Middleware responsible for caching HTML responses
  *
@@ -31,23 +41,23 @@ Class CacheWriterMiddleware Implements MiddlewareInterface
 
         // Is "Cache-Control: no-store" set?
         $cache_control = $request->headers->get( 'Cache-Control' );
-        $cache_control = $cache_control ? \strtolower( $cache_control ) : '';
+        $cache_control = $cache_control ? strtolower( $cache_control ) : '';
 
-        if ( \strpos( $cache_control, 'no-store' ) !== false ) {
+        if ( strpos( $cache_control, 'no-store' ) !== false ) {
             return $next( $request, $response );
         }
 
-        $hash = \sha1( $request->getPath() );
-        $dir = APP_DATA . 'cache/html';
+        $hash = sha1( $request->getPath() );
+        $dir  = APP_DATA . 'cache/html';
         $file = "$dir/$hash.php";
 
         // Already cached!
-        if ( \is_file( $file ) {
+        if ( is_file( $file ) {
             return $next( $request, $response );
         }
 
         // Failed to make directory
-        if ( !\is_dir( $dir ) && !\mkdir( $dir, 0644 ) ) {
+        if ( !is_dir( $dir ) && !mkdir( $dir, 0644 ) ) {
             return $next( $request, $response );
         }
 
