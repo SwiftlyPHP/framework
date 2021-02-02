@@ -49,7 +49,7 @@ Class CacheWriterMiddleware Implements MiddlewareInterface
 
         $hash = sha1( $request->getPath() );
         $dir  = APP_DATA . 'cache/html';
-        $file = "$dir/$hash.php";
+        $file = "$dir/$hash.html";
 
         // Already cached!
         if ( is_file( $file ) ) {
