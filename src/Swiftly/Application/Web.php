@@ -24,6 +24,7 @@ use Swiftly\Database\{
     Adapters\Sqlite
 };
 use Swiftly\Middleware\{
+    CacheReaderMiddleware,
     ControllerMiddleware,
     RoutingMiddleware,
     Runner
@@ -151,6 +152,7 @@ Class Web
     private function getStartup() : Runner
     {
         return new Runner([
+            $this->dependencies->resolve( CacheReaderMiddleware::class ),
             $this->dependencies->resolve( RoutingMiddleware::class ),
             $this->dependencies->resolve( ControllerMiddleware::class )
         ]);

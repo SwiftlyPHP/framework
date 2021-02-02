@@ -19,7 +19,7 @@ use function file_get_contents;
  *
  * @author clvarley
  */
-Class HttpCacheMiddleware Implements MiddlewareInterface
+Class CacheReaderMiddleware Implements MiddlewareInterface
 {
 
     /**
