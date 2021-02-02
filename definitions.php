@@ -21,6 +21,9 @@ define( 'APP_PUBLIC', APP_ROOT . 'public/' );
 // Config folder
 define( 'APP_CONFIG', APP_ROOT . 'config/' );
 
+// Var folder
+define( 'APP_DATA', APP_ROOT . 'data/' );
+
 // Source folder
 define( 'APP_SRC', APP_ROOT . 'src/' );
 
