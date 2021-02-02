@@ -52,18 +52,18 @@ Class CacheWriterMiddleware Implements MiddlewareInterface
         $file = "$dir/$hash.php";
 
         // Already cached!
-        if ( is_file( $file ) {
+        if ( is_file( $file ) ) {
             return $next( $request, $response );
         }
 
         // Failed to make directory
-        if ( !is_dir( $dir ) && !mkdir( $dir, 0644 ) ) {
+        if ( !is_dir( $dir ) && !@mkdir( $dir, 0644, true ) ) {
             return $next( $request, $response );
         }
 
         // Cache the content!
         $content = $response->getContent();
-        file_put_contents( $file, $content,  );
+        file_put_contents( $file, $content );
 
         return $next( $request, $response );
     }
