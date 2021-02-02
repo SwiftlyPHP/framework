@@ -25,6 +25,7 @@ use Swiftly\Database\{
 };
 use Swiftly\Middleware\{
     CacheReaderMiddleware,
+    CacheWriterMiddleware,
     ControllerMiddleware,
     RoutingMiddleware,
     Runner
@@ -166,7 +167,7 @@ Class Web
     private function getShutdown() : Runner
     {
         return new Runner([
-            // TODO:
+            $this->dependencies->resolve( CacheWriterMiddleware::class )
         ]);
     }
 }
