@@ -22,14 +22,14 @@ get up to speed with the project.
 ## Index
 
 1. [Files](#files)
-  1. [Naming](#naming)
-  2. [Format](#format)
-  3. [Lines](#lines)
-  4. [Indenting](#indenting)
+    1. [Naming](#naming)
+    2. [Format](#format)
+    3. [Lines](#lines)
+    4. [Indenting](#indenting)
 2. [Meta](#meta)
-  1. [Tags](#tags)
-  2. [Namespace](#namespace)
-  3. [Use](#use)
+    1. [Tags](#tags)
+    2. [Namespace](#namespace)
+    3. [Use](#use)
 
 
 ## Files
