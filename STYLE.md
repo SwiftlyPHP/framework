@@ -83,8 +83,8 @@ echo $name;
 ### Namespace
 
 Namespace declarations SHOULD be the next element in the file after the opening
-tag and comment. Namespaces MUST follow _PascalCasing_ and MUST follow the
-following standard.
+tag and comment. Namespaces MUST follow _PascalCasing_ and MUST use the
+following standard:
 
 ```php
 namespace VendorName\Component\SubComponent;
