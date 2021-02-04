@@ -30,6 +30,9 @@ start writing new code.
     1. [Tags](#tags)
     2. [Namespace](#namespace)
     3. [Use](#use)
+        1. [Classes](#classes)
+        2. [Functions](#functions)
+        3. [Constants](#constants)
 
 ## Files
 ### Naming
@@ -122,4 +125,67 @@ namespace swiftly\http\Server;
 ### Use
 
 Importing components from other namespaces is the preferred method of using
-external classes, functions and constants.
+external classes, functions and constants. Use statements SHOULD sit 2 lines
+under the namespace declaration.
+
+#### Classes
+
+Class imports should be the first `use` statements and take up single lines with
+no line breaks inbetween.
+
+**Good**
+
+```php
+<?php
+/**
+ * ...
+ */
+
+namespace Swiftly\Http\Server;
+
+use Swiftly\Http\Headers;
+use Swiftly\Http\Cookies;
+```
+
+If importing two or more components from the same namespace, you MAY opt to
+combine the imports into a group declaration. Developers MUST NOT nest
+namespaces within the group declaration as this makes the statement harder to
+scan.
+
+**Good**
+
+```php
+<?php
+/**
+ * ...
+ */
+
+namespace Swiftly\Http\Server;
+
+use Swiftly\Http\{
+    Headers,
+    Cookies
+};
+```
+
+**Bad**
+
+```php
+<?php
+/**
+ * ...
+ */
+
+namespace Swiftly\Http\Server;
+
+use Swiftly\Http\{
+    Client\TransportInterface,
+    Client\Transport\CurlTransport, // Too much nesting!
+    Server\JsonResponse,
+    Headers,
+};
+```
+
+#### Functions
+
+#### Constants
