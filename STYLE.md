@@ -1,4 +1,4 @@
-# Style Guide
+# Swiftly - Style Guide
 ## About
 
 Swiftly and all it's component libraries use a style based losely on the popular
