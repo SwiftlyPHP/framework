@@ -182,7 +182,7 @@ use Swiftly\Http\{
     Client\TransportInterface,
     Client\Transport\CurlTransport, // Too much nesting!
     Server\JsonResponse,
-    Headers,
+    Headers
 };
 ```
 

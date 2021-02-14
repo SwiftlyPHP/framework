@@ -2,12 +2,12 @@
 
 namespace Swiftly\Base;
 
-use \Swiftly\{
+use Swiftly\{
     Template\TemplateInterface,
     Dependency\Container,
     Base\Model
 };
-use \Swiftly\Http\Server\{
+use Swiftly\Http\Server\{
     Response,
     RedirectResponse
 };
@@ -34,7 +34,7 @@ Abstract Class Controller
     /**
      * @var TemplateInterface $renderer Internal renderer
      */
-    private $renderer = null;
+    private $renderer;
 
     /**
      * @var Model[] $models DB Models
@@ -50,17 +50,6 @@ Abstract Class Controller
     {
         $this->dependencies = $container;
         $this->renderer = $renderer;
-    }
-
-    /**
-     * Provide access to services
-     *
-     * @param string $name  Service name
-     * @return object|null  Service (Or null)
-     */
-    public function getService( string $name )
-    {
-        return $this->dependencies->resolve( $name );
     }
 
     /**
@@ -88,7 +77,7 @@ Abstract Class Controller
     {
         $file = APP_MODEL . "$name.php";
 
-        if ( !is_file( $ile ) ) {
+        if ( !is_file( $file ) ) {
             return null;
         }
 
