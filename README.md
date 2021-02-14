@@ -93,8 +93,8 @@ The controller used to handle this route.
 "handler": "Controller::method"
 ```
 
-Accepts either a string in the format `"Controller::index"` or a 2 element array
-in the format `[ "Controller", "method"]`.
+Accepts either a string in the format `"Controller::method"` or a 2 element
+array in the format `[ "Controller", "method"]`.
 
 ### Methods
 
