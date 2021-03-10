@@ -102,11 +102,6 @@ Class Web
         $shutdown = $this->getShutdown();
         $response = $shutdown->run( $request, $response );
 
-        // No choice but to 404
-        if ( empty( $response ) || !$response instanceof Response ) {
-            $response = new Response( '', 404 );
-        }
-
         // Send the response and end!
         $response->send();
 
