@@ -13,3 +13,4 @@ composer.json
 
 # Analysis
 psalm.xml
+psalm.php
