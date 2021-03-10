@@ -75,6 +75,7 @@ function format_bytes( int $bytes ) : string
             $formatted = sprintf( '%.2f %s', $bytes, 'kb' );
         break;
 
+        default:
         case 4:
             $formatted = sprintf( '%d %s', $bytes, 'b' );
         break;
