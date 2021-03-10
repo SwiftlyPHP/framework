@@ -5,3 +5,11 @@
 
 # Cache files
 data/cache
+
+# Composer
+vendor
+composer.lock
+composer.json
+
+# Analysis
+psalm.xml
