@@ -23,7 +23,7 @@ return [
 
     // Database
     Swiftly\Database\Database::class => [
-        'handler'   => function ( Swiftly\Dependency\AdapterInterface $db ) {
+        'handler'   => function ( Swiftly\Database\AdapterInterface $db ) {
             $database = new Swiftly\Database\Database( $db );
             $database->open();
             return $database;
