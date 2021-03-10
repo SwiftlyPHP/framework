@@ -2,7 +2,7 @@
 
 namespace Swiftly\Database\Adapters;
 
-use \Swiftly\Database\AdapterInterface;
+use Swiftly\Database\AdapterInterface;
 
 /**
  * Driver for PostgreSQL databases

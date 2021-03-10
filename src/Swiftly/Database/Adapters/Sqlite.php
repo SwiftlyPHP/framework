@@ -105,7 +105,8 @@ Class Sqlite Implements AdapterInterface
 
     /**
      * Returns all results from the last query
-     * @return array [description]
+     *
+     * @return array[] Query results
      */
     public function getResults() : array
     {

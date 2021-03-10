@@ -106,7 +106,7 @@ Class Database
      * Executes the given query and returns all the results
      *
      * @param string $query SQL query
-     * @return array        Query results
+     * @return array[]      Query results
      */
     public function queryResults( string $query ) : array
     {
