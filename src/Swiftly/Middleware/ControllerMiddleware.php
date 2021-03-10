@@ -46,7 +46,7 @@ Class ControllerMiddleware Implements MiddlewareInterface
 
         // Route matched but no response?
         if ( empty( $result ) || !$result instanceof Response ) {
-            $response = new Response( '', 500 );
+            $result = new Response( '', 500 );
         }
 
         // Return the controller response!
