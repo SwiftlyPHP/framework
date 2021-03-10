@@ -31,6 +31,9 @@ use Swiftly\Middleware\{
     Runner
 };
 
+use const APP_SWIFTLY;
+use const APP_CONFIG;
+
 /**
  * The front controller for our web app
  *
