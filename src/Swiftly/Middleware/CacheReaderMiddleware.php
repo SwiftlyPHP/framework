@@ -64,7 +64,7 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
         }
 
         $hash = sha1( $request->getPath() );
-        $file = APP_DATA . "cache/html/$hash.php";
+        $file = APP_DATA . "cache/html/$hash.html";
 
         // Cache file doesn't exist!
         if ( !is_readable( $file ) ) {
@@ -78,7 +78,7 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
         $expires = $filetime + $lifetime;
 
         // Expired!
-        if ( $expires > time() ) {
+        if ( $expires < time() ) {
             unlink( $file );
             return $next( $request, $response );
         }
