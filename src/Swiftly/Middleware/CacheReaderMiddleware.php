@@ -11,12 +11,16 @@ use Swiftly\Middleware\MiddlewareInterface;
 
 use function strtolower;
 use function strpos;
+use function is_string;
+use function rtrim;
 use function sha1;
 use function is_readable;
 use function filemtime;
 use function time;
 use function unlink;
 use function file_get_contents;
+
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Middleware responsible for returning cached HTML
@@ -63,8 +67,17 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
             return $next( $request, $response );
         }
 
+        // Custom directory?
+        $dir = $this->config->get( 'cache.root' );
+
+        if ( !empty( $dir ) && is_string( $dir ) ) {
+            $dir = rtrim( $dir, DIRECTORY_SEPARATOR );
+        } else {
+            $dir = 'data/cache/html';
+        }
+
         $hash = sha1( $request->getPath() );
-        $file = APP_DATA . "cache/html/$hash.html";
+        $file = APP_DATA . "$dir/$hash.html";
 
         // Cache file doesn't exist!
         if ( !is_readable( $file ) ) {
