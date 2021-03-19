@@ -91,9 +91,9 @@ function format_bytes( int $bytes ) : string
  * Returns false is any element fails the test of the $callback function,
  * otherwise returns true.
  *
- * @param array $subject Subject array
- * @param callable       Callback function
- * @return bool          Satisfies callback?
+ * @param mixed[] $subject Subject array
+ * @param callable         Callback function
+ * @return bool            Satisfies callback?
  */
 function array_satisfies( array $subject, callable $callback ) : bool
 {

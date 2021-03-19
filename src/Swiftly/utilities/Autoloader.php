@@ -9,7 +9,7 @@ Final Class Autoloader
 {
 
     /**
-     * @var array $prefixes Namespace mappings
+     * @var string[] $prefixes Namespace mappings
      */
     private $prefixes = [];
 
