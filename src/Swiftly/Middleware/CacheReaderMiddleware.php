@@ -2,6 +2,7 @@
 
 namespace Swiftly\Middleware;
 
+use Swiftly\Config\Store;
 use Swiftly\Http\Server\{
     Request,
     Response
@@ -12,6 +13,9 @@ use function strtolower;
 use function strpos;
 use function sha1;
 use function is_readable;
+use function filemtime;
+use function time;
+use function unlink;
 use function file_get_contents;
 
 /**
@@ -21,6 +25,23 @@ use function file_get_contents;
  */
 Class CacheReaderMiddleware Implements MiddlewareInterface
 {
+
+    /**
+     * Reference to the main application configuration
+     *
+     * @var Store $config Application config
+     */
+    private $config;
+
+    /**
+     * Create a middleware for reading cache files
+     *
+     * @param Store $config Application config
+     */
+    public function __construct( Store $config )
+    {
+        $this->config = $config;
+    }
 
     /**
      * {@inheritdoc}
@@ -47,6 +68,18 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
 
         // Cache file doesn't exist!
         if ( !is_readable( $file ) ) {
+            return $next( $request, $response );
+        }
+
+        // File expired?
+        $filetime = filemtime( $file );
+        $lifetime = (int)$this->config->get( 'cache.lifetime', 3600 );
+
+        $expires = $filetime + $lifetime;
+
+        // Expired!
+        if ( $expires > time() ) {
+            unlink( $file );
             return $next( $request, $response );
         }
 
