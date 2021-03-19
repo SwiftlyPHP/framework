@@ -20,6 +20,7 @@ use function time;
 use function unlink;
 use function file_get_contents;
 
+use const APP_ROOT;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -71,13 +72,13 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
         $dir = $this->config->get( 'cache.root' );
 
         if ( !empty( $dir ) && is_string( $dir ) ) {
-            $dir = rtrim( $dir, DIRECTORY_SEPARATOR );
+            $dir = APP_ROOT . rtrim( $dir, DIRECTORY_SEPARATOR );
         } else {
-            $dir = 'data/cache/html';
+            $dir = APP_ROOT . 'data/cache/html';
         }
 
         $hash = sha1( $request->getPath() );
-        $file = APP_DATA . "$dir/$hash.html";
+        $file = "$dir/$hash.html";
 
         // Cache file doesn't exist!
         if ( !is_readable( $file ) ) {
