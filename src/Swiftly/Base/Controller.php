@@ -60,9 +60,17 @@ Abstract Class Controller
      */
     public function getModel( string $name ) : ?Model
     {
-        if ( !isset( $this->models[$name] ) ) {
-            $this->models[$name] = $this->createModel( $name );
+        if ( isset( $this->models[$name] ) ) {
+            return $this->models[$name];
         }
+
+        $model = $this->createModel( $name );
+
+        if ( $model === null ) {
+            return null;
+        }
+
+        $this->models[$name] = $model;
 
         return $this->models[$name];
     }
@@ -90,8 +98,16 @@ Abstract Class Controller
 
         // Allows model to have dependency injection
         $this->dependencies->bind( $name, $name );
+        $model = $this->dependencies->resolve( $name );
 
-        return $this->dependencies->resolve( $name );
+        if ( !$model instanceof Model ) {
+            return null;
+        }
+
+        return ( $model instanceof Model
+            ? $model
+            : null
+        );
     }
 
     /**
