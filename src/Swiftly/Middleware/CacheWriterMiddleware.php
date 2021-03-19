@@ -57,7 +57,7 @@ Class CacheWriterMiddleware Implements MiddlewareInterface
         }
 
         // Failed to make directory
-        if ( !is_dir( $dir ) && !@mkdir( $dir, 0644, true ) ) {
+        if ( !is_dir( $dir ) && !@mkdir( $dir, 0664, true ) ) {
             return $next( $request, $response );
         }
 
