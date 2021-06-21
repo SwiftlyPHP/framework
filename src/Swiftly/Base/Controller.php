@@ -100,10 +100,6 @@ Abstract Class Controller
         $this->dependencies->bind( $name, $name );
         $model = $this->dependencies->resolve( $name );
 
-        if ( !$model instanceof Model ) {
-            return null;
-        }
-
         return ( $model instanceof Model
             ? $model
             : null
