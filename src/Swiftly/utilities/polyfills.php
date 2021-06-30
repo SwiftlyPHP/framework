@@ -21,7 +21,7 @@ if ( !interface_exists( 'Stringable', false ) ) {
 if ( !function_exists( 'apache_request_headers' ) ) {
 
     /**
-     * Fetch all HTTP request headers from the current request
+     * Fetch all HTTP headers from the current request
      *
      * @return array HTTP headers
      */
