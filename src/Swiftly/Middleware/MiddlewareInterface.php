@@ -18,6 +18,8 @@ Interface MiddlewareInterface
     /**
      * Execute this middleware
      *
+     * @psalm-param callable(Request,Response,callable):Response $next
+     *
      * @param Request $request   HTTP request
      * @param Response $response HTTP response
      * @param callable $next     Next middleware
