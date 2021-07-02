@@ -1,6 +1,7 @@
 <?php
 
 use Swiftly\Base\Controller;
+use Swiftly\Http\Server\Response;
 
 /**
  * The default controller that handles the homepage
@@ -12,8 +13,10 @@ Class Home Extends Controller
 
     /**
      * Load the homepage template
+     *
+     * @return Response HTTP response
      */
-    public function index()
+    public function index() : Response
     {
         // Output a response
         return $this->output( 'home', [
@@ -26,8 +29,9 @@ Class Home Extends Controller
      * Says hello to the given name
      *
      * @param string $name User name
+     * @return Response    HTTP response
      */
-    public function hello( string $name )
+    public function hello( string $name ) : Response
     {
         // Pass the named paramater in
         return $this->output( 'home', [
