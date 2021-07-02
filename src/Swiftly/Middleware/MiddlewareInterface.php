@@ -2,10 +2,8 @@
 
 namespace Swiftly\Middleware;
 
-use Swiftly\Http\Server\{
-    Request,
-    Response
-};
+use Swiftly\Http\Server\Request;
+use Swiftly\Http\Server\Response;
 
 /**
  * Interface for middleware components

@@ -2,15 +2,11 @@
 
 namespace Swiftly\Base;
 
-use Swiftly\{
-    Template\TemplateInterface,
-    Dependency\Container,
-    Base\Model
-};
-use Swiftly\Http\Server\{
-    Response,
-    RedirectResponse
-};
+use Swiftly\Template\TemplateInterface;
+use Swiftly\Dependency\Container;
+use Swiftly\Base\Model;
+use Swiftly\Http\Server\Response;
+use Swiftly\Http\Server\RedirectResponse;
 
 use function is_file;
 use function class_exists;

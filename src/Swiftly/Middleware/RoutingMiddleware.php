@@ -2,14 +2,10 @@
 
 namespace Swiftly\Middleware;
 
-use Swiftly\Dependency\{
-    Container,
-    Service
-};
-use Swiftly\Http\Server\{
-    Request,
-    Response
-};
+use Swiftly\Dependency\Container;
+use Swiftly\Dependency\Service;
+use Swiftly\Http\Server\Request;
+use Swiftly\Http\Server\Response;
 use Swiftly\Middleware\MiddlewareInterface;
 use Swiftly\Routing\Dispatcher;
 

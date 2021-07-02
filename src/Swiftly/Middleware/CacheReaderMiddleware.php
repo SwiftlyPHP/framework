@@ -3,10 +3,8 @@
 namespace Swiftly\Middleware;
 
 use Swiftly\Config\Store;
-use Swiftly\Http\Server\{
-    Request,
-    Response
-};
+use Swiftly\Http\Server\Request;
+use Swiftly\Http\Server\Response;
 use Swiftly\Middleware\MiddlewareInterface;
 
 use function strtolower;
