@@ -139,7 +139,7 @@ Abstract Class Controller
      *
      * @param string $url Redirect location
      * @param int $code   (Optional) HTTP code
-     * @return void       N/a
+     * @return never
      */
     public function redirect( string $url, int $code = 303 ) : void
     {
