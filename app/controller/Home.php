@@ -1,6 +1,6 @@
 <?php
 
-use Swiftly\Base\Controller;
+use Swiftly\Base\AbstractController;
 use Swiftly\Http\Server\Response;
 
 /**
@@ -8,7 +8,7 @@ use Swiftly\Http\Server\Response;
  *
  * @author clvarley
  */
-Class Home Extends Controller
+Class Home Extends AbstractController
 {
 
     /**

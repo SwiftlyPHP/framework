@@ -23,7 +23,7 @@ use const APP_VIEW;
  *
  * @author clvarley
  */
-Abstract Class Controller
+Abstract Class AbstractController
 {
 
     /**
