@@ -49,7 +49,7 @@ Class Php Implements TemplateInterface
     {
         $template = "$template.html.php";
 
-        if ( is_readable( $template ) ) {
+        if ( !is_readable( $template ) ) {
             return '';
         }
 
