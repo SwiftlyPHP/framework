@@ -9,7 +9,7 @@ use Swiftly\Database\Wrapper;
  *
  * @author clvarley
  */
-Abstract Class Model
+Abstract Class AbstractModel
 {
 
     /**

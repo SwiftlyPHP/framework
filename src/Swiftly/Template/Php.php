@@ -68,7 +68,10 @@ Class Php Implements TemplateInterface
      */
     public function __get( string $name )
     {
-        return ( isset( $this->data[$name] ) ? $this->data[$name] : '' );
+        return ( isset( $this->data[$name] )
+            ? $this->data[$name]
+            : ''
+        );
     }
 
     /**

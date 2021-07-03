@@ -5,38 +5,29 @@
  * @author clvarley
  */
 
-
 /**
- * Uppercases the first letter of the string
+ * Checks to see if every element in the array satisfies the callback
  *
- * @param string $subject Subject string
- * @return string         Result
+ * Returns false is any element fails the test of the $callback function,
+ * otherwise returns true.
+ *
+ * @psalm-param array<array-key,mixed> $subject
+ * @psalm-param callable(mixed):bool $callback
+ *
+ * @param mixed[] $subject   Subject array
+ * @param callable $callback Callback function
+ * @return bool              Satisfies callback?
  */
-function mb_ucfirst( string $subject ) : string
+function array_satisfies( array $subject, callable $callback ) : bool
 {
-    if ( !empty( $subject ) ) {
-        $subject = mb_strtoupper( mb_substr( $subject, 0, 1 ) ) . mb_substr( $subject, 1 );
+    foreach ( $subject as $item ) {
+        if ( !$callback( $item ) ) {
+            return false;
+        }
     }
 
-    return $subject;
+    return true;
 }
-
-
-/**
- * Lowercases the first letter of the string
- *
- * @param string $subject Subject string
- * @return string         Result
- */
-function mb_lcfirst( string $subject ) : string
-{
-    if ( !empty( $subject ) ) {
-        $subject = mb_strtolower( mb_substr( $subject, 0, 1 ) ) . mb_substr( $subject, 1 );
-    }
-
-    return $subject;
-}
-
 
 /**
  * Formats a human readable string for this number of bytes
@@ -82,28 +73,4 @@ function format_bytes( int $bytes ) : string
     }
 
     return $formatted;
-}
-
-
-/**
- * Checks to see if every element in the array satisfies the callback
- *
- * Returns false is any element fails the test of the $callback function,
- * otherwise returns true.
- *
- * @psalm-param callable(mixed):bool $callback
- *
- * @param mixed[] $subject   Subject array
- * @param callable $callback Callback function
- * @return bool              Satisfies callback?
- */
-function array_satisfies( array $subject, callable $callback ) : bool
-{
-    foreach ( $subject as $item ) {
-        if ( !$callback( $item ) ) {
-            return false;
-        }
-    }
-
-    return true;
 }

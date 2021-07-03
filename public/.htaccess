@@ -2,7 +2,7 @@
 Options -Indexes
 
 # Prevent Direct Access to Swiftly system files
-<FilesMatch "\.(log|env|json)$">
+<FilesMatch "\.(sql|log|env|json)$">
   Require all denied
 </FilesMatch>
 
