@@ -14,7 +14,7 @@ use Swiftly\Routing\Dispatcher;
  *
  * @author clvarley
  */
-Class RoutingMiddleware
+Class RoutingMiddleware Implements MiddlewareInterface
 {
 
     /**

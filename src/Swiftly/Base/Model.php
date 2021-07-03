@@ -2,7 +2,7 @@
 
 namespace Swiftly\Base;
 
-use Swiftly\Database\Database;
+use Swiftly\Database\Wrapper;
 
 /**
  * The abstract class all models should inherit
@@ -13,16 +13,16 @@ Abstract Class Model
 {
 
     /**
-     * @var Database $database DB wrapper
+     * @var Wrapper $database DB wrapper
      */
     protected $database;
 
     /**
      * Pass the db object into the model
      *
-     * @param Database $database DB wrapper
+     * @param Wrapper $database DB wrapper
      */
-    public function __construct( Database $database )
+    public function __construct( Wrapper $database )
     {
         $this->database = $database;
     }

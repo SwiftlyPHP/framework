@@ -17,11 +17,11 @@ use Swiftly\Http\Server\{
     Response
 };
 use Swiftly\Database\{
-    Database,
+    Wrapper,
     AdapterInterface,
-    Adapters\Mysql,
-    Adapters\Postgres,
-    Adapters\Sqlite
+    Adapter\MysqlAdapter,
+    Adapter\PostgresAdapter,
+    Adapter\SqliteAdapter
 };
 use Swiftly\Middleware\{
     CacheReaderMiddleware,
@@ -30,6 +30,9 @@ use Swiftly\Middleware\{
     RoutingMiddleware,
     Runner
 };
+
+use function is_file;
+use function mb_strtolower;
 
 use const APP_SWIFTLY;
 use const APP_CONFIG;
@@ -90,7 +93,7 @@ Class Web
         $response = new Response;
 
         // Load route.json and dispatch
-        if ( \is_file( APP_CONFIG . 'routes.json' ) ) {
+        if ( is_file( APP_CONFIG . 'routes.json' ) ) {
             $router->load( APP_CONFIG . 'routes.json' );
         }
 
@@ -118,20 +121,20 @@ Class Web
     private function bindDatabase( Container $services, array $config ) : void
     {
         // Get the correct adapter
-        switch( \mb_strtolower( $config['adapter'] ) ) {
+        switch( mb_strtolower( $config['adapter'] ) ) {
             case 'sqlite':
-                $adapter = Sqlite::class;
+                $adapter = SqliteAdapter::class;
                 break;
 
             case 'postgres':
             case 'postgresql':
-                $adapter = Postgres::class;
+                $adapter = PostgresAdapter::class;
                 break;
 
             case 'mysql':
             case 'mysqli':
             default:
-                $adapter = Mysql::class;
+                $adapter = MysqlAdapter::class;
                 break;
         }
 
