@@ -4,13 +4,12 @@
 *.env
 
 # Cache files
-data/cache
+/data/cache
 
 # Composer
-vendor
-composer.lock
-composer.json
+/vendor
+/composer.lock
 
 # Analysis
-psalm.xml
-psalm.php
+/psalm.xml
+/psalm.php

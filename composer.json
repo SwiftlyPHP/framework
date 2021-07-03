@@ -1,0 +1,7 @@
+{
+    "name": "swiftly/framework",
+    "description": "A simple PHP framework.",
+    "type": "project",
+    "license": "MIT",
+    "require": {}
+}
