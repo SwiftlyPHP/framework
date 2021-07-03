@@ -3,33 +3,26 @@
 namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
-use Swiftly\Routing\{
-    Dispatcher,
-    Route
-};
-use Swiftly\Dependency\{
-    Container,
-    Service,
-    Loader\PhpLoader
-};
-use Swiftly\Http\Server\{
-    Request,
-    Response
-};
-use Swiftly\Database\{
-    Database,
-    AdapterInterface,
-    Adapters\Mysql,
-    Adapters\Postgres,
-    Adapters\Sqlite
-};
-use Swiftly\Middleware\{
-    CacheReaderMiddleware,
-    CacheWriterMiddleware,
-    ControllerMiddleware,
-    RoutingMiddleware,
-    Runner
-};
+use Swiftly\Routing\Dispatcher;
+use Swiftly\Routing\Route;
+use Swiftly\Dependency\Container;
+use Swiftly\Dependency\Service;
+use Swiftly\Dependency\Loader\PhpLoader;
+use Swiftly\Http\Server\Request;
+use Swiftly\Http\Server\Response;
+use Swiftly\Database\Wrapper;
+use Swiftly\Database\AdapterInterface;
+use Swiftly\Database\Adapter\MysqlAdapter;
+use Swiftly\Database\Adapter\PostgresAdapter;
+use Swiftly\Database\Adapter\SqliteAdapter;
+use Swiftly\Middleware\CacheReaderMiddleware;
+use Swiftly\Middleware\CacheWriterMiddleware;
+use Swiftly\Middleware\ControllerMiddleware;
+use Swiftly\Middleware\RoutingMiddleware;
+use Swiftly\Middleware\Runner;
+
+use function is_file;
+use function mb_strtolower;
 
 use const APP_SWIFTLY;
 use const APP_CONFIG;
@@ -90,7 +83,7 @@ Class Web
         $response = new Response;
 
         // Load route.json and dispatch
-        if ( \is_file( APP_CONFIG . 'routes.json' ) ) {
+        if ( is_file( APP_CONFIG . 'routes.json' ) ) {
             $router->load( APP_CONFIG . 'routes.json' );
         }
 
@@ -118,20 +111,20 @@ Class Web
     private function bindDatabase( Container $services, array $config ) : void
     {
         // Get the correct adapter
-        switch( \mb_strtolower( $config['adapter'] ) ) {
+        switch( mb_strtolower( $config['adapter'] ) ) {
             case 'sqlite':
-                $adapter = Sqlite::class;
+                $adapter = SqliteAdapter::class;
                 break;
 
             case 'postgres':
             case 'postgresql':
-                $adapter = Postgres::class;
+                $adapter = PostgresAdapter::class;
                 break;
 
             case 'mysql':
             case 'mysqli':
             default:
-                $adapter = Mysql::class;
+                $adapter = MysqlAdapter::class;
                 break;
         }
 

@@ -8,7 +8,6 @@
     phpVersion="7.1"
 >
     <projectFiles>
-        <file name="definitions.php" />
         <file name="public/index.php" />
         <directory name="src" />
         <ignoreFiles>
@@ -16,4 +15,7 @@
             <directory name="app/view" />
         </ignoreFiles>
     </projectFiles>
+    <stubs>
+        <file name="definitions.php" />
+    </stubs>
 </psalm>

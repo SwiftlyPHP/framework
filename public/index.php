@@ -20,21 +20,13 @@ require_once dirname( __DIR__ ) . '/definitions.php';
 
 
 // Make sure we are running a compatable PHP version
-if ( defined( 'SWIFTLY_MIN_PHP' ) && version_compare( PHP_VERSION, SWIFTLY_MIN_PHP ) < 0 ) {
+if ( version_compare( PHP_VERSION, SWIFTLY_MIN_PHP ) < 0 ) {
     exit( 'Swiftly requires PHP version ' . SWIFTLY_MIN_PHP . ' or above to run!' );
 }
 
 
-// Load utility functions & autoloader
-require_once APP_SWIFTLY . 'utilities/functions.php';
-require_once APP_SWIFTLY . 'utilities/polyfills.php';
-require_once APP_SWIFTLY . 'utilities/Autoloader.php';
-
-
-// Get the autoloader
-$autoloader = new Autoloader();
-$autoloader->addPrefix( '*', APP_CONTROLLER );
-$autoloader->addPrefix( 'Swiftly', APP_SWIFTLY );
+// Let composer do it's thing
+require_once APP_ROOT . 'vendor/autoload.php';
 
 
 // Load the config
@@ -81,4 +73,5 @@ error_reporting( $error_level );
 
 
 // Start!
-( new Swiftly\Application\Web( $config ) )->start();
+$app = new Swiftly\Application\Web( $config );
+$app->start();
