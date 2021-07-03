@@ -9,7 +9,3 @@
 # Composer
 /vendor
 /composer.lock
-
-# Analysis
-/psalm.xml
-/psalm.php
