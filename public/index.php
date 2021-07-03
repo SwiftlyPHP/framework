@@ -25,10 +25,8 @@ if ( defined( 'SWIFTLY_MIN_PHP' ) && version_compare( PHP_VERSION, SWIFTLY_MIN_P
 }
 
 
-// Load utility functions & autoloader
-require_once APP_SWIFTLY . 'utilities/functions.php';
-require_once APP_SWIFTLY . 'utilities/polyfills.php';
-require_once APP_SWIFTLY . 'utilities/Autoloader.php';
+// Let composer do it's thing
+require_once APP_ROOT . 'vendor/autoload.php';
 
 
 // Get the autoloader
