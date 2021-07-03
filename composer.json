@@ -6,7 +6,11 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        
+        "swiftly/http": "dev-main",
+        "swiftly/config": "dev-main",
+        "swiftly/dependency": "dev-main",
+        "swiftly/routing": "dev-main",
+        "swiftly/database": "dev-main"
     },
     "require-dev": {
         "vimeo/psalm": "^4.8"
@@ -15,7 +19,9 @@
         "psr-4": {
             "Swiftly\\Base\\": "src/Swiftly/Base/",
             "Swiftly\\Application\\": "src/Swiftly/Application/",
-            "Swiftly\\Middleware\\": "src/Swiftly/Middleware/"
+            "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
+            "Swiftly\\Template\\": "src/Swiftly/Template/",
+            "": "app/controller/"
         },
         "files": [
             "src/Swiftly/utilities/functions.php",

@@ -22,10 +22,10 @@ return [
     Swiftly\Http\Server\Response::class => Swiftly\Http\Server\Response::class,
 
     // Database
-    Swiftly\Database\Database::class => [
+    Swiftly\Database\Wrapper::class => [
         'handler'   => function ( Swiftly\Database\AdapterInterface $db ) {
-            $database = new Swiftly\Database\Database( $db );
-            $database->open();
+            $database = new Swiftly\Database\Wrapper( $db );
+            $database->connect();
             return $database;
         }
     ],
