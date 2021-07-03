@@ -1,7 +1,25 @@
 {
     "name": "swiftly/framework",
     "description": "A simple PHP framework.",
+    "homepage": "https://github.com/SwiftlyPHP/framework",
+    "readme": "README.md",
     "type": "project",
     "license": "MIT",
-    "require": {}
+    "require": {
+        
+    },
+    "require-dev": {
+        "vimeo/psalm": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Swiftly\\Base\\": "src/Swiftly/Base/",
+            "Swiftly\\Application\\": "src/Swiftly/Application/",
+            "Swiftly\\Middleware\\": "src/Swiftly/Middleware/"
+        },
+        "files": [
+            "src/Swiftly/utilities/functions.php",
+            "src/Swiftly/utilities/polyfills.php"
+        ]
+    }
 }
