@@ -33,7 +33,7 @@ Abstract Class AbstractController
     private $renderer;
 
     /**
-     * @var Model[] $models DB Models
+     * @var AbstractModel[] $models DB Models
      */
     private $models = [];
 
