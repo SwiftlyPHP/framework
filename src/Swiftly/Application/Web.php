@@ -3,33 +3,23 @@
 namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
-use Swiftly\Routing\{
-    Dispatcher,
-    Route
-};
-use Swiftly\Dependency\{
-    Container,
-    Service,
-    Loader\PhpLoader
-};
-use Swiftly\Http\Server\{
-    Request,
-    Response
-};
-use Swiftly\Database\{
-    Wrapper,
-    AdapterInterface,
-    Adapter\MysqlAdapter,
-    Adapter\PostgresAdapter,
-    Adapter\SqliteAdapter
-};
-use Swiftly\Middleware\{
-    CacheReaderMiddleware,
-    CacheWriterMiddleware,
-    ControllerMiddleware,
-    RoutingMiddleware,
-    Runner
-};
+use Swiftly\Routing\Dispatcher;
+use Swiftly\Routing\Route;
+use Swiftly\Dependency\Container;
+use Swiftly\Dependency\Service;
+use Swiftly\Dependency\Loader\PhpLoader;
+use Swiftly\Http\Server\Request;
+use Swiftly\Http\Server\Response;
+use Swiftly\Database\Wrapper;
+use Swiftly\Database\AdapterInterface;
+use Swiftly\Database\Adapter\MysqlAdapter;
+use Swiftly\Database\Adapter\PostgresAdapter;
+use Swiftly\Database\Adapter\SqliteAdapter;
+use Swiftly\Middleware\CacheReaderMiddleware;
+use Swiftly\Middleware\CacheWriterMiddleware;
+use Swiftly\Middleware\ControllerMiddleware;
+use Swiftly\Middleware\RoutingMiddleware;
+use Swiftly\Middleware\Runner;
 
 use function is_file;
 use function mb_strtolower;
