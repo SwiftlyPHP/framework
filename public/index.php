@@ -29,12 +29,6 @@ if ( defined( 'SWIFTLY_MIN_PHP' ) && version_compare( PHP_VERSION, SWIFTLY_MIN_P
 require_once APP_ROOT . 'vendor/autoload.php';
 
 
-// Get the autoloader
-$autoloader = new Autoloader();
-$autoloader->addPrefix( '*', APP_CONTROLLER );
-$autoloader->addPrefix( 'Swiftly', APP_SWIFTLY );
-
-
 // Load the config
 $config = ( new Swiftly\Config\Store )->load(
     new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . 'app.json' )
