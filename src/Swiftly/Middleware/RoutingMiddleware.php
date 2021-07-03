@@ -2,12 +2,12 @@
 
 namespace Swiftly\Middleware;
 
-use Swiftly\Dependency\Container;
-use Swiftly\Dependency\Service;
-use Swiftly\Http\Server\Request;
-use Swiftly\Http\Server\Response;
 use Swiftly\Middleware\MiddlewareInterface;
 use Swiftly\Routing\Dispatcher;
+use Swiftly\Dependency\Container;
+use Swiftly\Http\Server\Request;
+use Swiftly\Http\Server\Response;
+use Swiftly\Base\AbstractController;
 
 /**
  * Middleware responsible for matching routes to controllers
@@ -61,7 +61,7 @@ Class RoutingMiddleware Implements MiddlewareInterface
 
         // Expose controller to later middleware
         $this->container->bind(
-            Service::class,
+            AbstractController::class,
             $route->callable
         )->parameters(
             $route->args
