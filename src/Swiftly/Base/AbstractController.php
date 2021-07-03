@@ -4,7 +4,7 @@ namespace Swiftly\Base;
 
 use Swiftly\Template\TemplateInterface;
 use Swiftly\Dependency\Container;
-use Swiftly\Base\Model;
+use Swiftly\Base\AbstractModel;
 use Swiftly\Http\Server\Response;
 use Swiftly\Http\Server\RedirectResponse;
 
@@ -52,9 +52,9 @@ Abstract Class AbstractController
      * Attempts to get a DB model
      *
      * @param string $name Model name
-     * @return Model|null  DB model (Or null)
+     * @return AbstractModel|null  DB model (Or null)
      */
-    public function getModel( string $name ) : ?Model
+    public function getModel( string $name ) : ?AbstractModel
     {
         if ( isset( $this->models[$name] ) ) {
             return $this->models[$name];
@@ -75,9 +75,9 @@ Abstract Class AbstractController
      * Tries to create a model of the given type
      *
      * @param string $name Model name
-     * @return Model|null  Db model (Or null)
+     * @return AbstractModel|null  Db model (Or null)
      */
-    private function createModel( string $name ) : ?Model
+    private function createModel( string $name ) : ?AbstractModel
     {
         $file = APP_MODEL . "$name.php";
 
@@ -96,7 +96,7 @@ Abstract Class AbstractController
         $this->dependencies->bind( $name, $name );
         $model = $this->dependencies->resolve( $name );
 
-        return ( $model instanceof Model
+        return ( $model instanceof AbstractModel
             ? $model
             : null
         );
