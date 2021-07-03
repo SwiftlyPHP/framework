@@ -3,8 +3,9 @@
 *.log
 *.env
 
-# Cache files
+# Cache files & db exports
 /data/cache
+/data/sql
 
 # Composer
 /vendor

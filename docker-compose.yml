@@ -28,7 +28,7 @@ services:
       MYSQL_USER: "username"
       MYSQL_PASSWORD: "secret"
     volumes:
-      - ./data/development.sql:/docker-entrypoint-initdb.d/development.sql
+      - ./data/sql/development.sql:/docker-entrypoint-initdb.d/development.sql
     networks:
       - net
 networks:
