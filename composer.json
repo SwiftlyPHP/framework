@@ -9,7 +9,8 @@
         "swiftly/http": "dev-main",
         "swiftly/config": "dev-main",
         "swiftly/dependency": "dev-main",
-        "swiftly/routing": "dev-main"
+        "swiftly/routing": "dev-main",
+        "swiftly/database": "dev-main"
     },
     "require-dev": {
         "vimeo/psalm": "^4.8"
