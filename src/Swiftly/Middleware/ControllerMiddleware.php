@@ -2,11 +2,11 @@
 
 namespace Swiftly\Middleware;
 
+use Swiftly\Middleware\MiddlewareInterface;
+use Swiftly\Dependency\Container;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
-use Swiftly\Dependency\Container;
-use Swiftly\Dependency\Service;
-use Swiftly\Middleware\MiddlewareInterface;
+use Swiftly\Base\AbstractController;
 
 /**
  * Middleware responsible for calling the controller
@@ -38,7 +38,7 @@ Class ControllerMiddleware Implements MiddlewareInterface
      */
     public function run( Request $request, Response $response, callable $next ) : Response
     {
-        $result = $this->container->resolve( Service::class );
+        $result = $this->container->resolve( AbstractController::class );
 
         // Route matched but no response?
         if ( empty( $result ) || !$result instanceof Response ) {
