@@ -33,6 +33,8 @@ Abstract Class AbstractController
     private $renderer;
 
     /**
+     * @psalm-var array<class-string,AbstractModel> $models
+     *
      * @var AbstractModel[] $models DB Models
      */
     private $models = [];
@@ -50,6 +52,8 @@ Abstract Class AbstractController
 
     /**
      * Attempts to get a DB model
+     *
+     * @psalm-param class-string $name
      *
      * @param string $name Model name
      * @return AbstractModel|null  DB model (Or null)
@@ -133,9 +137,11 @@ Abstract Class AbstractController
     /**
      * Redirect the user to a new location
      *
+     * @psalm-return never
+     *
      * @param string $url Redirect location
      * @param int $code   (Optional) HTTP code
-     * @return never
+     * @return void
      */
     public function redirect( string $url, int $code = 303 ) : void
     {
