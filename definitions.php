@@ -6,41 +6,41 @@
  * @author clvarley
  */
 
-// Swiftly version
+/** Swiftly version */
 define( 'SWIFTLY_VERSION', '1.0.0' );
 
-// Minimum PHP version
+/** Minimum PHP version */
 define( 'SWIFTLY_MIN_PHP', '7.1.0' );
 
-// Base directory
+/** Base directory */
 define( 'APP_ROOT', __DIR__ . '/' );
 
-// Public folder
+/** Public folder */
 define( 'APP_PUBLIC', APP_ROOT . 'public/' );
 
-// Config folder
+/** Config folder */
 define( 'APP_CONFIG', APP_ROOT . 'config/' );
 
-// Var folder
+/** Var folder */
 define( 'APP_DATA', APP_ROOT . 'data/' );
 
-// Source folder
+/** Source folder */
 define( 'APP_SRC', APP_ROOT . 'src/' );
 
-// Swiftly source
+/** Swiftly source */
 define( 'APP_SWIFTLY', APP_ROOT . 'src/Swiftly/' );
 
-// App folder
+/** App folder */
 define( 'APP_BASE', APP_ROOT . 'app/' );
 
-// Controller folder
+/** Controller folder */
 define( 'APP_CONTROLLER', APP_ROOT . 'app/controller/' );
 
-// Template folder
+/** Template folder */
 define( 'APP_VIEW', APP_ROOT . 'app/view/' );
 
-// Models folder
+/** Models folder */
 define( 'APP_MODEL', APP_ROOT . 'app/model/' );
 
-// Entities/services folder
+/** Entities folder */
 define( 'APP_ENTITY', APP_ROOT . 'app/entity/' );

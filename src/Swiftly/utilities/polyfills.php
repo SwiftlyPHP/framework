@@ -23,6 +23,8 @@ if ( !function_exists( 'apache_request_headers' ) ) {
     /**
      * Fetch all HTTP headers from the current request
      *
+     * @psalm-return array<string,string>
+     *
      * @return array HTTP headers
      */
     function apache_request_headers() : array

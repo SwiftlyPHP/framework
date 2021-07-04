@@ -37,8 +37,7 @@ $config = ( new Swiftly\Config\Store )->load(
 
 // Set the encoding
 if ( $config->has( 'core.encoding' ) ) {
-    mb_internal_encoding( $config->get( 'core.encoding' ) );
-    mb_http_output( $config->get( 'core.encoding' ) );
+    mb_internal_encoding( (string)$config->get( 'core.encoding' ) );
 }
 
 
