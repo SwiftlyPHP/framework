@@ -41,7 +41,7 @@ Class ControllerMiddleware Implements MiddlewareInterface
         $result = $this->container->resolve( AbstractController::class );
 
         // Route matched but no response?
-        if ( empty( $result ) || !$result instanceof Response ) {
+        if ( !$result instanceof Response ) {
             $result = new Response( '', 500 );
         }
 
