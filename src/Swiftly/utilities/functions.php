@@ -11,8 +11,9 @@
  * Returns false is any element fails the test of the $callback function,
  * otherwise returns true.
  *
- * @psalm-param array<array-key,mixed> $subject
- * @psalm-param callable(mixed):bool $callback
+ * @template T
+ * @psalm-param array<array-key,T> $subject
+ * @psalm-param callable(T):bool $callback
  *
  * @param mixed[] $subject   Subject array
  * @param callable $callback Callback function
