@@ -7,40 +7,40 @@
  */
 
 /** Swiftly version */
-define( 'SWIFTLY_VERSION', '1.0.0' );
+const SWIFTLY_VERSION = '1.0.0';
 
 /** Minimum PHP version */
-define( 'SWIFTLY_MIN_PHP', '7.1.0' );
+const SWIFTLY_MIN_PHP = '7.1.0';
 
 /** Base directory */
-define( 'APP_ROOT', __DIR__ . '/' );
+const APP_ROOT = __DIR__ . '/';
 
 /** Public folder */
-define( 'APP_PUBLIC', APP_ROOT . 'public/' );
+const APP_PUBLIC = APP_ROOT . 'public/';
 
 /** Config folder */
-define( 'APP_CONFIG', APP_ROOT . 'config/' );
+const APP_CONFIG = APP_ROOT . 'config/';
 
 /** Var folder */
-define( 'APP_DATA', APP_ROOT . 'data/' );
+const APP_DATA = APP_ROOT . 'data/';
 
 /** Source folder */
-define( 'APP_SRC', APP_ROOT . 'src/' );
+const APP_SRC = APP_ROOT . 'src/';
 
 /** Swiftly source */
-define( 'APP_SWIFTLY', APP_ROOT . 'src/Swiftly/' );
+const APP_SWIFTLY = APP_ROOT . 'src/Swiftly/';
 
 /** App folder */
-define( 'APP_BASE', APP_ROOT . 'app/' );
+const APP_BASE = APP_ROOT . 'app/';
 
 /** Controller folder */
-define( 'APP_CONTROLLER', APP_ROOT . 'app/controller/' );
+const APP_CONTROLLER = APP_ROOT . 'app/controller/';
 
 /** Template folder */
-define( 'APP_VIEW', APP_ROOT . 'app/view/' );
+const APP_VIEW = APP_ROOT . 'app/view/';
 
 /** Models folder */
-define( 'APP_MODEL', APP_ROOT . 'app/model/' );
+const APP_MODEL = APP_ROOT . 'app/model/';
 
 /** Entities folder */
-define( 'APP_ENTITY', APP_ROOT . 'app/entity/' );
+const APP_ENTITY = APP_ROOT . 'app/entity/';
