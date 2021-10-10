@@ -19,7 +19,6 @@ return [
     Swiftly\Http\Server\Request::class => [
         'handler' => [ Swiftly\Http\Server\RequestFactory::class, "fromGlobals" ]
     ],
-    Swiftly\Http\Server\Response::class => Swiftly\Http\Server\Response::class,
 
     // Database
     Swiftly\Database\Wrapper::class => [

@@ -7,7 +7,6 @@ use Swiftly\Routing\Dispatcher;
 use Swiftly\Dependency\Container;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
-use Swiftly\Base\AbstractController;
 
 /**
  * Middleware responsible for matching routes to controllers
@@ -61,7 +60,7 @@ Class RoutingMiddleware Implements MiddlewareInterface
 
         // Expose controller to later middleware
         $this->container->bind(
-            AbstractController::class,
+            Response::class,
             $route->callable
         )->parameters(
             $route->args

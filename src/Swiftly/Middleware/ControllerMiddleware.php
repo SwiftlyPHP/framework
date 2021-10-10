@@ -6,7 +6,7 @@ use Swiftly\Middleware\MiddlewareInterface;
 use Swiftly\Dependency\Container;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
-use Swiftly\Base\AbstractController;
+use Swiftly\Dependency\Exception\NotFoundException;
 
 /**
  * Middleware responsible for calling the controller
@@ -38,7 +38,7 @@ Class ControllerMiddleware Implements MiddlewareInterface
      */
     public function run( Request $request, Response $response, callable $next ) : Response
     {
-        $result = $this->container->resolve( AbstractController::class );
+        $result = $this->container->resolve( Response::class );
 
         // Route matched but no response?
         if ( !$result instanceof Response ) {
