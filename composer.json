@@ -10,7 +10,8 @@
         "swiftly/config": "dev-main",
         "swiftly/dependency": "dev-main",
         "swiftly/routing": "dev-main",
-        "swiftly/database": "dev-main"
+        "swiftly/database": "dev-main",
+        "vlucas/phpdotenv": "^5.3"
     },
     "require-dev": {
         "vimeo/psalm": "^4.8"
