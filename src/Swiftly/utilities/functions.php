@@ -12,7 +12,7 @@
  * otherwise returns true.
  *
  * @template T
- * @psalm-param array<array-key,T> $subject
+ * @psalm-param T[] $subject
  * @psalm-param callable(T):bool $callback
  *
  * @param mixed[] $subject   Subject array
