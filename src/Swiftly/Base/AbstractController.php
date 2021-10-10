@@ -79,6 +79,8 @@ Abstract Class AbstractController
     /**
      * Tries to create a model of the given type
      *
+     * @psalm-param class-string $name
+     *
      * @param string $name Model name
      * @return AbstractModel|null  Db model (Or null)
      */
@@ -93,6 +95,7 @@ Abstract Class AbstractController
         // TODO: This needs a lot of work!
         include $file;
 
+        /** @psalm-suppress DocblockTypeContradiction */
         if ( !class_exists( $name ) ) {
             return null;
         }
