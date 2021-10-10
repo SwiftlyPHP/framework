@@ -1,4 +1,4 @@
-FROM php:7.1.33-fpm-alpine3.10
+FROM php:7.1.33-fpm-alpine
 
 # Install required libraries
 RUN apk add --update --no-cache --virtual .ext-deps \
@@ -19,10 +19,8 @@ RUN apk add --no-cache \
     && docker-php-ext-install mbstring \
     && docker-php-ext-install gd \
     && docker-php-ext-install mysqli \
-    && docker-php-ext-install pgsql
-
-# Move project files into container
-COPY . /var/www/html/
+    && docker-php-ext-install pgsql \
+    && docker-php-ext-install opcache
 
 # Configure permissions for moved files
 # RUN find /var/www/html/ -type d -exec chmod 755 {} +

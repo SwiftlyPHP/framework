@@ -13,13 +13,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: swiftly/php
+    image: swiftly/php:7.1
     volumes:
      - .:/var/www/html
     networks:
      - net
   mysql:
-    image: mysql:5.7
+    image: mysql:latest
     ports:
       - "3306:3306"
     environment:
@@ -36,6 +36,4 @@ networks:
     driver: "bridge"
 volumes:
   mysqldata:
-    driver: "local"
-  redisdata:
     driver: "local"
