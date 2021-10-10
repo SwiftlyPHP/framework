@@ -5,6 +5,7 @@ namespace Swiftly\Base;
 use Swiftly\Template\TemplateInterface;
 use Swiftly\Dependency\Container;
 use Swiftly\Base\AbstractModel;
+use Swiftly\Http\Status;
 use Swiftly\Http\Server\Response;
 use Swiftly\Http\Server\RedirectResponse;
 
@@ -129,7 +130,7 @@ Abstract Class AbstractController
     {
         return new Response(
             $this->renderer->render( APP_VIEW . $template, $data ),
-            200,
+            Status::OK,
             []
         );
     }
@@ -137,13 +138,14 @@ Abstract Class AbstractController
     /**
      * Redirect the user to a new location
      *
+     * @psalm-param Status::* $code
      * @psalm-return never
      *
      * @param string $url Redirect location
      * @param int $code   (Optional) HTTP code
      * @return void
      */
-    public function redirect( string $url, int $code = 303 ) : void
+    public function redirect( string $url, int $code = Status::SEE_OTHER ) : void
     {
         $redirect = new RedirectResponse( $url, $code, [] );
         $redirect->send();
