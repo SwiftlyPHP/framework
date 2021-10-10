@@ -9,7 +9,6 @@ use Swiftly\Middleware\MiddlewareInterface;
 
 use function strtolower;
 use function strpos;
-use function is_string;
 use function rtrim;
 use function sha1;
 use function is_readable;
@@ -67,9 +66,9 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
         }
 
         // Custom directory?
-        $dir = $this->config->get( 'cache.root' );
+        $dir = (string)$this->config->get( 'cache.root' );
 
-        if ( !empty( $dir ) && is_string( $dir ) ) {
+        if ( !empty( $dir ) ) {
             $dir = APP_ROOT . rtrim( $dir, DIRECTORY_SEPARATOR );
         } else {
             $dir = APP_ROOT . 'data/cache/html';

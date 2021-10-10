@@ -11,7 +11,6 @@
         <file name="public/index.php" />
         <directory name="src" />
         <ignoreFiles>
-            <directory name="vendor" />
             <directory name="app/view" />
         </ignoreFiles>
     </projectFiles>
