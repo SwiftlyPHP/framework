@@ -1,0 +1,13 @@
+# Composer
+composer.lock
+vendor
+
+# Swiftly specific
+config
+data
+
+# Misc
+.git
+LICENSE
+README.md
+STYLE.md
