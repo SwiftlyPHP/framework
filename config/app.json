@@ -1,7 +1,6 @@
 {
     "core": {
-        "encoding": "UTF-8",
-        "environment": "dev",
+        "environment": "dev"
         "strict" : true,
         "warnings": true
     },
