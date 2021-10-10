@@ -104,6 +104,14 @@ Class Web
     /**
      * Binds the database adapter
      *
+     * @psalm-param array{
+     *  adapter:'sqlite'|'postgres'|'postgresql'|'mysql'|'mysqli',
+     *  host:string,
+     *  name?:string,
+     *  username?:string,
+     *  password?:string
+     * } $config
+     *
      * @param Container $services Dependency manager
      * @param array $config       Database config
      * @return void               N/a
