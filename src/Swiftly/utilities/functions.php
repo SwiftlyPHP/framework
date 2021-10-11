@@ -45,7 +45,7 @@ function format_bytes( int $bytes ) : string
 {
     $iterations = 4;
 
-    while( $bytes > 1024 && $iterations !== 0 ) {
+    while( $bytes >= 1024 && $iterations !== 0 ) {
         $bytes = $bytes / 1024;
         $iterations--;
     }
