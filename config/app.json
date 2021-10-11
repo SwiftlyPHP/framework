@@ -1,6 +1,6 @@
 {
     "core": {
-        "environment": "dev"
+        "environment": "dev",
         "strict" : true,
         "warnings": true
     },
