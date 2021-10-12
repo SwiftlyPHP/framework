@@ -33,6 +33,7 @@ require_once APP_ROOT . '/vendor/autoload.php';
 $config = ( new Swiftly\Config\Store )->load(
     new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . '/app.json' )
 );
+$config->set( 'app.root', APP_ROOT );
 
 
 // Set the encoding
