@@ -3,21 +3,19 @@
 namespace Swiftly\Template;
 
 use function is_readable;
+use function extract;
 use function ob_start;
 use function ob_get_clean;
 
+use const EXTR_PREFIX_SAME;
+
 /**
- * Renders a template using PHP
+ * Renders a single PHP template
  *
  * @author clvarley
  */
 Class Php Implements TemplateInterface
 {
-
-    /**
-     * @var array $data Template data
-     */
-    private $data = [];
 
     /**
      * @inheritdoc
@@ -30,69 +28,14 @@ Class Php Implements TemplateInterface
             return '';
         }
 
-        $this->data = $data;
+        // Stop templates accessing the $this variable
+        $render = static function ( array $data = [] ) use ($template) {
+            extract( $data, EXTR_PREFIX_SAME, '_' );
+            require $template;
+        };
 
         ob_start();
-            include $template;
-        $result = ob_get_clean() ?: '';
-
-        return $result;
-    }
-
-    /**
-     * Renders a partial template and returns the result
-     *
-     * @param string $template  Path to template
-     * @return string           Rendered template
-     */
-    public function renderPartial( string $template ) : string
-    {
-        $template = "$template.html.php";
-
-        if ( !is_readable( $template ) ) {
-            return '';
-        }
-
-        ob_start();
-            include $template;
-        $result = ob_get_clean();
-
-        return $result;
-    }
-
-    /**
-     * Provide support for direct access to `$this->data`
-     *
-     * @param string $name    Variable name
-     * @return mixed          The value
-     */
-    public function __get( string $name )
-    {
-        return ( isset( $this->data[$name] )
-            ? $this->data[$name]
-            : ''
-        );
-    }
-
-    /**
-     * Allows the setting of data values
-     *
-     * @param string $name  Variable name
-     * @param mixed $value  Variable value
-     */
-    public function __set( string $name, /* mixed */ $value )
-    {
-        $this->data[$name] = $value;
-    }
-
-    /**
-     * Provide support for isset() & empty()
-     *
-     * @param string $name    Variable name
-     * @return boolean        Isset?
-     */
-    public function __isset( string $name )
-    {
-        return ( isset( $this->data[$name] ) );
+        $render( $data );
+        return ob_get_clean() ?: '';
     }
 }
