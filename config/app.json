@@ -12,7 +12,7 @@
         "password": "secret"
     },
     "cache": {
-        "root": "data/cache/html",
+        "root": "/data/cache/html",
         "lifetime": 3600
     }
 }

@@ -86,7 +86,7 @@ Abstract Class AbstractController
      */
     private function createModel( string $name ) : ?AbstractModel
     {
-        $file = APP_MODEL . "$name.php";
+        $file = APP_MODEL . "/$name.php";
 
         if ( !is_file( $file ) ) {
             return null;
@@ -119,7 +119,7 @@ Abstract Class AbstractController
      */
     public function render( string $template, array $data = [] ) : string
     {
-        return $this->renderer->render( APP_VIEW . $template, $data );
+        return $this->renderer->render( APP_VIEW . '/' . $template, $data );
     }
 
     /**
@@ -132,7 +132,7 @@ Abstract Class AbstractController
     public function output( string $template, array $data = [] ) : Response
     {
         return new Response(
-            $this->renderer->render( APP_VIEW . $template, $data ),
+            $this->renderer->render( APP_VIEW . '/' . $template, $data ),
             Status::OK,
             []
         );

@@ -26,12 +26,12 @@ if ( version_compare( PHP_VERSION, SWIFTLY_MIN_PHP ) < 0 ) {
 
 
 // Let composer do it's thing
-require_once APP_ROOT . 'vendor/autoload.php';
+require_once APP_ROOT . '/vendor/autoload.php';
 
 
 // Load the config
 $config = ( new Swiftly\Config\Store )->load(
-    new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . 'app.json' )
+    new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . '/app.json' )
 );
 
 

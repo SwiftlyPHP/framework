@@ -13,34 +13,34 @@ const SWIFTLY_VERSION = '1.0.0';
 const SWIFTLY_MIN_PHP = '7.1.0';
 
 /** Base directory */
-const APP_ROOT = __DIR__ . '/';
+const APP_ROOT = __DIR__;
 
 /** Public folder */
-const APP_PUBLIC = APP_ROOT . 'public/';
+const APP_PUBLIC = APP_ROOT . '/public';
 
 /** Config folder */
-const APP_CONFIG = APP_ROOT . 'config/';
+const APP_CONFIG = APP_ROOT . '/config';
 
 /** Var folder */
-const APP_DATA = APP_ROOT . 'data/';
+const APP_DATA = APP_ROOT . '/data';
 
 /** Source folder */
-const APP_SRC = APP_ROOT . 'src/';
+const APP_SRC = APP_ROOT . '/src';
 
 /** Swiftly source */
-const APP_SWIFTLY = APP_ROOT . 'src/Swiftly/';
+const APP_SWIFTLY = APP_ROOT . '/src/Swiftly';
 
 /** App folder */
-const APP_BASE = APP_ROOT . 'app/';
+const APP_BASE = APP_ROOT . '/app';
 
 /** Controller folder */
-const APP_CONTROLLER = APP_ROOT . 'app/controller/';
+const APP_CONTROLLER = APP_ROOT . '/app/controller';
 
 /** Template folder */
-const APP_VIEW = APP_ROOT . 'app/view/';
+const APP_VIEW = APP_ROOT . '/app/view';
 
 /** Models folder */
-const APP_MODEL = APP_ROOT . 'app/model/';
+const APP_MODEL = APP_ROOT . '/app/model';
 
 /** Entities folder */
-const APP_ENTITY = APP_ROOT . 'app/entity/';
+const APP_ENTITY = APP_ROOT . '/app/entity';

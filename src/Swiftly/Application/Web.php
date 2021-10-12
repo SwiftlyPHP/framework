@@ -54,7 +54,7 @@ Class Web
     {
         $this->config = $config;
 
-        $services = new PhpLoader( APP_SWIFTLY . 'services.php'  );
+        $services = new PhpLoader( APP_SWIFTLY . '/services.php'  );
 
         // Register default services
         $this->dependencies = new Container;
@@ -83,8 +83,8 @@ Class Web
         $response = new Response;
 
         // Load route.json and dispatch
-        if ( is_file( APP_CONFIG . 'routes.json' ) ) {
-            $router->load( APP_CONFIG . 'routes.json' );
+        if ( is_file( APP_CONFIG . '/routes.json' ) ) {
+            $router->load( APP_CONFIG . '/routes.json' );
         }
 
         // Run startup middleware

@@ -71,7 +71,7 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
         if ( !empty( $dir ) ) {
             $dir = APP_ROOT . rtrim( $dir, DIRECTORY_SEPARATOR );
         } else {
-            $dir = APP_ROOT . 'data/cache/html';
+            $dir = APP_ROOT . '/data/cache/html';
         }
 
         $hash = sha1( $request->getPath() );
