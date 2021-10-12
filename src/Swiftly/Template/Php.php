@@ -29,7 +29,7 @@ Class Php Implements TemplateInterface
         }
 
         // Stop templates accessing the $this variable
-        $render = static function ( array $data = [] ) use ($template) {
+        $render = static function ( array $data ) use ($template) : void {
             extract( $data, EXTR_PREFIX_SAME, '_' );
             require $template;
         };
