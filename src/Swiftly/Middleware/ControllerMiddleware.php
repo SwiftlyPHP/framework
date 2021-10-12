@@ -6,7 +6,7 @@ use Swiftly\Middleware\MiddlewareInterface;
 use Swiftly\Dependency\Container;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
-use Swiftly\Dependency\Exception\NotFoundException;
+use Swiftly\Dependency\Exception\UnexpectedTypeException;
 
 /**
  * Middleware responsible for calling the controller
@@ -38,10 +38,12 @@ Class ControllerMiddleware Implements MiddlewareInterface
      */
     public function run( Request $request, Response $response, callable $next ) : Response
     {
-        $result = $this->container->resolve( Response::class );
-
-        // Route matched but no response?
-        if ( !$result instanceof Response ) {
+        // Call the user controller and try to get a response
+        try {
+            $result = $this->container->resolve( Response::class );
+            
+        // Route matched but not a valid response?
+        } catch ( UnexpectedTypeException $e ) {
             $result = new Response( '', 500 );
         }
 
