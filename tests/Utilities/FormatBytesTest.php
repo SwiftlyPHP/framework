@@ -20,6 +20,8 @@ Class FormatBytesTest Extends TestCase
         self::assertSame( '1.00 gb', format_bytes( self::GB_IN_BYTES ) );
         self::assertSame( '1.00 mb', format_bytes( self::MB_IN_BYTES ) );
         self::assertSame( '1.00 kb', format_bytes( self::KB_IN_BYTES ) );
+        self::assertSame( '512 b', format_bytes( 512 ) );
+        self::assertSame( '128 b', format_bytes( 128 ) );
     }
 
     public function testFunctionCanFormatFractionalValues() : void
