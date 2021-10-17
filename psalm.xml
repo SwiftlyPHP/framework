@@ -17,11 +17,4 @@
     <stubs>
         <file name="definitions.php" />
     </stubs>
-    <issueHandlers>
-        <UnresolvableInclude>
-            <errorLevel type="suppress">
-                <file name="src/Swiftly/Template/Php.php" />
-            </errorLevel>
-        </UnresolvableInclude>
-    </issueHandlers>
 </psalm>
