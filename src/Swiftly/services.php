@@ -30,7 +30,13 @@ return [
     ],
 
     // Template engine
-    Swiftly\Template\TemplateInterface::class => Swiftly\Template\Php::class,
+    Swiftly\Template\TemplateInterface::class => Swiftly\Template\Engine::class,
+    Swiftly\Template\ContextInterface::class => Swiftly\Template\ContextInterface::class,
+    Swiftly\Template\FileFinder::class => [
+        'handler' => function () {
+            return new Swiftly\Template\FileFinder( APP_VIEW . '/' );
+        }
+    ],
 
     // Route parser
     Swiftly\Routing\ParserInterface::class => Swiftly\Routing\Parser\JsonParser::class,

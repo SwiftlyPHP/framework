@@ -11,7 +11,8 @@
         "swiftly/dependency": "dev-main",
         "swiftly/routing": "dev-main",
         "swiftly/database": "dev-main",
-        "vlucas/phpdotenv": "^5.3"
+        "vlucas/phpdotenv": "^5.3",
+        "swiftly/template": "1.0.0-beta"
     },
     "require-dev": {
         "vimeo/psalm": "^4.8",
