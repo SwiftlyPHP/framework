@@ -23,7 +23,6 @@
             "Swiftly\\Base\\": "src/Swiftly/Base/",
             "Swiftly\\Application\\": "src/Swiftly/Application/",
             "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
-            "Swiftly\\Template\\": "src/Swiftly/Template/",
             "": "app/controller/"
         },
         "files": [
