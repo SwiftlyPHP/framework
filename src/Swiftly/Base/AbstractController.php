@@ -13,7 +13,6 @@ use function is_file;
 use function class_exists;
 
 use const APP_MODEL;
-use const APP_VIEW;
 
 /**
  * The abstract class all controllers should inherit
@@ -119,7 +118,7 @@ Abstract Class AbstractController
      */
     public function render( string $template, array $data = [] ) : string
     {
-        return $this->renderer->render( APP_VIEW . '/' . $template, $data );
+        return $this->renderer->render( $template, $data );
     }
 
     /**
@@ -132,7 +131,7 @@ Abstract Class AbstractController
     public function output( string $template, array $data = [] ) : Response
     {
         return new Response(
-            $this->renderer->render( APP_VIEW . '/' . $template, $data ),
+            $this->renderer->render( $template, $data ),
             Status::OK,
             []
         );
