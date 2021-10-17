@@ -10,7 +10,7 @@
 const SWIFTLY_VERSION = '1.0.0';
 
 /** Minimum PHP version */
-const SWIFTLY_MIN_PHP = '7.1.0';
+const SWIFTLY_MIN_PHP = '7.3.0';
 
 /** Base directory */
 const APP_ROOT = __DIR__;
