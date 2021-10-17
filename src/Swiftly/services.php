@@ -31,7 +31,7 @@ return [
 
     // Template engine
     Swiftly\Template\TemplateInterface::class => Swiftly\Template\Engine::class,
-    Swiftly\Template\ContextInterface::class => Swiftly\Template\Context\DefaultContext::class,
+    Swiftly\Template\ContextInterface::class => Swiftly\Template\Context\HelperContext::class,
     Swiftly\Template\FileFinder::class => [
         'handler' => function () {
             return new Swiftly\Template\FileFinder( APP_VIEW . '/' );
