@@ -20,7 +20,7 @@ Class Home Extends AbstractController
     {
         // Output a response
         return $this->output( 'home.html.php', [
-            'title'   => 'Swiftly',
+            'title'   => 'Welcome',
             'message' => 'Thanks for installing Swiftly!'
         ]);
     }
@@ -35,7 +35,7 @@ Class Home Extends AbstractController
     {
         // Pass the named paramater in
         return $this->output( 'home.html.php', [
-            'title'   => ucfirst( $name ),
+            'title'   => 'Hi ' . ucfirst( $name ),
             'message' => 'Welcome to Swiftly!'
         ]);
     }

@@ -13,6 +13,6 @@
     },
     "cache": {
         "root": "/data/cache/html",
-        "lifetime": 3600
+        "lifetime": 300
     }
 }
