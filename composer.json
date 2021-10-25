@@ -9,7 +9,7 @@
         "swiftly/http": "dev-main",
         "swiftly/config": "dev-main",
         "swiftly/dependency": "dev-main",
-        "swiftly/routing": "dev-main",
+        "swiftly/routing": "dev-develop",
         "swiftly/database": "dev-main",
         "vlucas/phpdotenv": "^5.3",
         "swiftly/template": "1.0.0-beta"

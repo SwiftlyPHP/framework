@@ -4,6 +4,9 @@ namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
 use Swiftly\Routing\Dispatcher;
+use Swiftly\Routing\ProviderInterface;
+use Swiftly\Routing\Provider\JsonProvider;
+use Swiftly\Routing\Collection\RouteCollection;
 use Swiftly\Routing\Route;
 use Swiftly\Dependency\Container;
 use Swiftly\Dependency\Service;
@@ -75,17 +78,18 @@ Class Web
      */
     public function start() : void
     {
-        // Create a new router
-        $router = $this->dependencies->resolve( Dispatcher::class );
+        // Defer loading of route definitions
+        $this->dependencies->bind( ProviderInterface::class, JsonProvider::class )
+            ->parameters([ 'filepath' => APP_CONFIG . '/routes.json' ]);
+
+        $this->dependencies->bind( RouteCollection::class, RouteCollection::class )
+            ->then( function ( ProviderInterface $provider, RouteCollection $collection ) {
+                $provider->populate( $collection );
+            });
 
         // Get the global request object
         $request = $this->dependencies->resolve( Request::class );
         $response = new Response;
-
-        // Load route.json and dispatch
-        if ( is_file( APP_CONFIG . '/routes.json' ) ) {
-            $router->load( APP_CONFIG . '/routes.json' );
-        }
 
         // Run startup middleware
         $startup = $this->getStartup();

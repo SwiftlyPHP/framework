@@ -61,7 +61,7 @@ Class RoutingMiddleware Implements MiddlewareInterface
         // Expose controller to later middleware
         $this->container->bind(
             Response::class,
-            $route->callable
+            $route->handler
         )->parameters(
             $route->args
         );

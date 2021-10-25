@@ -17,7 +17,7 @@ return [
     // HTTP services
     Swiftly\Http\Server\RequestFactory::class => Swiftly\Http\Server\RequestFactory::class,
     Swiftly\Http\Server\Request::class => [
-        'handler' => [ Swiftly\Http\Server\RequestFactory::class, "fromGlobals" ]
+        'handler' => [ Swiftly\Http\Server\RequestFactory::class, 'fromGlobals' ]
     ],
 
     // Database
@@ -39,6 +39,7 @@ return [
     ],
 
     // Route parser
-    Swiftly\Routing\ParserInterface::class => Swiftly\Routing\Parser\JsonParser::class,
+    Swiftly\Routing\Collection\RouteCollection::class => Swiftly\Routing\Collection\RouteCollection::class,
+    Swiftly\Routing\ProviderInterface::class => Swiftly\Routing\Provider\JsonProvider::class,
     Swiftly\Routing\Dispatcher::class => Swiftly\Routing\Dispatcher::class
 ];
