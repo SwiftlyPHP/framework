@@ -19,7 +19,7 @@ services:
     networks:
      - net
   mysql:
-    image: mysql:latest
+    image: mariadb:latest
     ports:
       - "3306:3306"
     environment:
@@ -27,6 +27,8 @@ services:
       MYSQL_DATABASE: "database"
       MYSQL_USER: "username"
       MYSQL_PASSWORD: "secret"
+    cap_add:
+      - SYS_NICE
     volumes:
       - ./data/sql/development.sql:/docker-entrypoint-initdb.d/development.sql
     networks:
