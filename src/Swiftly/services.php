@@ -39,11 +39,6 @@ return [
     ],
 
     // Route parser
-    Swiftly\Routing\Collection::class => [
-        'handler' => function ( Swiftly\Routing\ProviderInterface $provider ) {
-            return $provider->populate( new Swiftly\Routing\Collection() );
-        }
-    ],
     Swiftly\Routing\ProviderInterface::class => Swiftly\Routing\Provider\JsonProvider::class,
     Swiftly\Routing\CompilerInterface::class => Swiftly\Routing\Compiler\StandardCompiler::class,
     Swiftly\Routing\Dispatcher::class => Swiftly\Routing\Dispatcher::class

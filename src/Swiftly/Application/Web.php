@@ -6,8 +6,7 @@ use Swiftly\Config\Store;
 use Swiftly\Routing\Dispatcher;
 use Swiftly\Routing\ProviderInterface;
 use Swiftly\Routing\Provider\JsonProvider;
-use Swiftly\Routing\Collection\RouteCollection;
-use Swiftly\Routing\Route;
+use Swiftly\Routing\Collection;
 use Swiftly\Dependency\Container;
 use Swiftly\Dependency\Service;
 use Swiftly\Dependency\Loader\PhpLoader;
@@ -82,8 +81,8 @@ Class Web
         $this->dependencies->bind( ProviderInterface::class, JsonProvider::class )
             ->parameters([ 'filepath' => APP_CONFIG . '/routes.json' ]);
 
-        $this->dependencies->bind( RouteCollection::class, RouteCollection::class )
-            ->then( function ( ProviderInterface $provider, RouteCollection $collection ) {
+        $this->dependencies->bind( Collection::class, Collection::class )
+            ->then( function ( ProviderInterface $provider, Collection $collection ) {
                 $provider->populate( $collection );
             });
 
