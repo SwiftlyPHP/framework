@@ -16,7 +16,7 @@
 
 
 // Get global definitions
-require_once dirname( __DIR__ ) . '/definitions.php';
+require_once dirname( __DIR__ ) . '/constants.php';
 
 
 // Make sure we are running a compatable PHP version
