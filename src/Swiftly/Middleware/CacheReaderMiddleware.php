@@ -2,20 +2,20 @@
 
 namespace Swiftly\Middleware;
 
+use Swiftly\Middleware\MiddlewareInterface;
 use Swiftly\Config\Store;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
-use Swiftly\Middleware\MiddlewareInterface;
 
-use function strtolower;
-use function strpos;
-use function rtrim;
 use function sha1;
 use function is_readable;
 use function filemtime;
 use function time;
 use function unlink;
 use function file_get_contents;
+use function rtrim;
+use function strtolower;
+use function strpos;
 
 use const APP_ROOT;
 use const DIRECTORY_SEPARATOR;
@@ -55,25 +55,13 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
             return $next( $request, $response );
         }
 
-        $cache_control = $request->headers->get( 'Cache-Control' );
-        $cache_control = $cache_control ? strtolower( $cache_control ) : '';
-
-        // Asked for no-cache?
-        if ( strpos( $cache_control, 'no-cache' ) !== false
-            || strpos( $cache_control, 'no-store' ) !== false
-        ) {
+        // Client asked to avoid cache?
+        if ( $this->wantsFresh( $request ) ) {
             return $next( $request, $response );
         }
 
-        // Custom directory?
-        $dir = (string)$this->config->get( 'cache.root' );
-
-        if ( !empty( $dir ) ) {
-            $dir = APP_ROOT . rtrim( $dir, DIRECTORY_SEPARATOR );
-        } else {
-            $dir = APP_ROOT . '/data/cache/html';
-        }
-
+        // Generate file name
+        $dir = $this->getDirectory();
         $hash = sha1( $request->getPath() );
         $file = "$dir/$hash.html";
 
@@ -99,5 +87,40 @@ Class CacheReaderMiddleware Implements MiddlewareInterface
         $response->setContent( $content );
 
         return $response;
+    }
+
+    /**
+     * Gets the path to the cache directory
+     *
+     * @return string Directory path
+     */
+    private function getDirectory() : string
+    {
+        // Custom directory?
+        $dir = (string)$this->config->get( 'cache.root' );
+
+        if ( !empty( $dir ) ) {
+            $dir = APP_ROOT . rtrim( $dir, DIRECTORY_SEPARATOR );
+        } else {
+            $dir = APP_ROOT . '/data/cache/html';
+        }
+
+        return $dir;
+    }
+
+    /**
+     * Check to see if the client requested fresh/uncached content
+     *
+     * @param Request $request Client request
+     * @return bool            Wants fresh?
+     */
+    private function wantsFresh( Request $request ) : bool
+    {
+        $header = $request->headers->get( 'Cache-Control' );
+        $header = $header ? strtolower( $header ) : '';
+
+        return ( strpos( $header, 'no-cache' ) !== false
+            || strpos( $header, 'no-store' ) !== false
+        );
     }
 }
