@@ -41,5 +41,6 @@ return [
     // Route parser
     Swiftly\Routing\ProviderInterface::class => Swiftly\Routing\Provider\JsonProvider::class,
     Swiftly\Routing\CompilerInterface::class => Swiftly\Routing\Compiler\StandardCompiler::class,
-    Swiftly\Routing\Dispatcher::class => Swiftly\Routing\Dispatcher::class
+    Swiftly\Routing\Dispatcher::class => Swiftly\Routing\Dispatcher::class,
+    Swiftly\Routing\UrlGenerator::class => Swiftly\Routing\UrlGenerator::class
 ];
