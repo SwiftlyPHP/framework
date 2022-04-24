@@ -21,7 +21,3 @@ RUN apk add --no-cache \
     && docker-php-ext-install mysqli \
     && docker-php-ext-install pgsql \
     && docker-php-ext-install opcache
-
-# Configure permissions for moved files
-# RUN find /var/www/html/ -type d -exec chmod 755 {} +
-# RUN find /var/www/html/ -type f -exec chmod 644 {} +
