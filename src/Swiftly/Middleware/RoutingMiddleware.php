@@ -3,10 +3,11 @@
 namespace Swiftly\Middleware;
 
 use Swiftly\Middleware\MiddlewareInterface;
-use Swiftly\Routing\Dispatcher;
+use Swiftly\Routing\MatcherInterface;
 use Swiftly\Dependency\Container;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
+use Swiftly\Http\Status;
 
 /**
  * Middleware responsible for matching routes to controllers
@@ -17,9 +18,9 @@ Class RoutingMiddleware Implements MiddlewareInterface
 {
 
     /**
-     * The regex router
+     * Route matching component
      *
-     * @var Dispatcher $router Regex router
+     * @var MatcherInterface $router Route matcher
      */
     private $router;
 
@@ -33,11 +34,13 @@ Class RoutingMiddleware Implements MiddlewareInterface
     /**
      * Create a middleware to manage routing
      *
-     * @param Dispatcher $router   Regex router
-     * @param Container $container Dependency container
+     * @param MatcherInterface $router Route matcher
+     * @param Container $container     Dependency container
      */
-    public function __construct( Dispatcher $router, Container $container )
-    {
+    public function __construct(
+        MatcherInterface $router,
+        Container $container
+    ) {
         $this->router = $router;
         $this->container = $container;
     }
@@ -51,19 +54,24 @@ Class RoutingMiddleware Implements MiddlewareInterface
         $path = $request->getPath();
 
         // Get the route
-        $route = $this->router->dispatch( $method, $path );
+        $current = $this->router->match( $path );
 
         // No matches, 404 and exit early!
-        if ( empty( $route ) ) {
-            return new Response( '', 404 );
+        if ( $current === null ) {
+            return new Response( '', STATUS::NOT_FOUND );
+        }
+
+        // Route found, but unsupported verb
+        if ( !$current->route->supports($method) ) {
+            return new Response( '', STATUS::METHOD_NOT_ALLOWED );
         }
 
         // Expose controller to later middleware
         $this->container->bind(
             Response::class,
-            $route->handler
+            $current->route->getHandler()
         )->parameters(
-            $route->args
+            $current->args
         );
 
         return $next( $request, $response );

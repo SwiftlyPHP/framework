@@ -4,6 +4,8 @@ namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
 use Swiftly\Routing\Dispatcher;
+use Swiftly\Routing\File\JsonFile;
+use Swiftly\Routing\FileLoaderInterface;
 use Swiftly\Routing\ProviderInterface;
 use Swiftly\Routing\Provider\JsonProvider;
 use Swiftly\Routing\Collection;
@@ -78,16 +80,11 @@ Class Web
     public function start() : void
     {
         // Defer loading of route definitions
-        $this->dependencies->bind( ProviderInterface::class, JsonProvider::class )
-            ->parameters([ 'filepath' => APP_CONFIG . '/routes.json' ]);
-
-        $this->dependencies->bind( Collection::class, Collection::class )
-            ->then( function ( ProviderInterface $provider, Collection $collection ) {
-                $provider->populate( $collection );
-            });
+        $this->dependencies->bind(FileLoaderInterface::class, JsonFile::class)
+            ->parameters(['file_path' => APP_CONFIG . '/routes.json']);
 
         // Get the global request object
-        $request = $this->dependencies->resolve( Request::class );
+        $request = $this->dependencies->resolve(Request::class);
         $response = new Response;
 
         // Run startup middleware
