@@ -3,29 +3,18 @@
 namespace Swiftly\Application;
 
 use Swiftly\Config\Store;
-use Swiftly\Routing\Dispatcher;
 use Swiftly\Routing\File\JsonFile;
 use Swiftly\Routing\FileLoaderInterface;
-use Swiftly\Routing\ProviderInterface;
-use Swiftly\Routing\Provider\JsonProvider;
-use Swiftly\Routing\Collection;
 use Swiftly\Dependency\Container;
-use Swiftly\Dependency\Service;
 use Swiftly\Dependency\Loader\PhpLoader;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
-use Swiftly\Database\Wrapper;
-use Swiftly\Database\AdapterInterface;
-use Swiftly\Database\Adapter\MysqlAdapter;
-use Swiftly\Database\Adapter\PostgresAdapter;
-use Swiftly\Database\Adapter\SqliteAdapter;
 use Swiftly\Middleware\CacheReaderMiddleware;
 use Swiftly\Middleware\CacheWriterMiddleware;
 use Swiftly\Middleware\ControllerMiddleware;
 use Swiftly\Middleware\RoutingMiddleware;
 use Swiftly\Middleware\Runner;
 
-use function is_file;
 use function mb_strtolower;
 
 use const APP_SWIFTLY;
@@ -67,11 +56,6 @@ Class Web
         // Bind this config
         $this->dependencies->bind( Store::class, $config );
         $this->dependencies->bind( Container::class, $this->dependencies );
-
-        // Register the appropriate database adapter
-        if ( $config->has( 'database' ) ) {
-            $this->bindDatabase( $this->dependencies, $config->get( 'database' ) );
-        }
     }
 
     /**
@@ -97,49 +81,6 @@ Class Web
 
         // Send the response and end!
         $response->send();
-
-        return;
-    }
-
-    /**
-     * Binds the database adapter
-     *
-     * @psalm-param array{
-     *  adapter:'sqlite'|'postgres'|'postgresql'|'mysql'|'mysqli',
-     *  host:string,
-     *  name?:string,
-     *  username?:string,
-     *  password?:string
-     * } $config
-     *
-     * @param Container $services Dependency manager
-     * @param array $config       Database config
-     * @return void               N/a
-     */
-    private function bindDatabase( Container $services, array $config ) : void
-    {
-        // Get the correct adapter
-        switch( mb_strtolower( $config['adapter'] ) ) {
-            case 'sqlite':
-                $adapter = SqliteAdapter::class;
-                break;
-
-            case 'postgres':
-            case 'postgresql':
-                $adapter = PostgresAdapter::class;
-                break;
-
-            case 'mysql':
-            case 'mysqli':
-            default:
-                $adapter = MysqlAdapter::class;
-                break;
-        }
-
-        // Bind the adapter
-        $services->bind( AdapterInterface::class, $adapter )->parameters([
-            'options' => $config
-        ]);
 
         return;
     }

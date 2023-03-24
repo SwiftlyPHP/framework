@@ -1,5 +1,10 @@
 <?php
 
+use Swiftly\Factory\DatabaseAdapterFactory;
+use Swiftly\Factory\DatabaseWrapperFactory;
+use Swiftly\Factory\TemplateFinderFactory;
+use Swiftly\Factory\MatcherFactory;
+
 /**
  * Provides some of the default services used by most web apps
  *
@@ -15,27 +20,16 @@ return [
 
     // HTTP services
     Swiftly\Http\Server\RequestFactory::class => Swiftly\Http\Server\RequestFactory::class,
-    Swiftly\Http\Server\Request::class => [
-        'handler' => [Swiftly\Http\Server\RequestFactory::class, 'fromGlobals']
-    ],
+    Swiftly\Http\Server\Request::class => ['handler' => [Swiftly\Http\Server\RequestFactory::class, 'fromGlobals']],
 
     // Database
-    Swiftly\Database\Wrapper::class => [
-        'handler'   => function ( Swiftly\Database\AdapterInterface $db ) {
-            $database = new Swiftly\Database\Wrapper( $db );
-            $database->connect();
-            return $database;
-        }
-    ],
+    Swiftly\Database\AdapterInterface::class => ['handler' => [DatabaseAdapterFactory::class, 'create']],
+    Swiftly\Database\Wrapper::class => ['handler' => [DatabaseWrapperFactory::class, 'create']],
 
     // Template engine
     Swiftly\Template\TemplateInterface::class => Swiftly\Template\Engine::class,
     Swiftly\Template\ContextInterface::class => Swiftly\Template\Context\HelperContext::class,
-    Swiftly\Template\FileFinder::class => [
-        'handler' => function () {
-            return new Swiftly\Template\FileFinder(APP_VIEW . '/');
-        }
-    ],
+    Swiftly\Template\FileFinder::class => ['handler' => [TemplateFinderFactory::class, 'create']],
 
     // Route parser
     Swiftly\Routing\FileLoaderInterface::class => Swiftly\Routing\File\JsonFile::class,
@@ -44,15 +38,6 @@ return [
     Swiftly\Routing\UrlGenerator::class => Swiftly\Routing\UrlGenerator::class,
     Swiftly\Routing\Matcher\StaticMatcher::class => Swiftly\Routing\Matcher\StaticMatcher::class,
     Swiftly\Routing\Matcher\RegexMatcher::class => Swiftly\Routing\Matcher\RegexMatcher::class,
-    Swiftly\Routing\MatcherInterface::class => [
-        'handler' => function (
-            Swiftly\Routing\Matcher\StaticMatcher $static,
-            Swiftly\Routing\Matcher\RegexMatcher $dynamic
-        ) {
-            return new Swiftly\Routing\Matcher\SeriesMatcher([$static, $dynamic]);
-        }
-    ],
-    Swiftly\Routing\Collection::class => [
-        'handler' => [Swiftly\Routing\Provider\FileProvider::class, 'provide']
-    ]
+    Swiftly\Routing\MatcherInterface::class => ['handler' => [MatcherFactory::class, 'create']],
+    Swiftly\Routing\Collection::class => ['handler' => [Swiftly\Routing\Provider\FileProvider::class, 'provide']]
 ];
