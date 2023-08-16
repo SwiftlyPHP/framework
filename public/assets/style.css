@@ -103,11 +103,11 @@ body {
     display: flex;
     flex-direction: row;
 }
-.homepage-links__item:first-of-type {
+.homepage-links__item:not(:last-of-type) {
     margin-inline-end: 2rem;
     position: relative;
 }
-.homepage-links__item:first-of-type::after {
+.homepage-links__item:not(:last-of-type)::after {
     content: '';
     position: absolute;
     top: 0.25rem;
