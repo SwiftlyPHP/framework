@@ -17,6 +17,7 @@ return [
     Swiftly\Middleware\CacheWriterMiddleware::class => Swiftly\Middleware\CacheWriterMiddleware::class,
     Swiftly\Middleware\ControllerMiddleware::class => Swiftly\Middleware\ControllerMiddleware::class,
     Swiftly\Middleware\RoutingMiddleware::class => Swiftly\Middleware\RoutingMiddleware::class,
+    Swiftly\Middleware\NotFoundMiddleware::class => Swiftly\Middleware\NotFoundMiddleware::class,
 
     // HTTP services
     Swiftly\Http\Server\RequestFactory::class => Swiftly\Http\Server\RequestFactory::class,

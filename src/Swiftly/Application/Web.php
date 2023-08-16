@@ -13,6 +13,7 @@ use Swiftly\Middleware\CacheReaderMiddleware;
 use Swiftly\Middleware\CacheWriterMiddleware;
 use Swiftly\Middleware\ControllerMiddleware;
 use Swiftly\Middleware\RoutingMiddleware;
+use Swiftly\Middleware\NotFoundMiddleware;
 use Swiftly\Middleware\Runner;
 
 use const APP_SWIFTLY;
@@ -105,6 +106,7 @@ Class Web
     private function getShutdown() : Runner
     {
         return new Runner([
+            // $this->dependencies->resolve( NotFoundMiddleware::class ),
             $this->dependencies->resolve( CacheWriterMiddleware::class )
         ]);
     }
