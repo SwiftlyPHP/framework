@@ -1,6 +1,6 @@
 {
-    "home": {
-        "path":     "/",
-        "handler":  "Example0::index"
+    "homepage": {
+        "path": "/",
+        "handler": "Home::index"
     }
 }
