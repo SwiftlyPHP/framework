@@ -9,10 +9,10 @@
         <?php foreach($posts as $slug => $post): ?>
             <li class="results__item">
                 <?php
-                    $title = $post['title'];
-                    $author = $post['author'];
-                    $published = $post['published'];
-                    $link = "/post/{$slug}";
+                    $title = $post->title;
+                    $author = $post->author;
+                    $published = $post->published;
+                    $link = $post->link;
 
                     require __DIR__ . '/components/card.html.php';
                 ?>

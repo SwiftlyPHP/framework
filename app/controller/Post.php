@@ -21,11 +21,11 @@ class Post extends AbstractController
         }
 
         return $this->output('post.html.php', [
-            'title'       => $post['title'],
-            'author'      => $post['author'],
-            'author_slug' => $post['author_slug'],
-            'published'   => $post['published'],
-            'content'     => 'TODO'
+            'title'       => $post->title,
+            'author'      => $post->author,
+            'author_slug' => $post->author_slug,
+            'published'   => $post->published,
+            'content'     => $post->content
         ]);
     }
 }

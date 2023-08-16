@@ -3,7 +3,7 @@
 <main class="main main--archive">
     <header class="content-header">
         <h1>Welcome to <span>Swiftly</span>PHP</h1>
-        <p>Currently running in mode: <strong>development</strong></p>
+        <p>You are currently running in mode: <strong>development</strong></p>
     </header>
 
     <ul class="homepage-links">

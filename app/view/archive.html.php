@@ -12,7 +12,7 @@
                     'title'     => $post['title'],
                     'author'    => $post['author'],
                     'published' => $post['published'],
-                    'link'      => "/post/{$slug}"
+                    'link'      => $post['link']
                 ]); ?>
             </li>
         <?php endforeach; ?>
