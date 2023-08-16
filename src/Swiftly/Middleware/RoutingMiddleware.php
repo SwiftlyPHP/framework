@@ -8,6 +8,7 @@ use Swiftly\Dependency\Container;
 use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
 use Swiftly\Http\Status;
+use Swiftly\Routing\MatchedRoute;
 
 use function is_array;
 use function strpos;
@@ -83,6 +84,12 @@ Class RoutingMiddleware Implements MiddlewareInterface
         ) {
             $handler[0] = 'App\\Controller\\' . $handler[0];
         }
+
+        // Expose current route if anyone needs it
+        $this->container->bind(
+            MatchedRoute::class,
+            $current
+        );
 
         // Expose controller to later middleware
         $this->container->bind(
