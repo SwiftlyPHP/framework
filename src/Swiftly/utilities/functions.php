@@ -19,15 +19,41 @@
  * @param callable $callback Callback function
  * @return bool              Satisfies callback?
  */
-function array_satisfies( array $subject, callable $callback ) : bool
+function array_satisfies(array $subject, callable $callback): bool
 {
-    foreach ( $subject as $item ) {
-        if ( !$callback( $item ) ) {
+    foreach ($subject as $item) {
+        if (!$callback($item)) {
             return false;
         }
     }
 
     return true;
+}
+
+/**
+ * Returns the first element in the array that satisfies the callback
+ * 
+ * Loops over every element in the array and passes it to the supplied callback,
+ * if the callback returns a truthy value execution is stopped and the current
+ * item is returned. If no items satisfy the callback null is returned.
+ * 
+ * @template T
+ * @psalm-param T[] $subject
+ * @psalm-param callable(T):bool $callback
+ * 
+ * @param T[] $subject       Subject array
+ * @param callable $callback Callback function
+ * @return T|null            First passing item
+ */
+function array_first(array $subject, callable $callback)
+{
+    foreach ($subject as $item) {
+        if ($callback($item)) {
+            return $item;
+        }
+    }
+
+    return null;
 }
 
 /**
@@ -41,36 +67,32 @@ function array_satisfies( array $subject, callable $callback ) : bool
  * @param int $bytes Number of bytes
  * @return string    Formatted bytes
  */
-function format_bytes( int $bytes ) : string
+function format_bytes(int $bytes): string
 {
     $iterations = 4;
 
-    while( $bytes >= 1024 && $iterations !== 0 ) {
+    while($bytes >= 1024 && $iterations !== 0) {
         $bytes = $bytes / 1024;
         $iterations--;
     }
 
-    switch ( $iterations ) {
+    switch ($iterations) {
         case 0:
-            $formatted = sprintf( '%.2f %s', $bytes, 'tb' );
-        break;
-
+            $formatted = sprintf('%.2f %s', $bytes, 'tb');
+            break;
         case 1:
-            $formatted = sprintf( '%.2f %s', $bytes, 'gb' );
-        break;
-
+            $formatted = sprintf('%.2f %s', $bytes, 'gb');
+            break;
         case 2:
-            $formatted = sprintf( '%.2f %s', $bytes, 'mb' );
-        break;
-
+            $formatted = sprintf('%.2f %s', $bytes, 'mb');
+            break;
         case 3:
-            $formatted = sprintf( '%.2f %s', $bytes, 'kb' );
-        break;
-
+            $formatted = sprintf('%.2f %s', $bytes, 'kb');
+            break;
         default:
         case 4:
-            $formatted = sprintf( '%d %s', $bytes, 'b' );
-        break;
+            $formatted = sprintf('%d %s', $bytes, 'b');
+            break;
     }
 
     return $formatted;

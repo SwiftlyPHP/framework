@@ -40,10 +40,10 @@ class NotFoundMiddleware implements MiddlewareInterface
             return $next($request, $response);
         }
 
-        $content_type = $response->headers->get('content-type');
+        $content_type = $response->headers->get('content-type') ?: '';
 
         // Only do this for some resource types (i.e not JSON/XML)
-        if (in_array($content_type, ['', 'text/html', 'text/plain'], true)) {
+        if (!$this->isSupportedContentType($content_type)) {
             return $next($request, $response);
         }
 
@@ -62,6 +62,17 @@ class NotFoundMiddleware implements MiddlewareInterface
     }
 
     /**
+     * Determines if we can return HTML for this response
+     * 
+     * @param string $content_type Response content type
+     * @return bool                Supported type? 
+     */
+    private function isSupportedContentType(string $content_type): bool
+    {
+        return in_array($content_type, ['', 'text/plain', 'text/html'], true);
+    }
+
+    /**
      * Attempts to find a 404 template in the views directory
      * 
      * @return string|null File path
@@ -69,11 +80,7 @@ class NotFoundMiddleware implements MiddlewareInterface
     private function get404File(): ?string
     {
         // NOTE: TemplateInterface respects the `APP_VIEW` constant
-        $files = [
-            '/404.html.php',
-            '/404.php',
-            '/404.html'
-        ];    
+        $files = ['/404.html.php', '/404.php', '/404.html'];    
 
         // Return the first that matches
         return array_first($files, function (string $file) {
