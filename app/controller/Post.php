@@ -9,11 +9,8 @@ use Swiftly\Routing\UrlGenerator;
 
 class Post extends AbstractController
 {
-    public function view(
-        PostProvider $provider,
-        UrlGenerator $url,
-        string $slug
-    ): ?Response {
+    public function view(PostProvider $provider, UrlGenerator $url, string $slug): ?Response
+    {
         $post = $provider->getPost($slug);
 
         if (!$post) {
