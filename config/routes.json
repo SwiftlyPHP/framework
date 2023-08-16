@@ -1,12 +1,6 @@
 {
     "home": {
         "path":     "/",
-        "methods":  ["GET"],
-        "handler":  "Home::index"
-    },
-    "hello": {
-        "path":     "/hello/[s:name]",
-        "methods":  ["GET"],
-        "handler":  "Home::hello"
+        "handler":  "Example0::index"
     }
 }

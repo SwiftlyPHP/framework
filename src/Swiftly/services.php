@@ -39,5 +39,8 @@ return [
     Swiftly\Routing\Matcher\StaticMatcher::class => Swiftly\Routing\Matcher\StaticMatcher::class,
     Swiftly\Routing\Matcher\RegexMatcher::class => Swiftly\Routing\Matcher\RegexMatcher::class,
     Swiftly\Routing\MatcherInterface::class => ['handler' => [MatcherFactory::class, 'create']],
-    Swiftly\Routing\Collection::class => ['handler' => [Swiftly\Routing\Provider\FileProvider::class, 'provide']]
+    Swiftly\Routing\Collection::class => ['handler' => [Swiftly\Routing\Provider\FileProvider::class, 'provide']],
+
+    // Demo
+    App\Model\PostProvider::class => App\Model\PostProvider::class,
 ];

@@ -1,4 +1,4 @@
-<?= $this->render(__DIR__ . '/header.html.php', ['title' => 'Search Results']); ?>
+<?php require __DIR__ . '/header.html.php'; ?>
 
 <main class="main main--archive">
     <header class="content-header">
@@ -20,4 +20,4 @@
     </ul>
 </main>
 
-<?= $this->render(__DIR__ . '/footer.html.php'); ?>
+<?php require __DIR__ . '/footer.html.php'; ?>

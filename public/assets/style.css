@@ -1,0 +1,129 @@
+html {
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    box-shadow: 1px 0px 5px -3px;
+    align-items: center;
+    line-height: 1;
+    padding: 0.5rem 4rem;
+}
+.site-header__title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.site-header__title span {
+    text-decoration: underline wavy #1bca80;
+}
+.site-header__nav {
+    margin-inline-start: auto;
+}
+
+.navigation__list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navigation__link {
+    display: block;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    text-decoration: underline;
+    color: #1a8658;
+}
+
+.main {
+    margin-inline: auto;
+    margin-top: 3.5rem;
+    max-width: 58rem;
+}
+.content-header {
+    padding: 2rem 4rem;
+}
+.results {
+    padding: 0 4rem;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+.results .card {
+    height: 100%;
+    box-sizing: border-box;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #f7f7f7;
+    box-shadow: 4px 6px 6px -8px;
+    border-radius: 0.5rem;
+}
+.card__title {
+    margin: 0 0 2rem;
+}
+.card__title a {
+    color: #1a8658;
+}
+.card__title a:hover {
+    color: #1ea66c;
+}
+.card__title a:focus {
+    color: #1ea66c;
+    outline: auto;
+}
+.card__author {
+    display: block;
+    margin-block-start: auto;
+    font-size: 1rem;
+}
+.card__date {
+    display: block;
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: #757575;
+    margin-block-start: 0.125rem;
+}
+
+.homepage-links {
+    padding: 0 4rem;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+}
+.homepage-links__item:first-of-type {
+    margin-inline-end: 2rem;
+    position: relative;
+}
+.homepage-links__item:first-of-type::after {
+    content: '';
+    position: absolute;
+    top: 0.25rem;
+    right: -1.1275rem;
+    width: .125rem;
+    height: .125rem;
+    border: 2px solid #1bca80;
+    transform: rotate(45deg);
+}
+.homepage-links__link {
+    color: #1a8658;
+}
+
+.post-content {
+    padding-inline: 4rem;
+}
+.post-footer {
+    margin-block-start: 2rem;
+}

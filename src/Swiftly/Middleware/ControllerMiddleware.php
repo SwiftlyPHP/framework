@@ -44,7 +44,16 @@ Class ControllerMiddleware Implements MiddlewareInterface
             
         // Route matched but not a valid response?
         } catch ( UnexpectedTypeException $e ) {
-            $result = new Response( '', 500 );
+            $result = new Response( '505 - Controller did not return a response', 500 );
+
+        // Controller threw an expection
+        } catch ( \Exception $e ) {
+            $result = new Response(
+                "<h2>Unhandled " . get_class($e) . "</h2>\n"
+                . "<p>{$e->getMessage()}</p>"
+                . "<pre>{$e->getTraceAsString()}</pre>",
+                500
+            );
         }
 
         // Return the controller response!

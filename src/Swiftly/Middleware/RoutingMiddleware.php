@@ -9,6 +9,9 @@ use Swiftly\Http\Server\Request;
 use Swiftly\Http\Server\Response;
 use Swiftly\Http\Status;
 
+use function is_array;
+use function strpos;
+
 /**
  * Middleware responsible for matching routes to controllers
  *
@@ -58,18 +61,33 @@ Class RoutingMiddleware Implements MiddlewareInterface
 
         // No matches, 404 and exit early!
         if ( $current === null ) {
-            return new Response( '', STATUS::NOT_FOUND );
+            return new Response(
+                '404 - No route found',
+                STATUS::NOT_FOUND
+            );
         }
 
         // Route found, but unsupported verb
         if ( !$current->route->supports($method) ) {
-            return new Response( '', STATUS::METHOD_NOT_ALLOWED );
+            return new Response(
+                '405 - HTTP method not allowed',
+                STATUS::METHOD_NOT_ALLOWED
+            );
+        }
+
+        // Class should be in App\Controller namespace
+        $handler = $current->route->getHandler();
+
+        if (is_array($handler)
+            && strpos($handler[0], 'App\\Controller\\') === false
+        ) {
+            $handler[0] = 'App\\Controller\\' . $handler[0];
         }
 
         // Expose controller to later middleware
         $this->container->bind(
             Response::class,
-            $current->route->getHandler()
+            $handler
         )->parameters(
             $current->args
         );

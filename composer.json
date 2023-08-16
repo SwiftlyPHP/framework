@@ -11,7 +11,6 @@
         "swiftly/dependency": "dev-main",
         "swiftly/routing": "dev-develop",
         "swiftly/database": "dev-main",
-        "vlucas/phpdotenv": "^5.3",
         "swiftly/template": "1.0.0-beta"
     },
     "require-dev": {
@@ -24,7 +23,7 @@
             "Swiftly\\Application\\": "src/Swiftly/Application/",
             "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
             "Swiftly\\Factory\\": "src/Swiftly/Factory",
-            "": "app/controller/"
+            "App\\": "app/"
         },
         "files": [
             "src/Swiftly/utilities/functions.php"

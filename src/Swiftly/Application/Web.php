@@ -15,8 +15,6 @@ use Swiftly\Middleware\ControllerMiddleware;
 use Swiftly\Middleware\RoutingMiddleware;
 use Swiftly\Middleware\Runner;
 
-use function mb_strtolower;
-
 use const APP_SWIFTLY;
 use const APP_CONFIG;
 
