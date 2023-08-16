@@ -14,7 +14,7 @@ class PostProvider
 {
     private $posts;
 
-    public function __construct($something = null)
+    public function __construct($provider = null)
     {
         $this->posts = [
             'getting-started-typescript' => [

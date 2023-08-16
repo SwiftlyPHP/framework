@@ -7,7 +7,7 @@ namespace App\Controller;
  * 
  * @example Basic shape of a controller
  */
-class Example0
+class Home
 {
     /**
      * Load the homepage template

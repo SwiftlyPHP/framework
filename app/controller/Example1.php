@@ -29,9 +29,11 @@ class Example1
 
         // Setup database credentials
         $connection = new Connection();
-        $connection->name = "username";
+        $connection->name = "database";
+        $connection->username = "username";
         $connection->password = "password";
         $connection->host = "localhost";
+        $connection->port = 3306;
 
         // Connect to DB
         $database = new MysqlAdapter($connection);
