@@ -14,7 +14,9 @@ class Post extends AbstractController
         $post = $provider->getPost($slug);
 
         if (!$post) {
-            return new Response('404 - Not found', 404);
+            $response = $this->output('404.html.php', ['title' => '404']);
+            $response->setStatus(404);
+            return $response;
         }
 
         return $this->output('post.html.php', [
