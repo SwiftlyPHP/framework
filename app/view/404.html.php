@@ -16,7 +16,7 @@
         <li class="homepage-links__item">
             <a
                 href="/posts"
-                class="homepage-links__meta"
+                class="homepage-links__link"
             >Back to posts</a>
         </li>
     </ul>

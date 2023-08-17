@@ -87,8 +87,8 @@ class PostProvider
 
             $posts = array_filter(
                 $posts,
-                function (array $post) use ($year, $month): bool {
-                    return $post['published']->format("n") == $month;
+                function (Post $post) use ($year, $month): bool {
+                    return $post->published->format("n") == $month;
                 }
             );
         }
@@ -98,8 +98,8 @@ class PostProvider
 
             $posts = array_filter(
                 $posts,
-                function (array $post) use ($author): bool {
-                    return $post['author_slug'] === $author;
+                function (Post $post) use ($author): bool {
+                    return $post->author_slug === $author;
                 }
             );
         }

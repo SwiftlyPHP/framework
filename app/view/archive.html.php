@@ -9,10 +9,10 @@
         <?php foreach($posts as $slug => $post): ?>
             <li class="results__item">
                 <?= $this->render(__DIR__ . '/components/card.html.php', [
-                    'title'     => $post['title'],
-                    'author'    => $post['author'],
-                    'published' => $post['published'],
-                    'link'      => $post['link']
+                    'title'     => $post->title,
+                    'author'    => $post->author,
+                    'published' => $post->published,
+                    'link'      => $post->link
                 ]); ?>
             </li>
         <?php endforeach; ?>
