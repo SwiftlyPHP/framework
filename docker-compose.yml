@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
-    image: swiftly/php:7.3
+    image: swiftly/php:7.4
     volumes:
      - .:/var/www/html
     networks:

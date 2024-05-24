@@ -12,12 +12,19 @@
         "swiftly/routing": "dev-develop",
         "swiftly/database": "dev-main",
         "vlucas/phpdotenv": "^5.3",
-        "swiftly/template": "1.0.0-beta"
+        "swiftly/template": "1.0.0-rc1",
+        "swiftly/core": "dev-main"
     },
     "require-dev": {
         "vimeo/psalm": "^4.8",
         "phpunit/phpunit": "^9.5"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "/Users/conor.varley/Frameworks/core"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Swiftly\\Base\\": "src/Swiftly/Base/",
@@ -25,9 +32,6 @@
             "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
             "Swiftly\\Factory\\": "src/Swiftly/Factory",
             "": "app/controller/"
-        },
-        "files": [
-            "src/Swiftly/utilities/functions.php"
-        ]
+        }
     }
 }
