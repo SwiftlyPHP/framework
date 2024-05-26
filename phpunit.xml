@@ -12,13 +12,10 @@
     </testsuites>
     <coverage>
         <include>
-            <directory suffix=".php">src</directory>
+            <directory suffix=".php">app</directory>
         </include>
-        <exclude>
-            <file>src/Swiftly/services.php</file>
-        </exclude>
         <report>
-            <html outputDirectory="reports/html"/>
+            <html outputDirectory="coverage"/>
         </report>
     </coverage>
 </phpunit>

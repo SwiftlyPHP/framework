@@ -5,16 +5,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    phpVersion="7.3"
+    phpVersion="7.4"
 >
     <projectFiles>
         <file name="public/index.php" />
-        <directory name="src" />
+        <directory name="app" />
+        <directory name="services" />
         <ignoreFiles>
             <directory name="app/view" />
         </ignoreFiles>
     </projectFiles>
     <stubs>
-        <file name="constants.php" />
+        <file name="definitions.php" />
     </stubs>
 </psalm>

@@ -12,4 +12,4 @@
 /composer.lock
 
 # PHPUnit
-/reports
+/coverage
