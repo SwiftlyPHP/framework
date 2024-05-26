@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title><?= $this->title ?></title>
+        <title><?= $title ?></title>
         <style>
             body {
                 font-family: 'Segoe UI', Roboto, sans-serif;
@@ -35,8 +35,8 @@
     <body>
         <div class="content">
             <div class="inner">
-                <h1><?= $this->title; ?></h1>
-                <p><?= $this->message; ?></p>
+                <h1><?= $title; ?></h1>
+                <p><?= $message; ?></p>
             </div>
         </div>
     </body>

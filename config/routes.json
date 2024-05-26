@@ -2,11 +2,15 @@
     "home": {
         "path":     "/",
         "methods":  ["GET"],
-        "handler":  "Home::index"
+        "handler": ["App\\Controller\\Home", "index"]
     },
     "hello": {
         "path":     "/hello/[s:name]",
         "methods":  ["GET"],
-        "handler":  "Home::hello"
+        "handler":  ["App\\Controller\\Home", "hello"]
+    },
+    "api.hello": {
+        "path":     "/api/hello/[s:name]",
+        "handler":  ["App\\Controller\\Api", "hello"]
     }
 }

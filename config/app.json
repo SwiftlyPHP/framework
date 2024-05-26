@@ -1,6 +1,5 @@
 {
     "core": {
-        "encoding": "UTF-8",
         "environment": "dev",
         "strict" : true,
         "warnings": true
@@ -13,7 +12,7 @@
         "password": "secret"
     },
     "cache": {
-        "root": "data/cache/html",
-        "lifetime": 3600
+        "root": "/data/cache/html",
+        "lifetime": 300
     }
 }

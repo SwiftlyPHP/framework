@@ -1,77 +1,43 @@
 <?php
-
 /**
- * Swiftly | A Simple PHP Framework
+ * Main bootstrap file for SwiftlyPHP applications.
  *
- * Swiftly is a simple MVC framework that developed out of a learning project
- * in the summer of 2019.
+ * The constants in `definitions.php` can be edited if you wish to use a
+ * different folder structure than the default.
  *
- * More details about it's development, history and use can be found in the
- * readme file.
- *
- * @license MIT License
- * @author clvarley
- * @version 1.0.0 2019-08-11
+ * @version 1.0.0
  */
 
+use Swiftly\Config\File\JsonFile;
+use Swiftly\Core\Application;
+use Swiftly\Core\ServiceProvider;
+use Swiftly\Dependency\Container;
+use Swiftly\Http\Request\Request;
 
-// Get global definitions
-require_once dirname( __DIR__ ) . '/definitions.php';
+use const Swiftly\FILE_AUTOLOAD;
+use const Swiftly\FILE_CONFIG;
+use const Swiftly\PATH_SERVICES;
 
+// Edit this path if using a different folder structure
+require_once dirname(__DIR__) . '/definitions.php';
 
-// Make sure we are running a compatable PHP version
-if ( version_compare( PHP_VERSION, SWIFTLY_MIN_PHP ) < 0 ) {
-    exit( 'Swiftly requires PHP version ' . SWIFTLY_MIN_PHP . ' or above to run!' );
-}
+// Load composer autoloader
+require_once FILE_AUTOLOAD;
 
+// Load values from config.json 
+$config = new JsonFile(FILE_CONFIG);
+$config = $config->load();
 
-// Let composer do it's thing
-require_once APP_ROOT . 'vendor/autoload.php';
+// Create request from $_SERVER, $_GET, $_POST and $_COOKIE globals
+$request = Request::fromGlobals();
 
+// Create and populate the service container
+$container = new Container();
+$container->register(Request::class, $request);
+$provider = new ServiceProvider($container);
+$provider->loadDir(PATH_SERVICES);
 
-// Load the config
-$config = ( new Swiftly\Config\Store )->load(
-    new Swiftly\Config\Loader\JsonLoader( APP_CONFIG . 'app.json' )
-);
-
-
-// Set the encoding
-if ( $config->has( 'core.encoding' ) ) {
-    mb_internal_encoding( $config->get( 'core.encoding' ) );
-    mb_http_output( $config->get( 'core.encoding' ) );
-}
-
-
-// Are we in development mode?
-switch ( (string)$config->get( 'core.environment' ) )
-{
-    case 'development':
-    case 'dev':
-        $error_level = E_ERROR | E_WARNING | E_PARSE | E_NOTICE | E_DEPRECATED | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING;
-    break;
-
-    default:
-        $error_level = 0;
-    break;
-}
-
-
-// Does the developer want to see E_STRICT errors?
-if ( (bool)$config->get( 'core.strict', false ) ) {
-    $error_level = $error_level | E_STRICT;
-}
-
-
-// Display developer defined errors & warnings?
-if ( (bool)$config->get( 'core.warnings', false ) ) {
-    $error_level = $error_level | E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE | E_USER_DEPRECATED;
-}
-
-
-// Set error level
-error_reporting( $error_level );
-
-
-// Start!
-$app = new Swiftly\Application\Web( $config );
-$app->start();
+// Process request and respond to client
+$application = new Application($config, $container);
+$response = $application->process($request);
+$application->send($response);

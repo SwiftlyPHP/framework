@@ -1,46 +1,29 @@
 <?php
 
 /**
- * App wide definitions
+ * App wide version and file path definitions.
  *
- * @author clvarley
+ * This file can be edited and version controlled as necessary. Update the
+ * constants below if you wish to use a non-standard folder structure.
+ *
+ * @since 1.0.0
  */
 
-// Swiftly version
-define( 'SWIFTLY_VERSION', '1.0.0' );
+namespace Swiftly;
 
-// Minimum PHP version
-define( 'SWIFTLY_MIN_PHP', '7.1.0' );
+/* Framework version */
+const SWIFTLY_VERSION = '1.0.0';
+const SWIFTLY_MIN_PHP = '7.4.0';
 
-// Base directory
-define( 'APP_ROOT', __DIR__ . '/' );
+/* File paths */
+const PATH_ROOT = __DIR__;
+const PATH_PUBLIC = PATH_ROOT . '/public';
+const PATH_CONFIG = PATH_ROOT . '/config';
+const PATH_CACHE = PATH_ROOT . '/data/cache';
+const PATH_VIEW = PATH_ROOT . '/app/view';
+const PATH_SERVICES = PATH_ROOT . '/services';
 
-// Public folder
-define( 'APP_PUBLIC', APP_ROOT . 'public/' );
-
-// Config folder
-define( 'APP_CONFIG', APP_ROOT . 'config/' );
-
-// Var folder
-define( 'APP_DATA', APP_ROOT . 'data/' );
-
-// Source folder
-define( 'APP_SRC', APP_ROOT . 'src/' );
-
-// Swiftly source
-define( 'APP_SWIFTLY', APP_ROOT . 'src/Swiftly/' );
-
-// App folder
-define( 'APP_BASE', APP_ROOT . 'app/' );
-
-// Controller folder
-define( 'APP_CONTROLLER', APP_ROOT . 'app/controller/' );
-
-// Template folder
-define( 'APP_VIEW', APP_ROOT . 'app/view/' );
-
-// Models folder
-define( 'APP_MODEL', APP_ROOT . 'app/model/' );
-
-// Entities/services folder
-define( 'APP_ENTITY', APP_ROOT . 'app/entity/' );
+/* Config files */
+const FILE_AUTOLOAD = PATH_ROOT . '/vendor/autoload.php';
+const FILE_CONFIG = PATH_CONFIG . '/app.json';
+const FILE_ROUTES = PATH_CONFIG . '/routes.json';
