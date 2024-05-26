@@ -31,7 +31,7 @@
             "Swiftly\\Application\\": "src/Swiftly/Application/",
             "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
             "Swiftly\\Factory\\": "src/Swiftly/Factory",
-            "": "app/controller/"
+            "App\\": "app/"
         }
     }
 }

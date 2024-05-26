@@ -1,18 +1,20 @@
 <?php
 
+namespace App\Controller;
+
 use Swiftly\Core\Controller;
 use Swiftly\Http\Response\Response;
 
+use function ucfirst;
+
 /**
- * The default controller that handles the homepage
- *
- * @author clvarley
+ * Example controller that returns HTML responses.
  */
-Class Home Extends Controller
+class Home extends Controller
 {
 
     /**
-     * Load the homepage template
+     * Load a simple php template
      *
      * @return Response HTTP response
      */
@@ -25,7 +27,7 @@ Class Home Extends Controller
     }
 
     /**
-     * Says hello to the given name
+     * Example of route matching with variable component
      *
      * @param string $name User name
      * @return Response    HTTP response
