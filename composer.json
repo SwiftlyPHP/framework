@@ -13,6 +13,7 @@
         "swiftly/database": "dev-main",
         "vlucas/phpdotenv": "^5.3",
         "swiftly/template": "1.0.0-rc1",
+        "swiftly/installer": "dev-main",
         "swiftly/core": "dev-main"
     },
     "require-dev": {
@@ -23,6 +24,10 @@
         {
             "type": "vcs",
             "url": "/Users/conor.varley/Frameworks/core"
+        },
+        {
+            "type": "vcs",
+            "url": "/Users/conor.varley/Frameworks/Installer"
         }
     ],
     "autoload": {
@@ -32,6 +37,11 @@
             "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
             "Swiftly\\Factory\\": "src/Swiftly/Factory",
             "App\\": "app/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "swiftly/installer": true
         }
     }
 }

@@ -5,6 +5,7 @@
  * Any classes added to the container here will be available throughout your
  * application.
  *
+ * @author Conor Varley
  * @version 1.0.0
  */
 
@@ -18,18 +19,15 @@ use Swiftly\Routing\File\JsonFile;
 use Swiftly\Routing\ProviderInterface;
 use Swiftly\Routing\Provider\FileProvider;
 use Swiftly\Routing\Collection;
-use Swiftly\Routing\UrlGenerator;
 use Swiftly\Core\Middleware\RoutingMiddleware;
 use Swiftly\Core\Middleware\SessionMiddleware;
+use Swiftly\Routing\UrlGenerator;
 use Swiftly\Template\Context\HelperContext;
 use Swiftly\Template\Context\DefaultContext;
 use Swiftly\Template\FileFinder;
 use Swiftly\Template\Engine;
 use Swiftly\Http\SessionHandler;
 use Swiftly\Http\Session\NativeSession;
-
-use const Swiftly\FILE_ROUTES;
-use const Swiftly\PATH_VIEW;
 
 /**
  * Handles registering application-wide services
@@ -41,7 +39,7 @@ return static function (Container $container): void {
     $container
         ->register(JsonFile::class)
         ->setArguments([
-            'file_path' => FILE_ROUTES
+            'file_path' => '##PATH_ROUTES##'
         ]);
 
     $container
@@ -94,7 +92,7 @@ return static function (Container $container): void {
     $container
         ->register(FileFinder::class)
         ->setArguments([
-            'file_path' => PATH_VIEW
+            'file_path' => '##PATH_TEMPLATE##'
         ]);
 
     $container
