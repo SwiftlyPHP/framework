@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controller;
 
@@ -12,13 +12,12 @@ use function ucfirst;
  */
 class Home extends Controller
 {
-
     /**
      * Load a simple php template
      *
      * @return Response HTTP response
      */
-    public function index() : Response
+    public function index(): Response
     {
         return $this->render('home.html.php', [
             'title'   => 'Welcome',
