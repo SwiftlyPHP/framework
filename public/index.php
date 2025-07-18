@@ -1,8 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Main bootstrap file for SwiftlyPHP applications.
  *
- * @author Conor Varley
  * @version 1.0.0
  */
 
@@ -12,23 +11,33 @@ use Swiftly\Dependency\Container;
 use Swiftly\Core\ServiceProvider;
 use Swiftly\Core\Application;
 
-require_once "##PATH_AUTOLOAD##";
+use const Swiftly\FILE_AUTOLOAD;
+use const Swiftly\FILE_CONFIG;
+use const Swiftly\PATH_SERVICES;
 
-// Load values from config.json 
-$config = (new JsonFile("##PATH_CONFIG##"))->load();
+require_once dirname(__DIR__) . '/definitions.php';
+require_once FILE_AUTOLOAD;
 
-// Collect user request information
+/**
+ * Load user-defined config values.
+ */
+$config = (new JsonFile(FILE_CONFIG))->load();
+
+/**
+ * Collect HTTP request info from server.
+ */
 $request = Request::fromGlobals();
 
-// Create and populate the service container
+/**
+ * Create container and populate with values from all `/services/*.php` files.
+ */
 $container = new Container();
 $container->register(Request::class, $request);
 $provider = new ServiceProvider($container);
-$provider->loadDir("##PATH_SERVICES##");
+$provider->loadDir(PATH_SERVICES);
 
 /**
- * Process request and send HTTP response to client
+ * Hand request off to registered middlewares and route controller.
  */
 $application = new Application($config, $container);
-$response = $application->process($request);
-$application->send($response);
+$application->send($application->process($request));

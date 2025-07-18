@@ -4,7 +4,8 @@
     colors="true"
     cacheResult="false"
     testdox="true"
-    noInteraction="true">
+    noInteraction="true"
+>
     <testsuites>
         <testsuite name="unit">
             <directory suffix=".php">tests</directory>

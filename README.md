@@ -27,7 +27,7 @@ applications, the job of almost every controller will be to organise
 communication with the database through Models and to return a rendered View
 file.
 
-All Controllers live in the *App/Controller* directory.
+All Controllers live in the *app/Controller* directory.
 
 ### Models
 
@@ -36,13 +36,13 @@ sure the responses are represented in useful formats.
 
 TODO:
 
-All Models live in the *App/Model* directory.
+All Models live in the *app/Model* directory.
 
 ### Views
 
 TODO:
 
-All Views live in the *App/View* directory.
+All Views live in the *app/view* directory.
 
 ## Routing
 

@@ -29,6 +29,9 @@ use Swiftly\Template\Engine;
 use Swiftly\Http\SessionHandler;
 use Swiftly\Http\Session\NativeSession;
 
+use const Swiftly\FILE_ROUTES;
+use const Swiftly\PATH_VIEW;
+
 /**
  * Handles registering application-wide services
  *
@@ -39,7 +42,7 @@ return static function (Container $container): void {
     $container
         ->register(JsonFile::class)
         ->setArguments([
-            'file_path' => '##PATH_ROUTES##'
+            'file_path' => FILE_ROUTES,
         ]);
 
     $container
@@ -92,7 +95,7 @@ return static function (Container $container): void {
     $container
         ->register(FileFinder::class)
         ->setArguments([
-            'file_path' => '##PATH_TEMPLATE##'
+            'file_path' => PATH_VIEW,
         ]);
 
     $container
