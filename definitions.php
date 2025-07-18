@@ -13,7 +13,7 @@ namespace Swiftly;
 
 /* Framework version */
 const SWIFTLY_VERSION = '1.0.0';
-const SWIFTLY_MIN_PHP = '7.4.0';
+const SWIFTLY_MIN_PHP = '8.0.0';
 
 /* File paths */
 const PATH_ROOT = __DIR__;

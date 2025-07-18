@@ -6,19 +6,19 @@
     "type": "project",
     "license": "MIT",
     "require": {
+        "php": "^8.0",
         "swiftly/http": "dev-main",
         "swiftly/config": "dev-main",
         "swiftly/dependency": "dev-main",
-        "swiftly/routing": "dev-develop",
+        "swiftly/routing": "dev-main",
         "swiftly/database": "dev-main",
-        "vlucas/phpdotenv": "^5.3",
         "swiftly/template": "1.0.0-rc1",
         "swiftly/installer": "dev-main",
         "swiftly/core": "dev-main"
     },
     "require-dev": {
-        "vimeo/psalm": "^4.8",
-        "phpunit/phpunit": "^9.5"
+        "vimeo/psalm": "^5.26",
+        "phpunit/phpunit": "^9.6"
     },
     "repositories": [
         {
