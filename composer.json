@@ -21,22 +21,8 @@
         "phpunit/phpunit": "^9.6",
         "friendsofphp/php-cs-fixer": "^3.84"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "/Users/conor.varley/Frameworks/core"
-        },
-        {
-            "type": "vcs",
-            "url": "/Users/conor.varley/Frameworks/Installer"
-        }
-    ],
     "autoload": {
         "psr-4": {
-            "Swiftly\\Base\\": "src/Swiftly/Base/",
-            "Swiftly\\Application\\": "src/Swiftly/Application/",
-            "Swiftly\\Middleware\\": "src/Swiftly/Middleware/",
-            "Swiftly\\Factory\\": "src/Swiftly/Factory",
             "App\\": "app/"
         }
     },
@@ -44,5 +30,9 @@
         "allow-plugins": {
             "swiftly/installer": true
         }
+    },
+    "scripts": {
+        "tests": "@php vendor/bin/phpunit",
+        "serve": "@php -S 127.0.0.1:8080 -t ./public"
     }
 }

@@ -37,7 +37,7 @@ $provider = new ServiceProvider($container);
 $provider->loadDir(PATH_SERVICES);
 
 /**
- * Hand request off to registered middlewares and route controller.
+ * Hand request off to registered middleware and route controller.
  */
 $application = new Application($config, $container);
 $application->send($application->process($request));
